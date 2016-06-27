@@ -1,0 +1,31 @@
+language: node_js
+node_js:
+- '6'
+- '5'
+- '4.4'
+services:
+- redis-server
+- mongodb
+cache:
+  directories:
+  - node_modules
+env:
+  global:
+  - secure: PSW8PqFVFOJsKfq7ZUAM0IfUAGuOaIcGDTqQe4yHBGBfAyuCQ33XLSFraxLgTglaI6wh2G2fpOhjmI9OTDpr4blznT1LuUEx5L4ot0Tc5UwPOWxdfA+Bz2AcrJXokrb0tRhQ8mFdqJHB4kZSYz8G/NRB2c5k6OqE/1yoen7G2JMohh0gpMac8lrv3Miw2ebphquOtSp0C88y/JkQlpRyLVEcSd1moTtjxsiI5KaV4c8Xufc3aOAghyH9NhWcj6KEh1aAHQIC0bcVUoc0AOJKtsjVl8taoQwvyr3abK7y65Uy1+uJgCLt6ZNwsQtoLHwz6TQjp8y1OfDNilXQjcaRYbm81P2l4msS+IRqup8gz4BgKHzF+Fts9Yy5/VyolwySZ0cIQqyXPFh0MUSFolO3/axq/cAMPzDytkXGfofKOuQ0yksBe8aY9toE2A/Dw+ROcche8TACV3JeHtygX+My5yKj80duzqGRfIHP1zvHtm/a4GKNN8mgzmoiCxJhYcuX9zjfrRGLDR14FOT0JLDk4paqkzPDHJNn6Tp7mxQlI1hLxYnJopgf8MKrrGyCSofKQB1cMkoDq7rfvkafF8/strwQT2R2tvGCsbDF0EMDQZ/2Agt6UeD3qJHis2t4AfELUVH/TocFsly5jPZg6RpWx4NfC0s4aVK4g/vi4TqKgbY=
+before_deploy:
+- npm install -g gulp
+- gulp deploy
+deploy:
+  provider: releases
+  api_key:
+    secure: ZAtTIRRU+s6HSdXE3yf934iiqrNfYVp1dqsJ9YglExZpU+ujQGnEnIEg9cpUXn/gTTH8zljmPerHqqClL+s8eKxH//N0DJWBrjor6mbxL0AvuaG5SxzmeYoMCpXl+xXvlFIe//HApNAIveTA8F6SMhhwDPv1qIb3aGfCwJ2ft/cJuNmT/4qqtnJ4Ls+DAQAaXisYetF2OX1zzxN1cyT41UiLMKYPAwM71oETv36vwTd6aZQKYfiRstrLQwaxZmmq0a7tKKygOG5h/TGlklp7dsQNyLMhHlwJ8mTYRYPE/V1uwwNLXw4nhwo5EPZ4FUl+m6yi3iDs3tJLzFG9/5kT6nhvRBnX0xhfouq+aKU6hCQKV+EO493YWjNspMpVEfFIT2vzQ7TxDgMcpTv3/icqtGiP0o8Muej9Siir/XbsS3mL1PRisksyTuGPezZ8adyzRQTbuQd49BQ0UgEqDDgqfKt0A00WS6zaPf0d/ln/9GrTTgCsYRbu2yaBylsv0vxaf3eVFrPfHD8LSIY6YVEZqPOE/FZDAEJ+KG1bu/xisR+nfPmNteNou9N54Vy/Vhyy6Ynwb4T7gdKZFkqrqxoee7VdtUZ867sKZeYuMmE6YElJUPfF1AC7FOSnHBuGdBvaD9RFTF0B9ICQCp5FVFwX+o94wxZnoV0nK/IdqSDOJTQ=
+  file:
+  - dist/opsstatus.zip
+  - dist/opsstatus.tar.gz
+  skip_cleanup: true
+  overwrite: true
+  on:
+    branch: master
+    repo: wspglobal/opsstatus
+    tags: true
+    node: '6'
