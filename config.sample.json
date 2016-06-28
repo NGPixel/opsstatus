@@ -1,0 +1,10 @@
+{
+   "title": "Ops Status",
+   "host": "http://localhost",
+   "db": "mongodb://user:pass@localhost/opsstatus",
+   "redis": {
+      "host": "localhost",
+      "port": "6379"
+   },
+   "sessionSecret": "[ LONG SECRET KEY HERE ]"
+}
