@@ -37,7 +37,7 @@ var incidentSchema = modb.Schema({
     },
     actualStartDate: {
       type: Date
-    }
+    },
     actualEndDate: {
       type: Date
     }

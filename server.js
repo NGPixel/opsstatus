@@ -9,11 +9,11 @@
 // ----------------------------------------
 
 global.winston = require('winston');
-winston.log('Ops Status is initializing...');
+winston.info('Ops Status is initializing...');
 
 var appconfig = require('./config.json');
-global.db = require('modules/db')(appconfig);
-global.red = require('modules/redis')(appconfig);
+global.db = require('./modules/db')(appconfig);
+global.red = require('./modules/redis')(appconfig);
 
 var _ = require('lodash');
 var express = require('express');
@@ -28,11 +28,13 @@ var compression = require('compression');
 var passport = require('passport');
 var autoload = require('auto-load');
 var expressValidator = require('express-validator');
+var http = require('http');
 
 global.lang = require('i18next');
 var i18next_backend = require('i18next-node-fs-backend');
 var i18next_mw = require('i18next-express-middleware');
 
+var mw = autoload(path.join(__dirname, '/middlewares'));
 var ctrl = autoload(path.join(__dirname, '/controllers'));
 
 // ----------------------------------------
@@ -41,6 +43,7 @@ var ctrl = autoload(path.join(__dirname, '/controllers'));
 
 global.app = express();
 global.ROOTPATH = __dirname;
+var _isDebug = (app.get('env') === 'development');
 
 // ----------------------------------------
 // Security
@@ -52,7 +55,7 @@ app.use(mw.security);
 // Passport Authentication
 // ----------------------------------------
 
-var strategy = require('./passport-auth0');
+var strategy = require('./modules/auth')(passport);
 
 app.use(cookieParser());
 app.use(session({
@@ -96,7 +99,7 @@ app.use(i18next_mw.handle(lang));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
@@ -122,8 +125,8 @@ app.use(mw.flash);
 
 app.use('/', ctrl.login);
 
-app.use('/', mw.auth, ctrl.dashboard);
-app.use('/admin', mw.auth, ctrl.create);
+app.use('/', ctrl.dashboard);
+app.use('/admin', mw.auth, ctrl.admin);
 
 // ----------------------------------------
 // Error handling
@@ -145,4 +148,38 @@ app.use(function(err, req, res, next) {
   });
 });
 
-winston.log('Ops Status has initialized successfully. [RUNNING]');
+// ----------------------------------------
+// Start HTTP server
+// ----------------------------------------
+
+winston.info('Ops Status has initialized successfully.');
+
+var port = process.env.PORT || appconfig.port;
+winston.info('Starting HTTP server on port ' + port + '...');
+
+app.set('port', port);
+var server = http.createServer(app);
+server.listen(port);
+server.on('error', (error) => {
+  if (error.syscall !== 'listen') {
+    throw error;
+  }
+
+  // handle specific listen errors with friendly messages
+  switch (error.code) {
+    case 'EACCES':
+      console.error('Listening on port ' + port + ' requires elevated privileges!');
+      process.exit(1);
+      break;
+    case 'EADDRINUSE':
+      console.error('Port ' + port + ' is already in use!');
+      process.exit(1);
+      break;
+    default:
+      throw error;
+  }
+});
+
+server.on('listening', () => {
+  winston.info('HTTP server started successfully! [RUNNING]');
+});

@@ -1,0 +1,29 @@
+header
+	.logo
+		span System Status
+		img(src='/images/logo.png',alt="Logo")
+		button
+			span
+				i.fa.fa-bell
+				| Subscribe
+	nav
+		ul
+			li
+				span Web Apps
+				i.fa.fa-check
+			li
+				span Communications
+				i.fa.fa-clock-o
+			li
+				span Network
+				i.fa.fa-minus-square
+			li
+				span Data Storage
+				i.fa.fa-exclamation-triangle
+			li
+				span Cloud
+				i.fa.fa-circle
+			//-each menuitem, menukey in appdata.navbar
+				li(data-key=menukey, class=(navbar_active == menukey ? 'active' : ''), data-link=menuitem.target)
+					i.material-icons= menuitem.icon
+					= t('nav.' + menukey)
