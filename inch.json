@@ -4,6 +4,7 @@
       "client/js/**/*.js",
       "controllers/**/*.js",
       "middlewares/**/*.js",
+      "models/**/*.js",
       "modules/**/**.js"
     ],
     "excluded": []
