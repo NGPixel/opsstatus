@@ -27,7 +27,8 @@ try {
 
 	// Use default test values
 
-	global.appconfig = require(__dirname, '../config.sample.json');
+	let configPath = path.join(__dirname, '../config.sample.json');
+	global.appconfig = require(configPath);
 
 }
 
