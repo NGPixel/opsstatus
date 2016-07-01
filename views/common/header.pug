@@ -10,19 +10,19 @@ header
 		ul
 			li
 				span Web Apps
-				i.fa.fa-check
+				i.fa.fa-check.status-ok
 			li
 				span Communications
-				i.fa.fa-clock-o
+				i.fa.fa-clock-o.status-scheduled
 			li
 				span Network
-				i.fa.fa-minus-square
+				i.fa.fa-minus-square.status-perfissues
 			li
 				span Data Storage
-				i.fa.fa-exclamation-triangle
+				i.fa.fa-exclamation-triangle.status-partialdown
 			li
 				span Cloud
-				i.fa.fa-circle
+				i.fa.fa-circle.status-majordown
 			//-each menuitem, menukey in appdata.navbar
 				li(data-key=menukey, class=(navbar_active == menukey ? 'active' : ''), data-link=menuitem.target)
 					i.material-icons= menuitem.icon

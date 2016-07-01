@@ -25,12 +25,19 @@ var paths = {
       './node_modules/vue/dist/vue.min.js',
       './node_modules/pikaday/pikaday.js'
 	],
-	scriptapps: ['./client/js/*.js'],
-	csslibs: [
-		'./node_modules/font-awesome/css/font-awesome.min.css'
+	scriptapps: [
+		'./client/js/*.js'
 	],
-	cssapps: ['./client/css/app.scss'],
-	cssappswatch: ['./client/css/**/*.scss'],
+	csslibs: [
+		'./node_modules/font-awesome/css/font-awesome.min.css',
+		'./node_modules/gridlex/dist/gridlex.min.css'
+	],
+	cssapps: [
+		'./client/css/app.scss'
+	],
+	cssappswatch: [
+		'./client/css/**/*.scss'
+	],
 	fonts: [
 		'./node_modules/font-awesome/fonts/*-webfont.*',
 		'!./node_modules/font-awesome/fonts/*-webfont.svg'
@@ -52,7 +59,6 @@ var paths = {
 gulp.task('server', ['scripts', 'css', 'fonts'], function() {
 	nodemon({
 		script: './server',
-		args: ["80"],
 		ignore: ['public/', 'client/', 'tests/'],
 		ext: 'js json',
 		env: { 'NODE_ENV': 'development' }
@@ -143,7 +149,7 @@ gulp.task('default', ['watch', 'server']);
 /**
  * TASK - Creates deployment packages
  */
-gulp.task('deploy', function() {
+gulp.task('deploy', ['scripts', 'css', 'fonts'], function() {
 	var zipStream = gulp.src(paths.deploypackage)
 		.pipe(zip('opsstatus.zip'))
 		.pipe(gulp.dest('dist'));

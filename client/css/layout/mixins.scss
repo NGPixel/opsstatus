@@ -83,3 +83,21 @@
        -o-#{$property}: #{$value};
           #{$property}: #{$value};
 }
+
+@mixin status-colors() {
+  &.status-ok {
+    color: material-color('green', '500');
+  }
+  &.status-scheduled {
+    color: material-color('blue', '500');
+  }
+  &.status-perfissues {
+    color: material-color('purple', '300');
+  }
+  &.status-partialdown {
+    color: material-color('orange', '500');
+  }
+  &.status-majordown {
+    color: material-color('red', '500');
+  }
+}

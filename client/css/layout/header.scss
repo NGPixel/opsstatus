@@ -1,5 +1,5 @@
 header {
-	background-color: material-color('blue', '600');
+	background-color: material-color('light-blue', '700');
 	box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 
 	.logo {
@@ -82,21 +82,7 @@ header {
 				.fa {
 					margin-left: 10px;
 
-					&.fa-check {
-						color: material-color('green', '500');
-					}
-					&.fa-clock-o {
-						color: material-color('blue', '500');
-					}
-					&.fa-minus-square {
-						color: material-color('purple', '300');
-					}
-					&.fa-exclamation-triangle {
-						color: material-color('orange', '500');
-					}
-					&.fa-circle {
-						color: material-color('red', '500');
-					}
+					@include status-colors();
 
 				}
 
