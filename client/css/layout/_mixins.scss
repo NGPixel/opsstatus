@@ -84,20 +84,23 @@
           #{$property}: #{$value};
 }
 
-@mixin status-colors() {
+@mixin status-colors($prop, $ref:0) {
+
+  $basecolor: 500 + $ref * 100;
+
   &.status-ok {
-    color: material-color('green', '500');
+    #{$prop}: material-color('green', inspect($basecolor));
   }
   &.status-scheduled {
-    color: material-color('blue', '500');
+    #{$prop}: material-color('blue', inspect($basecolor));
   }
   &.status-perfissues {
-    color: material-color('purple', '300');
+    #{$prop}: material-color('purple', inspect($basecolor - 200));
   }
   &.status-partialdown {
-    color: material-color('orange', '500');
+    #{$prop}: material-color('orange', inspect($basecolor));
   }
   &.status-majordown {
-    color: material-color('red', '500');
+    #{$prop}: material-color('red', inspect($basecolor));
   }
 }

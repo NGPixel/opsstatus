@@ -12,5 +12,9 @@
 			],
 			"path": "."
 		}
-	]
+	],
+	"settings":
+	{
+		"tab_size": 2
+	}
 }

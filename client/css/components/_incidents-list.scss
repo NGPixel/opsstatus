@@ -1,0 +1,118 @@
+
+.incidents-list {
+	padding: 0;
+	margin: 0;
+	list-style-type: none;
+
+	> li {
+
+		&:first-child > h3 {
+			border-radius: 2px 2px 0 0;
+		}
+
+		+ li {
+			margin-top: 15px;
+		}
+
+		h3 {
+			background-color: material-color('blue-grey','500');
+			border-bottom: 4px solid material-color('blue-grey','300');
+			color: #FFF;
+			margin: 0;
+			padding: 5px 15px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+
+			@include status-colors('background-color', 1);
+			@include status-colors('border-bottom-color', -2);
+
+			span {
+				font-size: 14px;
+				font-weight: 600;
+				color: #FFF;
+			}
+
+			.fa {
+				font-size: 14px;
+				font-weight: 400;
+				display: inline-block;
+			}
+
+		}
+
+	}
+
+}
+
+.incident-properties {
+	background-color: lighten(material-color('blue-grey','50'), 0%);
+	margin: 0;
+	padding: 9px 15px;
+	list-style-type: none;
+
+	li {
+		font-size: 13px;
+		padding: 2px 0;
+
+		strong {
+			font-size: 12px;
+			font-weight: 600;
+			text-transform: uppercase;
+			color: material-color('blue-grey','600');
+			display: inline-block;
+			margin-right: 10px;
+		}
+
+		span {
+			font-weight: 400;
+			color: material-color('blue-grey','800');
+		}
+
+	}
+
+}
+
+.updates-list {
+	padding: 0 15px;
+	margin: 0;
+	list-style-type: none;
+
+	> li {
+		border-top: 1px dotted material-color('blue-grey','100');
+		padding: 15px 0;
+
+		&:first-child {
+			border-top: none;
+		}
+
+		> strong {
+			display: inline-block;
+			font-size: 14px;
+			color: material-color('blue-grey','700');
+			margin-right: 5px;
+
+			&::after {
+				content: ' \2014';
+				color: material-color('blue-grey','500');
+				font-weight: 300;
+			}
+
+		}
+
+		> span {
+			font-size: 14px;
+			color: material-color('blue-grey','600');
+		}
+
+		> em {
+			display: block;
+			font-size: 12px;
+			font-style: normal;
+			color: material-color('blue-grey','400');
+			margin-top: 3px;
+		}
+
+	}
+
+}

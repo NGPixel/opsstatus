@@ -1,0 +1,42 @@
+
+.dashboard {
+	padding: 25px;
+
+	.col, [class*=col-] {
+		padding: 0 1rem 1rem;
+	}
+
+	section {
+
+		h2 {
+			color: material-color('grey','700');
+			font-weight: 400;
+			font-size: 18px;
+			margin: 0 0 10px 0;
+			text-align: center;
+
+			.fa {
+				margin-right: 10px;
+			}
+
+		}
+
+		.box {
+			background-color: #FFF;
+			box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+			border-radius: 2px;
+		}
+
+		& + section {
+			margin-top: 25px;
+		}
+
+	}
+
+	.no-content {
+		padding: 15px;
+		color: material-color('grey','500');
+		font-size: 14px;
+	}
+
+}

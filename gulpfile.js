@@ -118,7 +118,7 @@ gulp.task("css-libs", function () {
 gulp.task("css-app", function () {
 	return gulp.src(paths.cssapps)
 	.pipe(plumber())
-	.pipe(sass({ outputStyle: 'compressed' }))
+	.pipe(sass())
 	.pipe(concat('app.css'))
 	.pipe(cleanCSS({ keepSpecialComments: 0 }))
 	.pipe(plumber.stop())

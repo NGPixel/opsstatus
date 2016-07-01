@@ -13,3 +13,14 @@ body {
 	height: 100%;
 	background-color: material-color('grey', '50');
 }
+
+a {
+	color: material-color('light-blue', '700');
+	text-decoration: none;
+
+	&:hover {
+		color: material-color('light-blue', '900');
+		text-decoration: underline;
+	}
+
+}

@@ -9,11 +9,12 @@ header {
 		height: 50px;
 
 		> span {
-			font-weight: 300;
+			font-weight: 400;
+			letter-spacing: 0.5px;
 			text-transform: uppercase;
 			color: #FFF;
 			display: inline-block;
-			padding-left: 15px;
+			padding-left: 25px;
 		}
 
 		button {
@@ -25,7 +26,7 @@ header {
 			height: 30px;
 			padding: 0 10px;
 			color: #FFF;
-			margin-right: 15px;
+			margin-right: 25px;
 			cursor: pointer;
 			transition: all 0.5s ease;
 
@@ -82,7 +83,7 @@ header {
 				.fa {
 					margin-left: 10px;
 
-					@include status-colors();
+					@include status-colors('color');
 
 				}
 

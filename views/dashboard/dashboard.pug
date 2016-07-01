@@ -5,7 +5,9 @@ block content
 		.grid-3_lg-2_sm-1
 			.col
 				section
-					h2 Overview
+					h2
+						i.fa.fa-check-circle 
+						| Overview
 					.box
 						ul.status-list
 							li
@@ -54,7 +56,7 @@ block content
 											strong OK
 											i.fa.fa-check
 							li
-								h3
+								h3.status-perfissues
 									span Network
 									i.fa.fa-check
 								ul.components-list
@@ -119,11 +121,119 @@ block content
 											i.fa.fa-check
 			.col
 				section
-					h2 Incidents
+					h2
+						i.fa.fa-bullhorn
+						| Incidents
 					.box
-						| Test
+						ul.incidents-list
+							li
+								h3.status-perfissues
+									span WAN intermittent packet loss
+									i.fa.fa-minus-square
+								ul.incident-properties
+									li
+										strong Component:
+										span Network - WAN
+									li
+										strong Severity:
+										span Performance Issues
+									li
+										strong Logged on:
+										span Jun 29, 15:10 UTC
+									li
+										strong Affected Regions:
+										span
+											a(href='/canada') Canada
+											|  ,
+											a(href='/canada') USA
+											|  and 
+											a(href='/canada') UK
+								ul.updates-list
+									li
+										strong Update
+										span We are working with our internet provider to resolve this issue.
+										em Jun 29, 15:14 UTC
+									li
+										strong Identified
+										span We are currently experiencing intermittent packet loss on the WAN.
+										em Jun 29, 15:10 UTC
+							li
+								h3.status-majordown
+									span WAN intermittent packet loss
+									i.fa.fa-circle
+								ul.incident-properties
+									li
+										strong Component:
+										span Network - WAN
+									li
+										strong Severity:
+										span Performance Issues
+									li
+										strong Logged on:
+										span Jun 29, 15:10 UTC
+									li
+										strong Affected Regions:
+										span Canada, USA and UK
+								ul.updates-list
+									li
+										strong Update
+										span We are working with our internet provider to resolve this issue.
+										em Jun 29, 15:14 UTC
+									li
+										strong Identified
+										span We are currently experiencing intermittent packet loss on the WAN.
+										em Jun 29, 15:10 UTC
+				section
+					h2
+						i.fa.fa-history
+						| Past Incidents
+					.box.no-content
+						| No recent past incidents
 			.col
 				section
-					h2 Uptime
-					.box
-						| Test
+					h2
+						i.fa.fa-globe
+						| Regions
+					.box.no-content
+						ul.regions-list
+							li
+								span
+									i.fa.fa-globe
+									a(href='/') Global
+								span 0 incidents
+							li
+								span
+									i.fa.fa-globe
+									a(href='/canada') Africa
+								span 0 incidents
+							li
+								span
+									i.fa.fa-globe
+									a(href='/canada') Australia
+								span 0 incidents
+							li
+								span
+									i.fa.fa-globe
+									a(href='/canada') Canada
+								span 1 incident
+							li
+								span
+									i.fa.fa-globe
+									a(href='/canada') Sweden
+								span 0 incidents
+							li
+								span
+									i.fa.fa-globe
+									a(href='/canada') United States
+								span 1 incident
+							li
+								span
+									i.fa.fa-globe
+									a(href='/canada') United Kingdom
+								span 1 incident
+				section
+					h2
+						i.fa.fa-line-chart
+						| Uptime
+					.box.no-content
+						| Coming soon

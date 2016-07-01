@@ -1,9 +1,13 @@
-@import './layout/mixins';
+@import './layout/_mixins';
 @import './material/_sass-material-colors';
 @import './material/_sass-material-colors-classes';
 
-@import './layout/common';
-@import './layout/header';
-@import './layout/footer';
+@import './layout/_common';
+@import './layout/_header';
+@import './layout/_footer';
 
-@import './sections/dashboard';
+@import './components/_incidents-list';
+@import './components/_regions-list';
+@import './components/_status-list';
+
+@import './sections/_dashboard';
