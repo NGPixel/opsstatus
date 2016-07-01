@@ -19,10 +19,6 @@ var componentSchema = modb.Schema({
     default: 0,
     required: true
   },
-  icon: {
-    type: String,
-    required: true
-  },
   state: {
     type: String,
     required: true,

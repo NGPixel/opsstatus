@@ -8,21 +8,23 @@ var incidentSchema = modb.Schema({
     type: String,
     required: true
   },
-  description: {
-    type: String
-  },
   state: {
     type: String,
     default: 'open',
     required: true,
     index: true,
     enum: ['open','scheduled','closed'],
-    default: 'operational'
+    default: 'open'
   },
   regions: [{
     type: String,
     ref: 'Region'
   }],
+  component: {
+    type: modb.Schema.Types.ObjectId,
+    ref: 'Component',
+    required: true
+  },
   author: {
     type: modb.Schema.Types.ObjectId,
     ref: 'User',
@@ -62,7 +64,6 @@ var incidentSchema = modb.Schema({
     },
     status: {
       type: String,
-      ref: 'Status',
       required: true
     }
   }]

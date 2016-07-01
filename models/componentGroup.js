@@ -8,6 +8,10 @@ var componentGroupSchema = modb.Schema({
     type: String,
     required: true
   },
+  shortName: {
+    type: String,
+    required: true
+  },
   sortIndex: {
     type: Number,
     default: 0,

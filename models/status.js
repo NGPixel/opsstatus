@@ -4,8 +4,6 @@ var modb = require('mongoose');
 
 var statusSchema = modb.Schema({
 
-  _id: String,
-
   name: {
     type: String,
     required: true
@@ -16,14 +14,6 @@ var statusSchema = modb.Schema({
   sortIndex: {
     type: Number,
     default: 0,
-    required: true
-  },
-  color: {
-    type: String,
-    required: true
-  },
-  icon: {
-    type: String,
     required: true
   }
 

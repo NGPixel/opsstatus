@@ -12,6 +12,10 @@ var regionSchema = modb.Schema({
     type: String,
     required: true
   },
+  shortName: {
+    type: String,
+    required: true
+  },
   description: {
     type: String
   },
