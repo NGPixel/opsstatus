@@ -7,5 +7,5 @@
       "host": "localhost",
       "port": "6379"
    },
-   "sessionSecret": "[LONG-SECRET-KEY-HERE]"
+   "sessionSecret": "1234567890abcdefghijklmnopqrstuvxyz"
 }
