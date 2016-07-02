@@ -23,14 +23,25 @@ var paths = {
       './node_modules/bluebird/js/browser/bluebird.min.js',
       './node_modules/moment/min/moment-with-locales.min.js',
       './node_modules/vue/dist/vue.min.js',
-      './node_modules/pikaday/pikaday.js'
+      './node_modules/pikaday/pikaday.js',
+      './node_modules/sortablejs/Sortable.min.js',
+      './node_modules/vex-js/js/vex.combined.min.js'
 	],
 	scriptapps: [
-		'./client/js/*.js'
+		'./client/js/components/*.js',
+		'./client/js/app.js'
+	],
+	scriptadmin: [
+		'./client/js/admin.js'
+	],
+	scriptappswatch: [
+		'./client/js/**/*.js'
 	],
 	csslibs: [
 		'./node_modules/font-awesome/css/font-awesome.min.css',
-		'./node_modules/gridlex/dist/gridlex.min.css'
+		'./node_modules/gridlex/dist/gridlex.min.css',
+		'./node_modules/vex-js/css/vex.css',
+		'./node_modules/vex-js/css/vex-theme-os.css'
 	],
 	cssapps: [
 		'./client/css/app.scss'
@@ -86,13 +97,26 @@ gulp.task("scripts-libs", function () {
  * TASK - Combine, make compatible and compress js app scripts
  */
 gulp.task("scripts-app", function () {
-	return gulp.src(paths.scriptapps)
-	.pipe(plumber())
-	.pipe(concat('app.js'))
-	.pipe(babel())
-	.pipe(uglify())
-	.pipe(plumber.stop())
-	.pipe(gulp.dest("./public/js"));
+	return merge(
+
+		gulp.src(paths.scriptapps)
+		.pipe(plumber())
+		.pipe(concat('app.js'))
+		.pipe(babel())
+		.pipe(uglify())
+		.pipe(plumber.stop())
+		.pipe(gulp.dest("./public/js")),
+
+		gulp.src(paths.scriptadmin)
+		.pipe(plumber())
+		.pipe(concat('admin.js'))
+		.pipe(babel())
+		.pipe(uglify())
+		.pipe(plumber.stop())
+		.pipe(gulp.dest("./public/js"))
+
+	);
+
 });
 
 /**
@@ -137,7 +161,7 @@ gulp.task("fonts", function () {
  * TASK - Start dev watchers
  */
 gulp.task('watch', function() {
-	gulp.watch([paths.scriptapps], ['scripts-app']);
+	gulp.watch([paths.scriptappswatch], ['scripts-app']);
 	gulp.watch([paths.cssappswatch], ['css-app']);
 });
 

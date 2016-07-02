@@ -1,0 +1,18 @@
+extends ./layout
+
+block admin-header
+	i.fa.fa-tasks
+	| Components
+
+block admin-actions
+	a.btn.btn-teal(href='/admin/components/create')
+		span
+			i.fa.fa-plus
+			| New Component
+	a.btn.btn-teal(href='/admin/components/create')
+		span
+			i.fa.fa-plus
+			| New Component Group
+
+block admin-content
+	

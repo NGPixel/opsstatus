@@ -1,0 +1,49 @@
+extends ./layout
+
+block admin-header
+	i.fa.fa-globe
+	| Regions
+
+block admin-actions
+	button.btn.btn-teal#admin-regions-new
+		span
+			i.fa.fa-plus
+			| New Region
+
+block admin-content
+	ul.admin-regions
+		li(data-id='africa')
+			span
+				i.fa.fa-bars.handle
+				| Africa
+			span
+				i.fa.fa-edit
+				i.fa.fa-trash-o
+		li(data-id='canada')
+			span
+				i.fa.fa-bars.handle
+				| Canada
+			span
+				i.fa.fa-edit
+				i.fa.fa-trash-o
+		li
+			span
+				i.fa.fa-bars.handle
+				| France
+			span
+				i.fa.fa-edit
+				i.fa.fa-trash-o
+		li
+			span
+				i.fa.fa-bars.handle
+				| USA
+			span
+				i.fa.fa-edit
+				i.fa.fa-trash-o
+		li
+			span
+				i.fa.fa-bars.handle
+				| UK
+			span
+				i.fa.fa-edit
+				i.fa.fa-trash-o

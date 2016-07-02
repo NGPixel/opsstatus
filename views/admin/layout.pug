@@ -1,0 +1,22 @@
+extends ../layout
+
+block head
+	script(type='text/javascript', src='/js/admin.js')
+
+block content
+	.admin
+		.grid
+			.col-3_sm-12
+				include ./sd
+			.col
+				.admin-header
+					h1
+						block admin-header
+					div
+						block admin-actions
+						a.btn.btn-deep-orange(href='/logout')
+							span
+								i.fa.fa-sign-out
+								| Logout
+				.admin-content
+					block admin-content

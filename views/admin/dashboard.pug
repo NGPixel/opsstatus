@@ -1,9 +1,8 @@
-extends ../layout
+extends ./layout
 
-block content
-	.admin
-		.grid
-			.col-3_sm-12
-				include ./sd
-			.col
-				| Welcome #{user.firstName}
+block admin-header
+	i.fa.fa-th-large
+	| Dashboard
+
+block admin-content
+	| Welcome #{user.firstName}

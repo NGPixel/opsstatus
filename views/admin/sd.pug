@@ -1,24 +1,32 @@
-button.btn.btn-teal.btn-block
+a.btn.btn-teal.btn-block(href='/admin/incidents/create')
 	span
 		i.fa.fa-plus
 		| Create New Incident
 
 ul.admin-sd
-	li
+	li(data-link='/admin')
+		i.fa.fa-th-large
+		| Dashboard
+	li(data-link='/admin/incidents')
 		i.fa.fa-bullhorn
 		| Incidents
-	li
+	li(data-link='/admin/templates')
 		i.fa.fa-copy
 		| Templates
-	li
+	li(data-link='/admin/regions')
 		i.fa.fa-globe
 		| Regions
-	li
+	li(data-link='/admin/components')
 		i.fa.fa-tasks
 		| Components
-	li
+	li(data-link='/admin/statuses')
 		i.fa.fa-bookmark
-		| Status
-	li
+		| Statuses
+	li(data-link='/admin/users')
 		i.fa.fa-users
 		| Users
+
+a.btn.btn-light-blue.btn-block(href='/')
+	span
+		i.fa.fa-home
+		| View Public Dashboard

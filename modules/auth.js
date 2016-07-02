@@ -24,10 +24,13 @@ module.exports = function(passport) {
         },
         function(req, uEmail, uPassword, done) {
             db.User.findOne({ 'email' :  uEmail }).then((user) => {
-                if (user && user.validatePassword(uPassword)) {
-                    return done(null, user);
+                if (user) {
+                    user.validatePassword(uPassword).then((isValid) => {
+                        return (isValid) ? done(null, user) : done(null, false);
+                    });
+                } else {
+                    return done(null, false);
                 }
-                return done(null, false, req.flash('autherror', 'Invalid login.'));
             }).catch((err) => {
                 done(err);
             });
