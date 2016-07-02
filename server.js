@@ -123,7 +123,7 @@ app.use(mw.flash);
 // Controllers
 // ----------------------------------------
 
-app.use('/', ctrl.login);
+app.use('/', ctrl.auth);
 
 app.use('/', ctrl.dashboard);
 app.use('/admin', mw.auth, ctrl.admin);

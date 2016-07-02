@@ -8,27 +8,30 @@ module.exports = function(passport) {
     });
 
     passport.deserializeUser(function(id, done) {
-        db.User.findById(_id).then((user) => {
+        db.User.findById(id).then((user) => {
             done(null, user);
         }).catch((err) => {
             done(err, null);
         });
     });
 
-    passport.use('local-signup', new LocalStrategy({
-        usernameField : 'email',
-        passwordField : 'password',
-        passReqToCallback : true
-    },
-    function(uEmail, uPassword, done) {
-        db.User.findOne({ 'email' :  uEmail }).then((user) => {
-            if (user && user.validatePassword(uPassword)) {
-                return done(null, user);
-            }
-            return done(null, false, req.flash('autherror', 'Invalid login.'));
-        }).catch((err) => {
-            done(err, null);
-        });
-    }));
+    passport.use(
+        'local',
+        new LocalStrategy({
+            usernameField : 'email',
+            passwordField : 'password',
+            passReqToCallback : true
+        },
+        function(req, uEmail, uPassword, done) {
+            db.User.findOne({ 'email' :  uEmail }).then((user) => {
+                if (user && user.validatePassword(uPassword)) {
+                    return done(null, user);
+                }
+                return done(null, false, req.flash('autherror', 'Invalid login.'));
+            }).catch((err) => {
+                done(err);
+            });
+        })
+    );
 
 };

@@ -1,0 +1,37 @@
+
+.admin {
+	padding: 25px;
+}
+
+.admin-sd {
+	background-color: material-color('blue-grey', '50');
+	border: 1px solid material-color('blue-grey', '100');
+	border-radius: 2px;
+	margin: 15px 0 0;
+	padding: 0;
+	list-style-type: none;
+
+	> li {
+		padding: 10px 15px;
+		border-top: 1px solid material-color('blue-grey', '100');
+		font-size: 14px;
+		font-weight: 600;
+		color: material-color('blue-grey', '800');
+		cursor: pointer;
+
+		&:first-child {
+			border-top: none;
+		}
+
+		&:hover {
+			background-color: material-color('blue-grey', '100');
+		}
+
+		.fa {
+			margin-right: 10px;
+			width: 16px;
+		}
+
+	}
+
+}

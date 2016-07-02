@@ -1,0 +1,80 @@
+.btn {
+	@include prefix(box-shadow, 0 0 5px 0 rgba(0,0,0,0.1));
+	@include prefix(user-select, none);
+	align-items: center;
+	background-image: none;
+	background-color: material-color('blue-grey', '200');
+	border-radius: 4px;
+	border: 1px solid transparent;
+	box-sizing: border-box;
+	color: #FFF;
+	cursor: pointer;
+	display: inline-flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+	font-family: 'Open Sans', sans-serif;
+	font-size: 12px;
+	font-weight: 600;
+	letter-spacing: 0.5px;
+	margin: 0;
+	outline: none;
+	padding: 0 12px;
+	height: 30px;
+	text-align: center;
+	text-transform: uppercase;
+	transition: all 0.4s ease;
+	vertical-align: middle;
+	white-space: nowrap;
+
+	@each $color-name, $color-variants in $material-colors {
+
+		&.btn-#{$color-name} {
+			background-color: material-color($color-name, '500');
+			@include prefix(text-shadow, 1px 1px 0 material-color($color-name, '700'));
+
+			&:hover {
+				background-color: material-color($color-name, '600');
+				@include prefix(text-shadow, 1px 1px 0 material-color($color-name, '800'));
+			}
+
+		}
+
+	}
+
+	&.btn-inverted {
+		background-color: #FFF;
+		color: material-color('blue-grey', '800');
+
+		&:hover {
+			background-color: rgba(255,255,255,0.6);
+		}
+
+	}
+
+	&:focus {
+		outline: none;
+	}
+
+	&.btn-block {
+		display: block;
+		width: 100%;
+	}
+
+	// span container required for firefox not handling flexbox on buttons!
+	> span {
+		display: inline-flex;
+		flex-direction: row;
+		flex-wrap: nowrap;
+		align-items: center;
+	}
+
+	.fa {
+		display: inline-block;
+		margin-right: 5px;
+		font-size: 12px;
+		font-weight: normal;
+		line-height: 12px;
+		margin-top: 2px;
+	}
+
+}

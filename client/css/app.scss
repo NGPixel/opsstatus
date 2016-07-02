@@ -6,8 +6,11 @@
 @import './layout/_header';
 @import './layout/_footer';
 
+@import './components/_button';
 @import './components/_incidents-list';
 @import './components/_regions-list';
 @import './components/_status-list';
 
+@import './sections/_admin';
+@import './sections/_auth';
 @import './sections/_dashboard';

@@ -1,0 +1,16 @@
+extends ../layout
+
+block content
+	form.login-form(action='/login',method='POST')
+		h1 Administration Login
+		.box
+			section
+				label Email Address
+				input(type='text', name='email')
+			section
+				label Password
+				input(type='password', name='password')
+		button.btn.btn-green(type='submit')
+			span
+				i.fa.fa-sign-in
+				| Login
