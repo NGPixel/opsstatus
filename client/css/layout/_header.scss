@@ -19,6 +19,11 @@ header {
 			padding-left: 25px;
 		}
 
+		> a {
+			display: inline-block;
+			height: 30px;
+		}
+
 		button {
 			display: inline-flex;
 			align-items: center;

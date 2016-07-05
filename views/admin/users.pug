@@ -1,0 +1,24 @@
+extends ./layout
+
+block admin-header
+	i.fa.fa-users
+	| Users
+
+block admin-actions
+	button.btn.btn-teal#admin-users-new
+		span
+			i.fa.fa-plus
+			| Create User
+
+block admin-content
+	#admin-users
+		ul.admin-list
+			each usr in users
+				li(data-id=usr.id, data-email=usr.email, data-firstname=usr.firstName, data-lastname=usr.lastName)
+					span
+						i.fa.fa-user
+						= usr.fullName
+					span
+						i.fa.fa-edit.edit-action
+						if !_.eq(usr._id.toString(), user._id.toString())
+							i.fa.fa-trash-o.delete-action

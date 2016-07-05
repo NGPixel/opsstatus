@@ -10,6 +10,7 @@ var tar = require('gulp-tar');
 var gzip = require('gulp-gzip');
 var sass = require('gulp-sass');
 var cleanCSS = require('gulp-clean-css');
+var include = require("gulp-include");
 
 /**
  * Paths
@@ -110,6 +111,7 @@ gulp.task("scripts-app", function () {
 		gulp.src(paths.scriptadmin)
 		.pipe(plumber())
 		.pipe(concat('admin.js'))
+		.pipe(include({ extensions: "js" }))
 		.pipe(babel())
 		.pipe(uglify())
 		.pipe(plumber.stop())

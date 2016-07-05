@@ -11,39 +11,17 @@ block admin-actions
 			| New Region
 
 block admin-content
-	ul.admin-regions
-		li(data-id='africa')
-			span
-				i.fa.fa-bars.handle
-				| Africa
-			span
-				i.fa.fa-edit
-				i.fa.fa-trash-o
-		li(data-id='canada')
-			span
-				i.fa.fa-bars.handle
-				| Canada
-			span
-				i.fa.fa-edit
-				i.fa.fa-trash-o
-		li
-			span
-				i.fa.fa-bars.handle
-				| France
-			span
-				i.fa.fa-edit
-				i.fa.fa-trash-o
-		li
-			span
-				i.fa.fa-bars.handle
-				| USA
-			span
-				i.fa.fa-edit
-				i.fa.fa-trash-o
-		li
-			span
-				i.fa.fa-bars.handle
-				| UK
-			span
-				i.fa.fa-edit
-				i.fa.fa-trash-o
+	#admin-regions
+		if regions.length > 0
+			ul.admin-list
+				each region in regions
+					li(data-id=region._id, data-name=region.name)
+						span
+							i.fa.fa-bars.handle
+							= region.name
+						span
+							i.fa.fa-edit.edit-action
+							i.fa.fa-trash-o.delete-action
+		else
+			.admin-box
+				| No region have been created yet.

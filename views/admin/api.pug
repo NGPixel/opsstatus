@@ -1,0 +1,15 @@
+extends ./layout
+
+block admin-header
+	i.fa.fa-sitemap
+	| API
+
+block admin-actions
+	button.btn.btn-teal#admin-api-new
+		span
+			i.fa.fa-plus
+			| Generate API Key
+
+block admin-content
+	.admin-box
+		| No API keys have been generated yet.

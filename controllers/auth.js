@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 var passport = require('passport');
-var ExpressBrute = require('express-brute')
+var ExpressBrute = require('express-brute');
 var ExpressBruteRedisStore = require('express-brute-redis');
 var moment = require('moment');
 
@@ -17,7 +17,7 @@ var bruteforce = new ExpressBrute(EBstore, {
 	minWait: 60 * 1000,
 	maxWait: 5 * 60 * 1000,
 	refreshTimeoutOnRequest: false,
-	failCallback: function (req, res, next, nextValidRequestDate) {
+	failCallback(req, res, next, nextValidRequestDate) {
 		req.flash('alert', {
       class: 'error',
       title: 'Too many attempts!',

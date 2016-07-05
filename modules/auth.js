@@ -1,5 +1,6 @@
 
 var LocalStrategy = require('passport-local').Strategy;
+var LocalAPIKeyStrategy = require('passport-localapikey').Strategy;
 
 module.exports = function(passport) {
 
@@ -36,5 +37,15 @@ module.exports = function(passport) {
             });
         })
     );
+
+    passport.use(new LocalAPIKeyStrategy(
+        function(req, apikey, done) {
+            db.Api.findOne({ key: apikey }, function (err, keyusr) {
+                if (err) { return done(err); }
+                if (!keyusr) { return done(null, false); }
+                return done(null, keyusr);
+            });
+        }
+    ));
 
 };

@@ -10,7 +10,6 @@ var incidentSchema = modb.Schema({
   },
   state: {
     type: String,
-    default: 'open',
     required: true,
     index: true,
     enum: ['open','scheduled','closed'],

@@ -11,29 +11,10 @@ jQuery( document ).ready(function( $ ) {
 	});
 
 	// ====================================
-	// Regions
+	// Sections
 	// ====================================
 
-	if($('.admin-regions').length) {
-
-		Sortable.create($('.admin-regions').get(0), {
-			animation: 300,
-			chosenClass: 'active',
-			handle: '.handle'
-		});
-
-		$('#admin-regions-new').on('click', (ev => {
-
-			vex.dialog.prompt({
-			  message: 'Enter the name of the new region:',
-			  placeholder: 'Region name',
-			  callback: function(value) {
-			    return console.log(value);
-			  }
-			});
-
-		}));
-
-	}
+	//=include admin/regions.js
+	//=include admin/users.js
 
 });

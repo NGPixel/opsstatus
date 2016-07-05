@@ -34,6 +34,7 @@ class Alerts {
 	 * Show a new Alert
 	 *
 	 * @param      {Object}  options  Alert properties
+	 * @return     {null}  Void
 	 */
 	push(options) {
 
@@ -58,6 +59,38 @@ class Alerts {
 
 		self.uidNext++;
 
+	}
+
+	/**
+	 * Shorthand method for pushing errors
+	 *
+	 * @param      {String}  title    The title
+	 * @param      {String}  message  The message
+	 */
+	pushError(title, message) {
+		this.push({
+			class: 'error',
+			iconClass: 'fa-warning',
+			message: message,
+			sticky: false,
+			title: title
+		});
+	}
+
+	/**
+	 * Shorthand method for pushing success messages
+	 *
+	 * @param      {String}  title    The title
+	 * @param      {String}  message  The message
+	 */
+	pushSuccess(title, message) {
+		this.push({
+			class: 'success',
+			iconClass: 'fa-check',
+			message: message,
+			sticky: false,
+			title: title
+		});
 	}
 
 	/**

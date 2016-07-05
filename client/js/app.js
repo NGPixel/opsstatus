@@ -14,7 +14,7 @@ jQuery( document ).ready(function( $ ) {
 	if(alertsData) {
 		_.forEach(alertsData, (alertRow) => {
 			alerts.push(alertRow);
-		})
+		});
 	}
 
 });

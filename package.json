@@ -42,8 +42,10 @@
     "node-bcrypt": "0.0.1",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
+    "passport-localapikey": "0.0.3",
     "pug": "^2.0.0-beta3",
     "serve-favicon": "^2.3.0",
+    "slug": "^0.9.1",
     "validator": "^5.4.0",
     "winston": "^2.2.0"
   },
@@ -59,6 +61,7 @@
     "gulp-clean-css": "^2.0.10",
     "gulp-concat": "^2.6.0",
     "gulp-gzip": "^1.4.0",
+    "gulp-include": "^2.3.0",
     "gulp-nodemon": "^2.1.0",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.3.2",

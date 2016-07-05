@@ -46,7 +46,16 @@ module.exports = function(appconfig) {
 
 	// Helpers
 
-	//dbModels.common = require('../models/common');
+	dbModels.common = {
+
+		stringifyIds(doc, ret, opt) {
+			if(doc.id && typeof doc.id !== String) {
+				ret.id = _.toString(doc.id.valueOf());
+			}
+			return ret;
+		}
+		
+	}
 
 	// Connect
 
