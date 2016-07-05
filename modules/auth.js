@@ -2,7 +2,9 @@
 var LocalStrategy = require('passport-local').Strategy;
 var LocalAPIKeyStrategy = require('passport-localapikey').Strategy;
 
-module.exports = function(passport) {
+module.exports = function(passport, appconfig) {
+
+    // Serialization user methods
 
     passport.serializeUser(function(user, done) {
         done(null, user._id);
@@ -15,6 +17,8 @@ module.exports = function(passport) {
             done(err, null);
         });
     });
+
+    // Setup local user authentication strategy
 
     passport.use(
         'local',
@@ -38,6 +42,8 @@ module.exports = function(passport) {
         })
     );
 
+    // Setup API authentication strategy
+
     passport.use(new LocalAPIKeyStrategy(
         function(req, apikey, done) {
             db.Api.findOne({ key: apikey }, function (err, keyusr) {
@@ -47,5 +53,27 @@ module.exports = function(passport) {
             });
         }
     ));
+
+    // Check for admin access
+
+    db.connectPromise.then(() => {
+
+        db.User.count().then((count) => {
+            if(count < 1) {
+                winston.info('No administrator account found. Creating a new one...');
+                db.User.new({
+                    email: appconfig.admin,
+                    firstName: "Root",
+                    lastName: "Admin",
+                    password: "admin123"
+                }).then(() => {
+                    winston.info('Administrator account created successfully!');
+                }).catch((ex) => {
+                    winston.error('An error occured while creating administrator account: ' + ex);
+                });
+            }
+        });
+
+    });
 
 };

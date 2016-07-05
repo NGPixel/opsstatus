@@ -55,7 +55,7 @@ app.use(mw.security);
 // Passport Authentication
 // ----------------------------------------
 
-var strategy = require('./modules/auth')(passport);
+var strategy = require('./modules/auth')(passport, appconfig);
 
 app.use(cookieParser());
 app.use(session({
