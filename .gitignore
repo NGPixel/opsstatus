@@ -43,4 +43,4 @@ jspm_packages
 *.sublime-workspace
 
 # Config Files
-config.json
+config.yml

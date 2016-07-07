@@ -17,6 +17,9 @@
     "url": "https://github.com/wspglobal/opsstatus/issues"
   },
   "homepage": "https://github.com/wspglobal/opsstatus#readme",
+  "engines" : {
+    "node" : ">=4.4.5"
+  },
   "dependencies": {
     "auto-load": "^2.1.0",
     "bcryptjs-then": "^1.0.1",
@@ -35,6 +38,7 @@
     "i18next-express-middleware": "^1.0.1",
     "i18next-node-fs-backend": "^0.1.2",
     "ioredis": "^2.2.0",
+    "js-yaml": "^3.6.1",
     "lodash": "^4.13.1",
     "moment": "^2.13.0",
     "moment-timezone": "^0.5.4",

@@ -11,7 +11,7 @@
 global.winston = require('winston');
 winston.info('Ops Status is initializing...');
 
-var appconfig = require('./config.json');
+var appconfig = require('./modules/config')('./config.yml');
 global.db = require('./modules/db')(appconfig);
 global.red = require('./modules/redis')(appconfig);
 
