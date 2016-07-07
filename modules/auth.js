@@ -63,7 +63,7 @@ module.exports = function(passport, appconfig) {
                 winston.info('No administrator account found. Creating a new one...');
                 db.User.new({
                     email: appconfig.admin,
-                    firstName: "Root",
+                    firstName: "Admin",
                     lastName: "Admin",
                     password: "admin123"
                 }).then(() => {

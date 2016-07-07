@@ -5,14 +5,90 @@ block admin-header
 	| Components
 
 block admin-actions
-	a.btn.btn-teal(href='/admin/components/create')
+	button.btn.btn-teal#admin-components-new
 		span
 			i.fa.fa-plus
 			| New Component
-	a.btn.btn-teal(href='/admin/components/create')
+	button.btn.btn-teal#admin-components-newgroup
 		span
 			i.fa.fa-plus
 			| New Component Group
 
 block admin-content
-	
+	#admin-components
+		if comps.length > 0
+			.admin-prelist
+				h2 Uncategorized Items
+				span Components below must be placed inside a Component Group. They will not be displayed until they are part of a group.
+				ul.admin-list
+					each comp in _.find(comps, { id: null }).comps
+						li(data-id=comp._id, data-name=comp.name)
+							span
+								i.fa.fa-bars.handle
+								p
+									strong= comp.name
+									span= comp.description
+							span
+								i.fa.fa-edit.edit-action
+								i.fa.fa-trash-o.delete-action
+			ul.admin-headlist
+				li
+					h2
+						span
+							i.fa.fa-bars.handle
+							| Web Apps
+						span
+							i.fa.fa-edit.edit-action
+							i.fa.fa-trash-o.delete-action
+					ul.admin-list
+						each comp in comps
+							li(data-id=comp._id, data-name=comp.name)
+								span
+									i.fa.fa-bars.handle
+									p
+										strong= comp.name
+										span= comp.description
+								span
+									i.fa.fa-edit.edit-action
+									i.fa.fa-trash-o.delete-action
+				li
+					h2
+						span
+							i.fa.fa-bars.handle
+							| Communications
+						span
+							i.fa.fa-edit.edit-action
+							i.fa.fa-trash-o.delete-action
+					ul.admin-list
+						each comp in comps
+							li(data-id=comp._id, data-name=comp.name)
+								span
+									i.fa.fa-bars.handle
+									p
+										strong= comp.name
+										span= comp.description
+								span
+									i.fa.fa-edit.edit-action
+									i.fa.fa-trash-o.delete-action
+				li
+					h2
+						span
+							i.fa.fa-bars.handle
+							| Network
+						span
+							i.fa.fa-edit.edit-action
+							i.fa.fa-trash-o.delete-action
+					ul.admin-list
+						each comp in comps
+							li(data-id=comp._id, data-name=comp.name)
+								span
+									i.fa.fa-bars.handle
+									p
+										strong= comp.name
+										span= comp.description
+								span
+									i.fa.fa-edit.edit-action
+									i.fa.fa-trash-o.delete-action
+		else
+			.admin-box
+				| No components have been created yet.

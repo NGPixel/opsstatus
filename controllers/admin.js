@@ -9,6 +9,74 @@ router.get('/', function(req, res, next) {
 });
 
 // ====================================
+// COMPONENTS
+// ====================================
+
+/**
+ * Components - GET
+ */
+router.get('/components', function(req, res, next) {
+	return db.Component
+	.aggregate()
+	.sort({ sortIndex: 1 })
+	.group({ _id: "$group", comps: { $push: "$$ROOT" } })
+	.exec()
+	.then((comps) => {
+		comps = _.map(comps, (c) => {
+			c.id = (c._id == null) ? null : c._id.toString();
+			return c;
+		});
+		res.render('admin/components', {
+			comps
+		});
+	});
+});
+
+/**
+ * Components - PUT
+ */
+router.put('/components', function(req, res, next) {
+	db.Component.new(req.body.name, req.body.description).then(() => {
+		req.flash('alert', {
+      class: 'success',
+      title: 'Component created!',
+      message:  req.body.name + ' has been created successfully!',
+      iconClass: 'fa-check'
+    });
+		return res.json({
+			ok: true
+		});
+	}).catch((ex) => {
+		return res.json({
+			ok: false,
+			error: ex
+		});
+	});
+});
+
+/**
+ * Component Groups - PUT
+ */
+router.put('/componentgroups', function(req, res, next) {
+	db.ComponentGroup.new(req.body.name, req.body.shortname).then(() => {
+		req.flash('alert', {
+      class: 'success',
+      title: 'Component Group created!',
+      message:  req.body.name + ' has been created successfully!',
+      iconClass: 'fa-check'
+    });
+		return res.json({
+			ok: true
+		});
+	}).catch((ex) => {
+		return res.json({
+			ok: false,
+			error: ex
+		});
+	});
+});
+
+// ====================================
 // REGIONS
 // ====================================
 
@@ -132,12 +200,6 @@ router.delete('/regions', function(req, res, next) {
 			ok: false,
 			error: ex
 		});
-	});
-});
-
-router.get('/components', function(req, res, next) {
-	res.render('admin/components', {
-		
 	});
 });
 
