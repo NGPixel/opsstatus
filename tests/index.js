@@ -18,17 +18,17 @@ try {
 
 	// can't use async here, doing it the ugly way...
 
-	let configPath = path.join(__dirname, '../config.json');
+	let configPath = path.join(__dirname, '../config.yml');
 
 	fs.accessSync(configPath, fs.R_OK);
-	global.appconfig = require(configPath);
+	global.appconfig = require('../modules/config')(configPath);
 
 } catch(err) {
 
 	// Use default test values
 
-	let configPath = path.join(__dirname, '../config.sample.json');
-	global.appconfig = require(configPath);
+	let configPath = path.join(__dirname, '../config.sample.yml');
+	global.appconfig = require('../modules/config')(configPath);
 
 }
 
