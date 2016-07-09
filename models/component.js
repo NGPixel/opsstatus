@@ -2,6 +2,7 @@
 
 var modb = require('mongoose');
 var _ = require('lodash');
+var modb_delete = require('mongoose-delete');
 
 /**
  * Component Schema
@@ -41,6 +42,8 @@ var componentSchema = modb.Schema({
 {
   timestamps: {}
 });
+
+componentSchema.plugin(modb_delete, { deletedAt : true, overrideMethods: true });
 
 /**
  * MODEL - Create a new component
@@ -108,7 +111,7 @@ componentSchema.statics.reorder = function(newOrder) {
         let newIdx = _.indexOf(newOrder[groupRefs[curCompId]], curCompId);
         newIdx = (newIdx > 0) ? newIdx : 0;
 
-        if(comp.sortIndex != newIdx) {
+        if(comp.sortIndex !== newIdx) {
           comp.sortIndex = newIdx;
           isModified = true;
         }
@@ -125,6 +128,33 @@ componentSchema.statics.reorder = function(newOrder) {
 
     return (queries.length > 0) ? Promise.all(queries) : Promise.resolve(true);
 
+  });
+};
+
+/**
+ * MODEL - Edit a component
+ *
+ * @param      {String}   compId           The component identifier
+ * @param      {String}   compName         The new component name
+ * @param      {<type>}   compDescription  The new component description
+ * @return     {Promise}  Promise of the update operation
+ */
+componentSchema.statics.edit = function(compId, compName, compDescription) {
+  return this.findByIdAndUpdate(db.ObjectId(compId), {
+    name: compName,
+    description: compDescription
+  }, { runValidators: true });
+};
+
+/**
+ * MODEL - Delete a component
+ *
+ * @param      {String}   compId  The component identifier
+ * @return     {Promise}  Promise of the delete operation
+ */
+componentSchema.statics.erase = function(compId) {
+  return this.findById(db.ObjectId(compId)).then((c) => {
+    return c.delete();
   });
 };
 

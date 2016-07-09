@@ -24,7 +24,7 @@ module.exports = (confPath) => {
 	return _.defaultsDeep(appconfig, {
 		title: "Ops Status",
 		host: "http://localhost",
-		port: 80,
+		port: process.env.PORT,
 		db: "mongodb://localhost/opsstatus",
 		redis: {
 		  host: "localhost",

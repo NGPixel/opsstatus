@@ -55,7 +55,7 @@ module.exports = function(appconfig) {
 			return ret;
 		}
 		
-	}
+	};
 
 	// Connect
 

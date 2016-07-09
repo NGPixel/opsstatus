@@ -75,12 +75,27 @@ componentGroupSchema.statics.reorder = function(newOrder) {
 };
 
 /**
+ * MODEL - Edit a component group
+ *
+ * @param      {String}   groupId         The component group identifier
+ * @param      {String}   groupName       The new component group name
+ * @param      {String}   groupShortName  The new component group short name
+ * @return     {Promise}  Promise of the update operation
+ */
+componentGroupSchema.statics.edit = function(groupId, groupName, groupShortName) {
+  return this.findByIdAndUpdate(db.ObjectId(groupId), {
+    name: groupName,
+    shortName: groupShortName
+  }, { runValidators: true });
+};
+
+/**
  * MODEL - Delete a component group
  *
  * @param      {String}   groupId  The component group identifier
  * @return     {Promise}  Promise of the delete operation
  */
-componentGroupSchema.statics.delete = function(groupId) {
+componentGroupSchema.statics.erase = function(groupId) {
   return Promise.all([
     this.findByIdAndRemove(groupId),
     db.Component.update({ group: db.ObjectId(groupId) },{ group: null }, { multi: true })

@@ -143,7 +143,7 @@ userSchema.statics.edit = function(userId, data) {
  * @param      {String}   userId  The user ID
  * @return     {Promise}  Promise of the delete operation
  */
-userSchema.statics.delete = function(userId) {
+userSchema.statics.erase = function(userId) {
   return this.findByIdAndRemove(userId);
 };
 

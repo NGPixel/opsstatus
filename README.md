@@ -10,3 +10,21 @@
 
 ##### Status Pages and Incidents Management
 *Under development*
+
+##### Milestones
+- [x] Public Dashboard
+	- [x] UI
+	- [ ] Logic
+- [x] Config
+- [x] Authentication
+- [x] Administration
+	- [x] Dashboard
+	- [ ] Incidents
+	- [ ] Templates
+	- [x] Components
+	- [x] Regions
+	- [x] Users
+	- [ ] API
+- [ ] Regional Dashboard
+- [ ] Subscriptions
+- [ ] API

@@ -28,7 +28,7 @@ router.get('/components', function(req, res, next) {
 			});
 
 			return db.Component
-				.aggregate()
+				.aggregate({ $match: { deleted: false } })
 				.sort({ sortIndex: 1, name: 1 })
 				.group({ _id: "$group", comps: { $push: "$$ROOT" } })
 				.exec()
@@ -101,6 +101,28 @@ router.post('/components', function(req, res, next) {
 			});
 		}
 
+	// Edit a component
+
+	} else if(req.body.editCompId) {
+
+		if(!_.isEmpty(req.body.editCompName) && !_.isEmpty(req.body.editCompDescription)) {
+			db.Component.edit(req.body.editCompId, req.body.editCompName, req.body.editCompDescription).then(() => {
+				return res.json({
+					ok: true
+				});
+			}).catch((ex) => {
+				return res.json({
+					ok: false,
+					error: ex
+				});
+			});
+		} else {
+			return res.json({
+				ok: false,
+				error: 'Invalid component name / description.'
+			});
+		}
+
 	// Invalid command
 
 	} else {
@@ -113,6 +135,32 @@ router.post('/components', function(req, res, next) {
 	}
 
 });
+
+/**
+ * Component - DELETE
+ */
+router.delete('/components', function(req, res, next) {
+	db.Component.erase(req.body.compId).then(() => {
+		req.flash('alert', {
+      class: 'success',
+      title: 'Component deleted',
+      message:  req.body.compName + ' has been deleted successfully!',
+      iconClass: 'fa-trash-o'
+    });
+		return res.json({
+			ok: true
+		});
+	}).catch((ex) => {
+		return res.json({
+			ok: false,
+			error: ex
+		});
+	});
+});
+
+// ====================================
+// COMPONENT GROUPS
+// ====================================
 
 /**
  * Component Groups - PUT
@@ -164,6 +212,28 @@ router.post('/componentgroups', function(req, res, next) {
 			});
 		}
 
+	// Edit a component group
+
+	} else if(req.body.editGroupId) {
+
+		if(!_.isEmpty(req.body.editGroupName) && !_.isEmpty(req.body.editGroupShortName)) {
+			db.ComponentGroup.edit(req.body.editGroupId, req.body.editGroupName, req.body.editGroupShortName).then(() => {
+				return res.json({
+					ok: true
+				});
+			}).catch((ex) => {
+				return res.json({
+					ok: false,
+					error: ex
+				});
+			});
+		} else {
+			return res.json({
+				ok: false,
+				error: 'Invalid group name / shortname.'
+			});
+		}
+
 	// Invalid command
 
 	} else {
@@ -181,7 +251,7 @@ router.post('/componentgroups', function(req, res, next) {
  * Component Groups - DELETE
  */
 router.delete('/componentgroups', function(req, res, next) {
-	db.ComponentGroup.delete(req.body.groupId).then(() => {
+	db.ComponentGroup.erase(req.body.groupId).then(() => {
 		req.flash('alert', {
       class: 'success',
       title: 'Component Group deleted',
@@ -274,7 +344,7 @@ router.post('/regions', function(req, res, next) {
 	} else if(req.body.editRegionId) {
 
 		if(!_.isEmpty(req.body.editRegionName)) {
-			db.Region.editname(req.body.editRegionId, req.body.editRegionName).then(() => {
+			db.Region.edit(req.body.editRegionId, req.body.editRegionName).then(() => {
 				return res.json({
 					ok: true
 				});
@@ -308,7 +378,7 @@ router.post('/regions', function(req, res, next) {
  * Regions - DELETE
  */
 router.delete('/regions', function(req, res, next) {
-	db.Region.delete(req.body.regionId).then(() => {
+	db.Region.erase(req.body.regionId).then(() => {
 		req.flash('alert', {
       class: 'success',
       title: 'Region deleted!',
@@ -341,7 +411,7 @@ router.get('/users', function(req, res, next) {
 	.then((users) => {
 		res.render('admin/users', {
 			users: _.map(users, (u) => {
-				return u.toObject({ transform: db.common.stringifyIds, virtuals: true })
+				return u.toObject({ transform: db.common.stringifyIds, virtuals: true });
 			})
 		});
 	});
@@ -401,7 +471,7 @@ router.post('/users', function(req, res, next) {
  * Users - DELETE
  */
 router.delete('/users', function(req, res, next) {
-	db.User.delete(req.body.id).then(() => {
+	db.User.erase(req.body.id).then(() => {
 		req.flash('alert', {
       class: 'success',
       title: 'User deleted!',

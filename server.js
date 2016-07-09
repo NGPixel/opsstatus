@@ -154,12 +154,11 @@ app.use(function(err, req, res, next) {
 
 winston.info('Ops Status has initialized successfully.');
 
-var port = process.env.PORT || appconfig.port;
-winston.info('Starting HTTP server on port ' + port + '...');
+winston.info('Starting HTTP server on port ' + appconfig.port + '...');
 
-app.set('port', port);
+app.set('port', appconfig.port);
 var server = http.createServer(app);
-server.listen(port);
+server.listen(appconfig.port);
 server.on('error', (error) => {
   if (error.syscall !== 'listen') {
     throw error;
@@ -168,11 +167,11 @@ server.on('error', (error) => {
   // handle specific listen errors with friendly messages
   switch (error.code) {
     case 'EACCES':
-      console.error('Listening on port ' + port + ' requires elevated privileges!');
+      console.error('Listening on port ' + appconfig.port + ' requires elevated privileges!');
       process.exit(1);
       break;
     case 'EADDRINUSE':
-      console.error('Port ' + port + ' is already in use!');
+      console.error('Port ' + appconfig.port + ' is already in use!');
       process.exit(1);
       break;
     default:

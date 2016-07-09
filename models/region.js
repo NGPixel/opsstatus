@@ -4,6 +4,7 @@ var modb = require('mongoose');
 var _ = require('lodash');
 var slug = require('slug');
 var Promise = require('bluebird');
+var modb_delete = require('mongoose-delete');
 
 /**
  * Region schema
@@ -31,6 +32,8 @@ var regionSchema = modb.Schema({
   timestamps: {}
 });
 
+regionSchema.plugin(modb_delete, { deletedAt: true, overrideMethods: true });
+
 /**
  * MODEL - Create a new region
  *
@@ -38,10 +41,17 @@ var regionSchema = modb.Schema({
  * @return     {Promise}  Promise of the create operation
  */
 regionSchema.statics.new = function(regionName) {
-  return this.create({
-    _id: slug(regionName, { lower: true }),
-    name: regionName,
-    sortIndex: 0
+  let regionSlug = slug(regionName, { lower: true });
+  return this.findOneDeleted({ _id: regionSlug }).then((r) => {
+    if(r) {
+      return r.restore();
+    } else {
+      return this.create({
+        _id: regionSlug,
+        name: regionName,
+        sortIndex: 0
+      });
+    }
   });
 };
 
@@ -58,7 +68,7 @@ regionSchema.statics.reorder = function(newOrder) {
     _.forEach(regions, (region) => {
       let newIdx = _.indexOf(newOrder, region._id);
       newIdx = (newIdx > 0) ? newIdx : 0;
-      if(region.sortIndex != newIdx) {
+      if(region.sortIndex !== newIdx) {
         region.sortIndex = newIdx;
         queries.push(region.save());
       }
@@ -74,7 +84,7 @@ regionSchema.statics.reorder = function(newOrder) {
  * @param      {String}  regionName  The new region name
  * @return     {Promise}  Promise of the update operation
  */
-regionSchema.statics.editname = function(regionId, regionName) {
+regionSchema.statics.edit = function(regionId, regionName) {
   return this.findByIdAndUpdate(regionId, { name: regionName }, { runValidators: true });
 };
 
@@ -84,8 +94,10 @@ regionSchema.statics.editname = function(regionId, regionName) {
  * @param      {String}   regionName  The region identifier
  * @return     {Promise}  Promise of the delete operation
  */
-regionSchema.statics.delete = function(regionId) {
-  return this.findByIdAndRemove(regionId);
+regionSchema.statics.erase = function(regionId) {
+  return this.findById(regionId).then((r) => {
+    return r.delete();
+  });
 };
 
 module.exports = modb.model('Region', regionSchema);

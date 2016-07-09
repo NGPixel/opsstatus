@@ -71,9 +71,9 @@ class Alerts {
 		this.push({
 			class: 'error',
 			iconClass: 'fa-warning',
-			message: message,
+			message,
 			sticky: false,
-			title: title
+			title
 		});
 	}
 
@@ -87,9 +87,9 @@ class Alerts {
 		this.push({
 			class: 'success',
 			iconClass: 'fa-check',
-			message: message,
+			message,
 			sticky: false,
-			title: title
+			title
 		});
 	}
 
