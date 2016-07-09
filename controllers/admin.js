@@ -16,20 +16,39 @@ router.get('/', function(req, res, next) {
  * Components - GET
  */
 router.get('/components', function(req, res, next) {
-	return db.Component
-	.aggregate()
-	.sort({ sortIndex: 1 })
-	.group({ _id: "$group", comps: { $push: "$$ROOT" } })
-	.exec()
-	.then((comps) => {
-		comps = _.map(comps, (c) => {
-			c.id = (c._id == null) ? null : c._id.toString();
-			return c;
+	return db.ComponentGroup
+		.find()
+		.sort({ sortIndex: 1 })
+		.exec()
+		.then((groups) => {
+
+			groups = _.map(groups, (g) => {
+				g.id = g._id.toString();
+				return g;
+			});
+
+			return db.Component
+				.aggregate()
+				.sort({ sortIndex: 1, name: 1 })
+				.group({ _id: "$group", comps: { $push: "$$ROOT" } })
+				.exec()
+				.then((compsRaw) => {
+
+					let comps = {};
+					_.forEach(compsRaw, (c) => {
+						let grpId = (c._id == null) ? 'uncategorized' : 'g_' + c._id.toString();
+						comps[grpId] = c.comps;
+					});
+
+					res.render('admin/components', {
+						groups,
+						comps,
+						util: require('util')
+					});
+
+				});
+
 		});
-		res.render('admin/components', {
-			comps
-		});
-	});
 });
 
 /**
@@ -55,6 +74,47 @@ router.put('/components', function(req, res, next) {
 });
 
 /**
+ * Components - POST
+ */
+router.post('/components', function(req, res, next) {
+
+	// Set new components order
+
+	if(req.body.compsOrder) {
+
+		let compsOrder = JSON.parse(req.body.compsOrder);
+		if(_.isPlainObject(compsOrder)) {
+			db.Component.reorder(compsOrder).then(() => {
+				return res.json({
+					ok: true
+				});
+			}).catch((ex) => {
+				return res.json({
+					ok: false,
+					error: ex
+				});
+			});
+		} else {
+			return res.json({
+				ok: false,
+				error: 'Invalid components array.'
+			});
+		}
+
+	// Invalid command
+
+	} else {
+
+		return res.json({
+			ok: false,
+			error: 'Invalid command.'
+		});
+
+	}
+
+});
+
+/**
  * Component Groups - PUT
  */
 router.put('/componentgroups', function(req, res, next) {
@@ -64,6 +124,69 @@ router.put('/componentgroups', function(req, res, next) {
       title: 'Component Group created!',
       message:  req.body.name + ' has been created successfully!',
       iconClass: 'fa-check'
+    });
+		return res.json({
+			ok: true
+		});
+	}).catch((ex) => {
+		return res.json({
+			ok: false,
+			error: ex
+		});
+	});
+});
+
+/**
+ * Component Groups - POST
+ */
+router.post('/componentgroups', function(req, res, next) {
+
+	// Set new component groups order
+
+	if(req.body.groupsOrder) {
+
+		let groupsOrder = JSON.parse(req.body.groupsOrder);
+		if(_.isArray(groupsOrder)) {
+			db.ComponentGroup.reorder(groupsOrder).then(() => {
+				return res.json({
+					ok: true
+				});
+			}).catch((ex) => {
+				return res.json({
+					ok: false,
+					error: ex
+				});
+			});
+		} else {
+			return res.json({
+				ok: false,
+				error: 'Invalid group array.'
+			});
+		}
+
+	// Invalid command
+
+	} else {
+
+		return res.json({
+			ok: false,
+			error: 'Invalid command.'
+		});
+
+	}
+
+});
+
+/**
+ * Component Groups - DELETE
+ */
+router.delete('/componentgroups', function(req, res, next) {
+	db.ComponentGroup.delete(req.body.groupId).then(() => {
+		req.flash('alert', {
+      class: 'success',
+      title: 'Component Group deleted',
+      message:  req.body.groupName + ' has been deleted successfully!',
+      iconClass: 'fa-trash-o'
     });
 		return res.json({
 			ok: true

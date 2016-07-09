@@ -32,7 +32,7 @@ var regionSchema = modb.Schema({
 });
 
 /**
- * Create a new region
+ * MODEL - Create a new region
  *
  * @param      {String}   regionName  The new region name
  * @return     {Promise}  Promise of the create operation
@@ -46,27 +46,29 @@ regionSchema.statics.new = function(regionName) {
 };
 
 /**
- * Re-order the regions
+ * MODEL - Re-order the regions
  *
  * @param      {Array[String]}  newOrder  Array of the new region sort order,
  *                                        using IDs
  * @return     {Promise}        Promise of all update operations
  */
 regionSchema.statics.reorder = function(newOrder) {
-  let self = this;
-  return self.find().then((regions) => {
+  return this.find().then((regions) => {
     let queries = [];
     _.forEach(regions, (region) => {
       let newIdx = _.indexOf(newOrder, region._id);
-      region.sortIndex = (newIdx > 0) ? newIdx : 0;
-      queries.push(region.save());
+      newIdx = (newIdx > 0) ? newIdx : 0;
+      if(region.sortIndex != newIdx) {
+        region.sortIndex = newIdx;
+        queries.push(region.save());
+      }
     });
-    return Promise.all(queries);
+    return (queries.length > 0) ? Promise.all(queries) : Promise.resolve(true);
   });
 };
 
 /**
- * Edit the name of a region
+ * MODEL - Edit the name of a region
  *
  * @param      {String}  regionId    The region identifier
  * @param      {String}  regionName  The new region name
@@ -77,7 +79,7 @@ regionSchema.statics.editname = function(regionId, regionName) {
 };
 
 /**
- * Delete a region
+ * MODEL - Delete a region
  *
  * @param      {String}   regionName  The region identifier
  * @return     {Promise}  Promise of the delete operation

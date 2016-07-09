@@ -14,21 +14,21 @@ if($('#admin-components').length) {
 			chosenClass: 'active',
 			handle: '.handle',
 			onEnd: (ev) => {
-				/*$.ajax('/admin/regions', {
+				$.ajax('/admin/componentgroups', {
 	  			dataType: 'json',
 	  			method: 'POST',
 	  			data: {
-	  				regionOrder: JSON.stringify(regionsList.toArray())
+	  				groupsOrder: JSON.stringify(compgroupsList.toArray())
 	  			}
 	  		}).then((res) => {
 	  			if(res.ok === true) {
-	  				alerts.pushSuccess('New order saved.', 'The new regions sort order has been saved.');
+	  				alerts.pushSuccess('New order saved.', 'The groups sort order has been saved.');
 	  			} else {
-	  				alerts.pushError('Re-ordering failed.', 'Could not re-order regions. Try again later.');
+	  				alerts.pushError('Re-ordering failed.', 'Could not re-order groups. Try again later.');
 	  			}
 	  		}, () => {
 	  			alerts.pushError('Connection error', 'An unexpected error when connecting to the server.');
-	  		});*/
+	  		});
 			}
 		});
 		var compsList = _.map($('#admin-components > .admin-headlist .admin-list'), (grp) => {
@@ -38,21 +38,10 @@ if($('#admin-components').length) {
 				chosenClass: 'active',
 				handle: '.handle',
 				onEnd: (ev) => {
-					/*$.ajax('/admin/regions', {
-		  			dataType: 'json',
-		  			method: 'POST',
-		  			data: {
-		  				regionOrder: JSON.stringify(regionsList.toArray())
-		  			}
-		  		}).then((res) => {
-		  			if(res.ok === true) {
-		  				alerts.pushSuccess('New order saved.', 'The new regions sort order has been saved.');
-		  			} else {
-		  				alerts.pushError('Re-ordering failed.', 'Could not re-order regions. Try again later.');
-		  			}
-		  		}, () => {
-		  			alerts.pushError('Connection error', 'An unexpected error when connecting to the server.');
-		  		});*/
+					return compOrderSave();
+				},
+				onAdd: (ev) => {
+					return compOrderSave();
 				}
 			});
 		});
@@ -66,24 +55,7 @@ if($('#admin-components').length) {
 			},
 			animation: 300,
 			chosenClass: 'active',
-			handle: '.handle',
-			onEnd: (ev) => {
-				/*$.ajax('/admin/regions', {
-	  			dataType: 'json',
-	  			method: 'POST',
-	  			data: {
-	  				regionOrder: JSON.stringify(regionsList.toArray())
-	  			}
-	  		}).then((res) => {
-	  			if(res.ok === true) {
-	  				alerts.pushSuccess('New order saved.', 'The new regions sort order has been saved.');
-	  			} else {
-	  				alerts.pushError('Re-ordering failed.', 'Could not re-order regions. Try again later.');
-	  			}
-	  		}, () => {
-	  			alerts.pushError('Connection error', 'An unexpected error when connecting to the server.');
-	  		});*/
-			}
+			handle: '.handle'
 		});
 
 	}
@@ -158,29 +130,30 @@ if($('#admin-components').length) {
 
 	// Edit existing Region
 
-	$('#admin-regions > .admin-list > li .edit-action').on('click', (ev) => {
+	$('#admin-components > .admin-headlist > li > h2 .edit-action').on('click', (ev) => {
 
 		let parentElm = $(ev.currentTarget).closest('li').get(0);
 
-		vex.dialog.prompt({
-		  message: 'Enter a new name for region ' + parentElm.dataset.name + ':',
-		  placeholder: 'Region name',
-		  value: parentElm.dataset.name,
+		vex.dialog.open({
+		  message: 'Enter info for group ' + parentElm.dataset.name + ':',
+		  input: '<input name="name" type="text" placeholder="Component Group Name" autocomplete="off" pattern=".{2,255}" value="' + parentElm.dataset.name + '" required />' + 
+		  			 '<input name="shortname" type="text" placeholder="Component Group Short Name" autocomplete="off" pattern=".{2,20}" value="' + parentElm.dataset.shortname + '" required />',
 		  callback(value) {
 
 		  	if(!_.isEmpty(value)) {
-		  		$.ajax('/admin/regions', {
+		  		$.ajax('/admin/componentgroups', {
 		  			dataType: 'json',
 		  			method: 'POST',
 		  			data: {
-		  				editRegionId: parentElm.dataset.id,
-		  				editRegionName: value
+		  				editGroupId: parentElm.dataset.id,
+		  				editGroupName: value.name,
+		  				editGroupShortName: value.shortname
 		  			}
 		  		}).then((res) => {
 		  			if(res.ok === true) {
 		  				window.location.reload(true);
 		  			} else {
-		  				alerts.pushError('Edit region failed', 'Could not edit region. Try again later.');
+		  				alerts.pushError('Edit Component Group failed', 'Could not edit group. Try again later.');
 		  			}
 		  		}, () => {
 		  			alerts.pushError('Connection error', 'An unexpected error when connecting to the server.');
@@ -192,29 +165,29 @@ if($('#admin-components').length) {
 
 	});
 
-	// Delete a region
+	// Delete a component group
 
-	$('#admin-regions > .admin-list > li .delete-action').on('click', (ev) => {
+	$('#admin-components > .admin-headlist > li > h2 .delete-action').on('click', (ev) => {
 
 		let parentElm = $(ev.currentTarget).closest('li').get(0);
 
 		vex.dialog.confirm({
-		  message: 'Are you sure you want to delete region ' + parentElm.dataset.name + '?',
+		  message: 'Are you sure you want to delete component group ' + parentElm.dataset.name + '? All children components will be moved to Uncategorized.',
 		  callback(value) {
 
 		  	if(value) {
-		  		$.ajax('/admin/regions', {
+		  		$.ajax('/admin/componentgroups', {
 		  			dataType: 'json',
 		  			method: 'DELETE',
 		  			data: {
-		  				regionId: parentElm.dataset.id,
-		  				regionName: parentElm.dataset.name
+		  				groupId: parentElm.dataset.id,
+		  				groupName: parentElm.dataset.name
 		  			}
 		  		}).then((res) => {
 		  			if(res.ok === true) {
 		  				window.location.reload(true);
 		  			} else {
-		  				alerts.pushError('Delete region failed', 'Could not delete region. Try again later.');
+		  				alerts.pushError('Delete component group failed', 'Could not delete component group. Try again later.');
 		  			}
 		  		}, () => {
 		  			alerts.pushError('Connection error', 'An unexpected error when connecting to the server.');
@@ -227,3 +200,29 @@ if($('#admin-components').length) {
 	});
 
 }
+
+let compOrderSave = _.debounce(() => {
+
+	let orderData = {};
+	_.forEach(compsList, (clist) => {
+		let clistGroupId = $(clist.el).parent('li').get(0).dataset.id;
+		orderData[clistGroupId] = clist.toArray();
+	});
+
+	$.ajax('/admin/components', {
+		dataType: 'json',
+		method: 'POST',
+		data: {
+			compsOrder: JSON.stringify(orderData)
+		}
+	}).then((res) => {
+		if(res.ok === true) {
+			alerts.pushSuccess('Components re-arranged', 'The new components sort order has been saved.');
+		} else {
+			alerts.pushError('Re-ordering failed.', 'Could not re-order components. Try again later.');
+		}
+	}, () => {
+		alerts.pushError('Connection error', 'An unexpected error when connecting to the server.');
+	});
+
+}, 500);

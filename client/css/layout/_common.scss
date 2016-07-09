@@ -30,6 +30,16 @@ main {
 	z-index: 0;
 }
 
+.server-error {
+	padding: 25px;
+	text-align: center;
+
+	pre {
+		text-align: left;
+	}
+
+}
+
 // ========================================
 // Animations
 // ========================================
