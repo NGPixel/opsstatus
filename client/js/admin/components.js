@@ -33,6 +33,8 @@ if($('#admin-components').length) {
 			}
 		});
 
+		var compsList = [];
+
 		// Save components order + group assignment
 
 		let compOrderSave = _.debounce(() => {
@@ -61,7 +63,7 @@ if($('#admin-components').length) {
 
 		}, 500);
 
-		var compsList = _.map($('#admin-components > .admin-headlist .admin-list'), (grp) => {
+		compsList = _.map($('#admin-components > .admin-headlist .admin-list'), (grp) => {
 			return Sortable.create(grp, {
 				group: 'child',
 				animation: 300,

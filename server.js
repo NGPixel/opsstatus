@@ -123,10 +123,12 @@ app.use(mw.flash);
 // Controllers
 // ----------------------------------------
 
+let routes = ctrl.routes();
+
 app.use('/', ctrl.auth);
 
-app.use('/', ctrl.dashboard);
-app.use('/admin', mw.auth, ctrl.admin);
+app.use('/', routes.dashboard());
+app.use('/admin', mw.auth, routes.admin());
 
 // ----------------------------------------
 // Error handling

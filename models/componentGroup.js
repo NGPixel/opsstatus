@@ -65,7 +65,7 @@ componentGroupSchema.statics.reorder = function(newOrder) {
     _.forEach(groups, (group) => {
       let newIdx = _.indexOf(newOrder, group._id.toString());
       newIdx = (newIdx > 0) ? newIdx : 0;
-      if(group.sortIndex != newIdx) {
+      if(group.sortIndex !== newIdx) {
         group.sortIndex = newIdx;
         queries.push(group.save());
       }
