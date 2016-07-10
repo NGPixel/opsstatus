@@ -1,0 +1,23 @@
+extends ./layout
+
+block admin-header
+	i.fa.fa-copy
+	| Templates / #{title}
+
+block admin-actions
+	a.btn.btn-indigo(href='/admin/templates')
+		span
+			i.fa.fa-arrow-left
+			| Back to list
+
+block admin-content
+	#admin-templates-edit(data-id=tmpl.id)
+		.admin-form
+			section
+				label Name
+				input#tmpl-name(type='text', placeholder='Template Name', value=tmpl.name)
+			section
+				label Content
+				textarea#tmpl-editor= tmpl.content
+			section.form-footer
+				button.btn.btn-green#admin-templates-save Save Template

@@ -37,6 +37,7 @@ module.exports = () => {
 			// ====================================
 
 			router.get('/templates', routes.admin.templates.display);
+			router.get('/templates/:id', routes.admin.templates.displayEdit);
 			router.put('/templates', routes.admin.templates.create);
 			router.post('/templates', routes.admin.templates.edit);
 			router.delete('/templates', routes.admin.templates.delete);

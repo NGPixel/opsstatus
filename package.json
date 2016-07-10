@@ -50,6 +50,7 @@
     "passport-localapikey": "0.0.3",
     "pug": "^2.0.0-beta3",
     "serve-favicon": "^2.3.0",
+    "simplemde": "^1.11.2",
     "slug": "^0.9.1",
     "validator": "^5.4.0",
     "winston": "^2.2.0"

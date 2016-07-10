@@ -31,6 +31,37 @@ module.exports = {
 	},
 
 	/**
+	 * Display Edit Template Page
+	 *
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
+	 */
+	displayEdit(req, res, next) {
+		if(req.params.id === 'create') {
+			res.render('admin/templates-edit', {
+				title: 'Create',
+				tmpl: {
+					id: 'new',
+					name: '',
+					content: ''
+				}
+			});
+		} else {
+			db.Template
+			.findById(req.params.id)
+			.exec()
+			.then((tmpl) => {
+				res.render('admin/templates-edit', {
+					title: 'Edit',
+					tmpl: tmpl.toObject({ transform: db.common.stringifyIds, virtuals: true })
+				});
+			});
+		}
+	},
+
+	/**
 	 * Create a new Template
 	 *
 	 * @param      {Request}   req     The request
@@ -70,6 +101,12 @@ module.exports = {
 		if(req.body.id && _.isString(req.body.name) && _.isString(req.body.content)) {
 
 			db.Template.edit(req.body.id, req.body.name, req.body.content).then(() => {
+				req.flash('alert', {
+		      class: 'success',
+		      title: 'Template saved!',
+		      message:  'Template has been saved successfully!',
+		      iconClass: 'fa-check'
+		    });
 				res.json({
 					ok: true
 				});

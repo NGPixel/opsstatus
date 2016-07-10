@@ -14,6 +14,8 @@ jQuery( document ).ready(function( $ ) {
 	// Sections
 	// ====================================
 
+	//=include admin/templates.js
+	//=include admin/templates-edit.js
 	//=include admin/components.js
 	//=include admin/regions.js
 	//=include admin/users.js

@@ -74,6 +74,53 @@
 	font-size: 14px;
 }
 
+.admin-form {
+	border: 1px solid material-color('grey', '300');
+	border-radius: 2px;
+	background-color: #FFF;
+	padding: 0;
+	color: material-color('grey', '700');
+	font-size: 14px;
+
+	section {
+		border-top: 1px dotted #CCC;
+		padding: 15px 25px;
+
+		&:first-child {
+			border-top: none;
+		}
+
+		label {
+			display: block;
+			color: material-color('grey', '600');
+			padding-bottom: 5px;
+			font-size: 14px;
+			font-weight: 600;
+		}
+
+		input {
+			border: 1px solid #CCC;
+			border-radius: 4px;
+			background-color: #FFF;
+			height: 40px;
+			display: flex;
+			align-items: center;
+			padding: 0 15px;
+			font-family: inherit;
+			font-size: 14px;
+			color: material-color('grey', '700');
+			width: 100%;
+		}
+
+		&.form-footer {
+			display: flex;
+			justify-content: flex-end;
+		}
+
+	}
+
+}
+
 .admin-prelist {
 	padding: 15px;
 	border: 1px solid material-color('teal', '100');

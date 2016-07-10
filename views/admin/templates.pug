@@ -5,7 +5,7 @@ block admin-header
 	| Templates
 
 block admin-actions
-	button.btn.btn-teal#admin-templates-new
+	a.btn.btn-teal(href='/admin/templates/create')
 		span
 			i.fa.fa-plus
 			| Create Template
@@ -15,12 +15,12 @@ block admin-content
 		if tmpls.length > 0
 			ul.admin-list
 				each tmpl in tmpls
-					li(data-id=region._id, data-name=region.name)
+					li(data-id=tmpl.id, data-name=tmpl.name)
 						span
-							i.fa.fa-sort.handle
-							= region.name
+							i.fa.fa-copy
+							= tmpl.name
 						span
-							i.fa.fa-edit.edit-action
+							a(href='/admin/templates/' + tmpl.id): i.fa.fa-edit.edit-action
 							i.fa.fa-trash-o.delete-action
 		else
 			.admin-box

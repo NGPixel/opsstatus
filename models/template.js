@@ -52,7 +52,7 @@ templateSchema.statics.new = function(templateName, templateContent) {
  * @return     {Promise}  Promise of the update operation
  */
 templateSchema.statics.edit = function(templateId, templateName, templateContent) {
-  return this.findByIdAndUpdate(templateId, { name: regionName, content: templateContent }, { runValidators: true });
+  return this.findByIdAndUpdate(templateId, { name: templateName, content: templateContent }, { runValidators: true });
 };
 
 /**
@@ -62,7 +62,7 @@ templateSchema.statics.edit = function(templateId, templateName, templateContent
  * @return     {Promise}  Promise of the delete operation
  */
 templateSchema.statics.erase = function(templateId) {
-  return this.findByIdAndRemove(regionId);
+  return this.findByIdAndRemove(templateId);
 };
 
 module.exports = modb.model('Template', templateSchema);
