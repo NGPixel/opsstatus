@@ -1,8 +1,17 @@
 
+// ====================================
+// COMPONENT GROUPS
+// ====================================
+
 module.exports = {
 
 	/**
-	 * Component Groups - PUT
+	 * Display Component Groups
+	 * 
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
 	 */
 	create(req, res, next) {
 		db.ComponentGroup.new(req.body.name, req.body.shortname).then(() => {
@@ -24,7 +33,12 @@ module.exports = {
 	},
 
 	/**
-	 * Component Groups - POST
+	 * Edit Component Groups
+	 * 
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
 	 */
 	edit(req, res, next) {
 
@@ -45,7 +59,7 @@ module.exports = {
 					});
 				});
 			} else {
-				return res.json({
+				res.json({
 					ok: false,
 					error: 'Invalid group array.'
 				});
@@ -67,7 +81,7 @@ module.exports = {
 					});
 				});
 			} else {
-				return res.json({
+				res.json({
 					ok: false,
 					error: 'Invalid group name / shortname.'
 				});
@@ -77,7 +91,7 @@ module.exports = {
 
 		} else {
 
-			return res.json({
+			res.json({
 				ok: false,
 				error: 'Invalid command.'
 			});
@@ -87,7 +101,12 @@ module.exports = {
 	},
 
 	/**
-	 * Component Groups - DELETE
+	 * Delete a Component Group
+	 * 
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
 	 */
 	delete(req, res, next) {
 		db.ComponentGroup.erase(req.body.groupId).then(() => {
@@ -108,4 +127,4 @@ module.exports = {
 		});
 	}
 
-}
+};

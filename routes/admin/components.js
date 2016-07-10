@@ -8,10 +8,15 @@ var _ = require('lodash');
 module.exports = {
 
 	/**
-	 * Components - GET
+	 * Display Components
+	 * 
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
 	 */
 	display(req, res, next) {
-		return db.ComponentGroup
+		db.ComponentGroup
 			.find()
 			.sort({ sortIndex: 1 })
 			.exec()
@@ -35,7 +40,7 @@ module.exports = {
 							comps[grpId] = c.comps;
 						});
 
-						res.render('admin/components', {
+						return res.render('admin/components', {
 							groups,
 							comps,
 							util: require('util')
@@ -47,7 +52,12 @@ module.exports = {
 	},
 
 	/**
-	 * Components - PUT
+	 * Create a Component
+	 * 
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
 	 */
 	create(req, res, next) {
 		db.Component.new(req.body.name, req.body.description).then(() => {
@@ -69,7 +79,12 @@ module.exports = {
 	},
 
 	/**
-	 * Components - POST
+	 * Edit Components
+	 * 
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
 	 */
 	edit(req, res, next) {
 
@@ -90,7 +105,7 @@ module.exports = {
 					});
 				});
 			} else {
-				return res.json({
+				res.json({
 					ok: false,
 					error: 'Invalid components array.'
 				});
@@ -112,7 +127,7 @@ module.exports = {
 					});
 				});
 			} else {
-				return res.json({
+				res.json({
 					ok: false,
 					error: 'Invalid component name / description.'
 				});
@@ -122,7 +137,7 @@ module.exports = {
 
 		} else {
 
-			return res.json({
+			res.json({
 				ok: false,
 				error: 'Invalid command.'
 			});
@@ -132,7 +147,12 @@ module.exports = {
 	},
 
 	/**
-	 * Component - DELETE
+	 * Delete a Component
+	 * 
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
 	 */
 	delete(req, res, next) {
 		db.Component.erase(req.body.compId).then(() => {
@@ -153,4 +173,4 @@ module.exports = {
 		});
 	}
 
-}
+};

@@ -1,8 +1,12 @@
 
+// ====================================
+// API
+// ====================================
+
 module.exports = {
 
 	/**
-	 * Display Users
+	 * Display API keys
 	 *
 	 * @param      {Request}   req     The request
 	 * @param      {Response}  res     The Response
@@ -15,4 +19,4 @@ module.exports = {
 		});
 	},
 
-}
+};

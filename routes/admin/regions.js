@@ -1,14 +1,20 @@
-	// ====================================
-	// REGIONS
-	// ====================================
+
+// ====================================
+// REGIONS
+// ====================================
 
 module.exports = {
 
 	/**
-	 * Regions - GET
+	 * Display Regions
+	 * 
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
 	 */
 	display(req, res, next) {
-		return db.Region
+		db.Region
 			.find()
 			.sort({ sortIndex: 1 })
 			.exec()
@@ -21,7 +27,12 @@ module.exports = {
 	},
 
 	/**
-	 * Regions - PUT
+	 * Create a Region
+	 * 
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
 	 */
 	create(req, res, next) {
 		db.Region.new(req.body.newRegionName).then(() => {
@@ -43,7 +54,12 @@ module.exports = {
 	},
 
 	/**
-	 * Regions - POST
+	 * Edit Regions
+	 * 
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
 	 */
 	edit(req, res, next) {
 
@@ -106,7 +122,12 @@ module.exports = {
 	},
 
 	/**
-	 * Regions - DELETE
+	 * Delete a Region
+	 * 
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
 	 */
 	delete(req, res, next) {
 		db.Region.erase(req.body.regionId).then(() => {
@@ -127,4 +148,4 @@ module.exports = {
 		});
 	}
 
-}
+};

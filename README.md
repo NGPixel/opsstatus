@@ -18,9 +18,9 @@
 - [x] Config
 - [x] Authentication
 - [x] Administration
-	- [x] Dashboard
+	- [ ] Dashboard
 	- [ ] Incidents
-	- [ ] Templates
+	- [x] Templates
 	- [x] Components
 	- [x] Regions
 	- [x] Users

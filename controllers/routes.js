@@ -33,6 +33,15 @@ module.exports = () => {
 			router.get('/', routes.admin.dashboard.display);
 
 			// ====================================
+			// TEMPLATES
+			// ====================================
+
+			router.get('/templates', routes.admin.templates.display);
+			router.put('/templates', routes.admin.templates.create);
+			router.post('/templates', routes.admin.templates.edit);
+			router.delete('/templates', routes.admin.templates.delete);
+
+			// ====================================
 			// COMPONENTS
 			// ====================================
 
@@ -79,4 +88,4 @@ module.exports = () => {
 
 	};
 
-}
+};

@@ -1,26 +1,27 @@
 extends ./layout
 
 block admin-header
-	i.fa.fa-users
-	| Users
+	i.fa.fa-copy
+	| Templates
 
 block admin-actions
-	button.btn.btn-teal#admin-users-new
+	button.btn.btn-teal#admin-templates-new
 		span
 			i.fa.fa-plus
-			| Create User
+			| Create Template
 
 block admin-content
-	#admin-users
-		ul.admin-list
-			each usr in users
-				li(data-id=usr.id, data-email=usr.email, data-firstname=usr.firstName, data-lastname=usr.lastName)
-					span
-						i.fa.fa-user
-						p
-							strong= usr.fullName
-							span= usr.email
-					span
-						i.fa.fa-edit.edit-action
-						if !_.eq(usr._id.toString(), user._id.toString())
+	#admin-templates
+		if tmpls.length > 0
+			ul.admin-list
+				each tmpl in tmpls
+					li(data-id=region._id, data-name=region.name)
+						span
+							i.fa.fa-sort.handle
+							= region.name
+						span
+							i.fa.fa-edit.edit-action
 							i.fa.fa-trash-o.delete-action
+		else
+			.admin-box
+				| No template has been created yet.
