@@ -36,6 +36,7 @@ jQuery( document ).ready(function( $ ) {
 	// Sections
 	// ====================================
 
+	//=include admin/incidents-create.js
 	//=include admin/templates.js
 	//=include admin/templates-edit.js
 	//=include admin/components.js

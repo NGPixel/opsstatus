@@ -24,6 +24,10 @@ header {
 			height: 30px;
 		}
 
+		> div {
+			display: flex;
+		}
+
 		button {
 			display: inline-flex;
 			align-items: center;
@@ -98,6 +102,26 @@ header {
 
 		}
 
+	}
+
+}
+
+#notifload {
+	width: 42px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	opacity: 0;
+	transition: opacity .5s ease;
+	margin-right: 10px;
+
+	&::before {
+		content: " ";
+		@include spinner(material-color('light-blue', '100'),0.5s,24px);
+	}
+
+	&.active {
+		opacity: 1;
 	}
 
 }

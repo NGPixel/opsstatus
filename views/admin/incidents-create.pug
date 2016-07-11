@@ -9,34 +9,49 @@ block admin-actions
 		span
 			i.fa.fa-arrow-left
 			| Back to list
-
+	button.btn.btn-indigo#btn-load-from-template
+		span
+			i.fa.fa-file-o
+			| Load Template
+			
 block admin-content
-	#admin-templates-edit
-		.admin-form
-			section
-				label Summary
-				input#tmpl-summary(type='text', placeholder='Incident Summary')
-			section
-				label Schedule
-				input#schedule_unplanned(name='schedule', type='radio', checked)
-				label(for='schedule_unplanned') Unplanned
-				input#schedule_planned(name='schedule', type='radio')
-				label(for='schedule_planned') Scheduled Maintenance
-			section
-				label Component
-				+dropdown('create_subcategory', 'subcategory', '')(placeholder='Choose...')
-					each comp in comps
-						+dropdownitem(comp.name, comp.id, 'tasks', 'grey', comp.group.name)
-			section
-				label Region(s)
-				each region in regions
-					input(id='region_' + region.id, type='checkbox')
-					label(for='region_' + region.id)= region.name
-			section
-				label Content
-				textarea#tmpl-editor
-			section.form-footer
-				button.btn.btn-green#admin-templates-save
-					span
-						i.fa.fa-check
-						| Save Incident
+	if comps.length > 0 && regions.length > 0
+		#admin-incidents-create
+			.admin-form
+				section.hidden#sct-load-from-template
+					label Load from Template...
+					+dropdown('incident-template', 'template', '')(placeholder='Choose...')
+						each tmpl in templates
+							+dropdownitem(tmpl.name, tmpl.id, 'file-o', 'grey')
+				section
+					label Summary
+					input#incident-summary(type='text', placeholder='Incident Summary')
+				section
+					label Schedule
+					input#schedule_unplanned(name='schedule', type='radio', checked)
+					label(for='schedule_unplanned') Unplanned
+					input#schedule_planned(name='schedule', type='radio')
+					label(for='schedule_planned') Scheduled Maintenance
+				section
+					label Component
+					+dropdown('incident-component', 'subcategory', '')(placeholder='Choose...')
+						each comp in comps
+							+dropdownitem(comp.name, comp.id, 'tasks', 'grey', comp.group.name)
+				section
+					label Region(s)
+					each region in regions
+						input(id='region-' + region.id, type='checkbox')
+						label(for='region-' + region.id)= region.name
+				section
+					label Content
+					textarea#incident-editor
+				section.form-footer
+					button.btn.btn-green#admin-incidents-save
+						span
+							i.fa.fa-check
+							| Save Incident
+	else
+		.admin-box
+			| You must create a least one component
+			strong  and 
+			| one region to create an incident!

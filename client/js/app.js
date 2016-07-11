@@ -10,6 +10,15 @@ jQuery( document ).ready(function( $ ) {
 	// Notifications
 	// ====================================
 
+	$(window).bind('beforeunload', () => {
+		$('#notifload').addClass('active');
+	});
+	$(document).ajaxSend(() => {
+		$('#notifload').addClass('active');
+	}).ajaxComplete(() => {
+		$('#notifload').removeClass('active');
+	});
+
 	alerts = new Alerts();
 	if(alertsData) {
 		_.forEach(alertsData, (alertRow) => {

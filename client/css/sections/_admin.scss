@@ -91,6 +91,15 @@
 			border-top: none;
 		}
 
+		&.hidden {
+			display: none;
+
+			& + section {
+				border-top: none;
+			}
+
+		}
+
 		label:first-child {
 			display: block;
 			color: material-color('grey', '600');
