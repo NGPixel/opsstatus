@@ -23,9 +23,7 @@ module.exports = {
 		.exec()
 		.then((tmpls) => {
 			res.render('admin/templates', {
-				tmpls: _.map(tmpls, (t) => {
-					return t.toObject({ transform: db.common.stringifyIds, virtuals: true });
-				})
+				tmpls
 			});
 		});
 	},
@@ -55,7 +53,7 @@ module.exports = {
 			.then((tmpl) => {
 				res.render('admin/templates-edit', {
 					title: 'Edit',
-					tmpl: tmpl.toObject({ transform: db.common.stringifyIds, virtuals: true })
+					tmpl
 				});
 			});
 		}

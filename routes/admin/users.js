@@ -22,9 +22,7 @@ module.exports = {
 		.exec()
 		.then((users) => {
 			res.render('admin/users', {
-				users: _.map(users, (u) => {
-					return u.toObject({ transform: db.common.stringifyIds, virtuals: true });
-				})
+				users
 			});
 		});
 	},

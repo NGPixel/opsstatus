@@ -1,8 +1,8 @@
 extends ./layout
 
 block admin-header
-	i.fa.fa-copy
-	| Templates / #{title}
+	i.fa.fa-bullhorn
+	| Incidents / #{title}
 
 block admin-actions
 	a.btn.btn-indigo(href='/admin/templates')
@@ -14,13 +14,13 @@ block admin-content
 	#admin-templates-edit(data-id=tmpl.id)
 		.admin-form
 			section
-				label Name
-				input#tmpl-name(type='text', placeholder='Template Name', value=tmpl.name)
+				label Summary
+				input#tmpl-summary(type='text', placeholder='Incident Summary', value=tmpl.name)
 			section
-				label Content
+				label Initial Report Content
 				textarea#tmpl-editor= tmpl.content
 			section.form-footer
 				button.btn.btn-green#admin-templates-save
 					span
 						i.fa.fa-check
-						| Save Template
+						| Save Incident

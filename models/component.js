@@ -90,7 +90,7 @@ componentSchema.statics.reorder = function(newOrder) {
 
     _.forEach(comps, (comp) => {
 
-      let curCompId = comp._id.toString();
+      let curCompId = comp.id;
       let curGroupId = (_.isNull(comp.group)) ? null : comp.group.toString();
 
       // Is component in a group?

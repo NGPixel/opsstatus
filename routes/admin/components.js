@@ -22,11 +22,6 @@ module.exports = {
 			.exec()
 			.then((groups) => {
 
-				groups = _.map(groups, (g) => {
-					g.id = g._id.toString();
-					return g;
-				});
-
 				return db.Component
 					.aggregate({ $match: { deleted: false } })
 					.sort({ sortIndex: 1, name: 1 })
@@ -42,8 +37,7 @@ module.exports = {
 
 						return res.render('admin/components', {
 							groups,
-							comps,
-							util: require('util')
+							comps
 						});
 
 					});

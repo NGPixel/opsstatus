@@ -22,5 +22,5 @@ block admin-content
 							span= usr.email
 					span
 						i.fa.fa-edit.edit-action
-						if !_.eq(usr._id.toString(), user._id.toString())
+						if !_.eq(usr.id, user.id)
 							i.fa.fa-trash-o.delete-action

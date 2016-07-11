@@ -1,0 +1,42 @@
+extends ./layout
+
+block admin-header
+	i.fa.fa-bullhorn
+	| Incidents / Create
+
+block admin-actions
+	a.btn.btn-indigo(href='/admin/incidents')
+		span
+			i.fa.fa-arrow-left
+			| Back to list
+
+block admin-content
+	#admin-templates-edit
+		.admin-form
+			section
+				label Summary
+				input#tmpl-summary(type='text', placeholder='Incident Summary')
+			section
+				label Schedule
+				input#schedule_unplanned(name='schedule', type='radio', checked)
+				label(for='schedule_unplanned') Unplanned
+				input#schedule_planned(name='schedule', type='radio')
+				label(for='schedule_planned') Scheduled Maintenance
+			section
+				label Component
+				+dropdown('create_subcategory', 'subcategory', '')(placeholder='Choose...')
+					each comp in comps
+						+dropdownitem(comp.name, comp.id, 'tasks', 'grey', comp.group.name)
+			section
+				label Region(s)
+				each region in regions
+					input(id='region_' + region.id, type='checkbox')
+					label(for='region_' + region.id)= region.name
+			section
+				label Content
+				textarea#tmpl-editor
+			section.form-footer
+				button.btn.btn-green#admin-templates-save
+					span
+						i.fa.fa-check
+						| Save Incident

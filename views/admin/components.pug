@@ -23,7 +23,7 @@ block admin-content
 					span Components below must be placed inside a Component Group. They will not be displayed until they are part of a group.
 					ul.admin-list
 						each comp in comps.uncategorized
-							li(data-id=comp._id.toString(), data-name=comp.name, data-description=comp.description)
+							li(data-id=comp.id, data-name=comp.name, data-description=comp.description)
 								span
 									i.fa.fa-sort.handle
 									p

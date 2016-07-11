@@ -10,7 +10,9 @@ if($('#admin-templates-edit').length) {
 	let mde = new SimpleMDE({
 		element: $("#tmpl-editor").get(0),
 		autoDownloadFontAwesome: false,
-		placeholder: 'Enter Markdown formatted content here...'
+		placeholder: 'Enter Markdown formatted content here...',
+		hideIcons: ['heading', 'quote'],
+		showIcons: ['strikethrough', 'heading-1', 'heading-2', 'heading-3', 'code', 'table', 'horizontal-rule']
 	});
 
 	// Save template
@@ -30,7 +32,7 @@ if($('#admin-templates-edit').length) {
 				name: $('#tmpl-name').val(),
 				content: mde.value()
 			}
-		}
+		};
 
 		$.ajax('/admin/templates', {
 			dataType: 'json',

@@ -1,0 +1,21 @@
+extends ./layout
+
+block admin-header
+	i.fa.fa-bullhorn
+	| Incidents
+
+block admin-content
+	#admin-incidents
+		if incidents.length > 0
+			ul.admin-list
+				each incident in incidents
+					li(data-id=incident.id, data-name=incident.name)
+						span
+							i.fa.fa-copy
+							= incident.name
+						span
+							a(href='/admin/incidents/' + incident.id): i.fa.fa-edit.edit-action
+							i.fa.fa-trash-o.delete-action
+		else
+			.admin-box
+				| No incident has been filed yet.

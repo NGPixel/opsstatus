@@ -33,6 +33,17 @@ module.exports = () => {
 			router.get('/', routes.admin.dashboard.display);
 
 			// ====================================
+			// INCIDENTS
+			// ====================================
+
+			router.get('/incidents', routes.admin.incidents.display);
+			router.get('/incidents/create', routes.admin.incidents.displayCreate);
+			router.get('/incidents/:id', routes.admin.incidents.displayEdit);
+			router.put('/incidents', routes.admin.incidents.create);
+			router.post('/incidents', routes.admin.incidents.edit);
+			router.delete('/incidents', routes.admin.incidents.delete);
+
+			// ====================================
 			// TEMPLATES
 			// ====================================
 
