@@ -46,7 +46,7 @@ module.exports = {
 			comps: db.Component.find()
 				.where('group').ne(null)
 				.populate('group')
-				.exec().then((comps) => { return _.sortBy(comps, ['group.sortIndex', 'sortIndex'])	}),
+				.exec().then((comps) => { return _.sortBy(comps, ['group.sortIndex', 'sortIndex']);	}),
 
 			regions: db.Region.find()
 				.sort('sortIndex')
@@ -54,6 +54,7 @@ module.exports = {
 
 			templates: db.Template.find()
 				.select('name')
+				.sort('name')
 				.exec()
 
 		}).then((data) => {

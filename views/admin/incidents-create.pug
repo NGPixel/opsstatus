@@ -25,22 +25,38 @@ block admin-content
 							+dropdownitem(tmpl.name, tmpl.id, 'file-o', 'grey')
 				section
 					label Summary
-					input#incident-summary(type='text', placeholder='Incident Summary')
+					input#incident-summary(type='text', placeholder='Incident Summary', v-model='summary')
 				section
-					label Schedule
-					input#schedule_unplanned(name='schedule', type='radio', checked)
-					label(for='schedule_unplanned') Unplanned
-					input#schedule_planned(name='schedule', type='radio')
+					label Type
+					input#schedule_unplanned(name='schedule', type='radio', v-model='type', value='unplanned')
+					label(for='schedule_unplanned') Unplanned Incident
+					input#schedule_planned(name='schedule', type='radio', v-model='type', value='scheduled')
 					label(for='schedule_planned') Scheduled Maintenance
+				section(v-show='type=="unplanned"')
+					label Occured on
+					input.datepicker#schedule_actual_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_actual_start')
+					|  at 
+					input.timepicker#schedule_actual_start_time(type='text', placeholder='HH:MM', v-model='schedule_actual_start_time')
+					|  UTC
+				section(v-show='type=="scheduled"')
+					label Scheduled to start on
+					input.datepicker#schedule_planned_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_start')
+					|  at 
+					input.timepicker#schedule_planned_start_time(type='text', placeholder='HH:MM', v-model='schedule_planned_start_time')
+					|  UTC and end on 
+					input.datepicker#schedule_planned_end(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_end')
+					|  at 
+					input.timepicker#schedule_planned_end_time(type='text', placeholder='HH:MM', v-model='schedule_planned_end_time')
+					|  UTC
 				section
 					label Component
-					+dropdown('incident-component', 'subcategory', '')(placeholder='Choose...')
+					+dropdown('incident-component', 'component', '')(placeholder='Choose...')
 						each comp in comps
 							+dropdownitem(comp.name, comp.id, 'tasks', 'grey', comp.group.name)
 				section
 					label Region(s)
 					each region in regions
-						input(id='region-' + region.id, type='checkbox')
+						input(id='region-' + region.id, type='checkbox', v-model='regions', value=region.id)
 						label(for='region-' + region.id)= region.name
 				section
 					label Content

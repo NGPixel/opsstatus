@@ -25,9 +25,11 @@ var paths = {
       './node_modules/moment/min/moment-with-locales.min.js',
       './node_modules/vue/dist/vue.min.js',
       './node_modules/pikaday/pikaday.js',
+      './node_modules/pikaday/plugins/pikaday.jquery.js',
       './node_modules/sortablejs/Sortable.min.js',
       './node_modules/vex-js/js/vex.combined.min.js',
-      './node_modules/simplemde/dist/simplemde.min.js'
+      './node_modules/simplemde/dist/simplemde.min.js',
+      './node_modules/timepicker/jquery.timepicker.min.js'
 	],
 	scriptapps: [
 		'./client/js/components/*.js',
@@ -44,7 +46,9 @@ var paths = {
 		'./node_modules/gridlex/dist/gridlex.min.css',
 		'./node_modules/vex-js/css/vex.css',
 		'./node_modules/vex-js/css/vex-theme-os.css',
-		'./node_modules/simplemde/dist/simplemde.min.css'
+		'./node_modules/simplemde/dist/simplemde.min.css',
+		'./node_modules/pikaday/css/pikaday.css',
+		'./node_modules/timepicker/jquery.timepicker.min.css'
 	],
 	cssapps: [
 		'./client/css/app.scss'

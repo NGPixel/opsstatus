@@ -5,6 +5,31 @@
 
 if($('#admin-incidents-create').length) {
 
+	let vueIncident = new Vue({
+		el: '#admin-incidents-create',
+		data: {
+			summary: '',
+			type: 'unplanned',
+			schedule_actual_start: moment().utc().format('YYYY/MM/DD'),
+			schedule_actual_start_time: moment().utc().format('HH:mm'),
+			component: '',
+			regions: [],
+			content: ''
+		}
+	});
+
+	// Set datetime inputs
+
+	$('input.datepicker').pikaday({
+		format: 'YYYY/MM/DD'
+	});
+
+	$('input.timepicker').timepicker({
+		show2400: true,
+		step: 15,
+		timeFormat: 'H:i'
+	});
+
 	// Load from template
 
 	$('#btn-load-from-template').on('click', (ev) => {

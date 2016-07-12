@@ -127,6 +127,15 @@
 				border-color: material-color('blue-grey', '200');
 			}
 
+			&.datepicker {
+				width: 120px;
+				display: inline-block;
+			}
+			&.timepicker {
+				width: 80px;
+				display: inline-block;
+			}
+
 		}
 
 		&.form-footer {
