@@ -3,7 +3,7 @@
 
 mixin dropdown(name, modelBinding, defaultval)
 	.dropdown
-		input(name=name, v-model=modelBinding, type='hidden', value=defaultval)
+		input(name=name, v-model=modelBinding, type='hidden', value=defaultval)&attributes(attributes.extra)
 		div
 			span= attributes.placeholder
 			i.fa.fa-chevron-down

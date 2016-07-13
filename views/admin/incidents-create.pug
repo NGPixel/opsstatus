@@ -28,7 +28,7 @@ block admin-content
 					input#incident-summary(type='text', placeholder='Incident Summary', v-model='summary')
 				section
 					label Type
-					input#schedule_unplanned(name='schedule', type='radio', v-model='type', value='unplanned')
+					input#schedule_unplanned(name='schedule', type='radio', v-model='type', value='unplanned', checked)
 					label(for='schedule_unplanned') Unplanned Incident
 					input#schedule_planned(name='schedule', type='radio', v-model='type', value='scheduled')
 					label(for='schedule_planned') Scheduled Maintenance

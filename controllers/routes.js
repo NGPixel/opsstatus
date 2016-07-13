@@ -80,6 +80,15 @@ module.exports = () => {
 			router.delete('/regions', routes.admin.regions.delete);
 
 			// ====================================
+			// Monitors
+			// ====================================
+
+			router.get('/monitors', routes.admin.monitors.display);
+			router.put('/monitors', routes.admin.monitors.create);
+			router.post('/monitors', routes.admin.monitors.edit);
+			router.delete('/monitors', routes.admin.monitors.delete);
+
+			// ====================================
 			// Users
 			// ====================================
 

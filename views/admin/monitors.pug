@@ -1,0 +1,16 @@
+extends ./layout
+
+block admin-header
+	i.fa.fa-heartbeat
+	| Monitors
+
+block admin-actions
+	a.btn.btn-teal(href='/admin/monitors/create')
+		span
+			i.fa.fa-plus
+			| Setup New Monitor
+
+block admin-content
+	#admin-monitors
+		.admin-box
+			| No monitor has been configured yet.

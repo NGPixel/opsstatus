@@ -51,10 +51,22 @@ module.exports = {
 			.findById(req.params.id)
 			.exec()
 			.then((tmpl) => {
-				res.render('admin/templates-edit', {
-					title: 'Edit',
-					tmpl
-				});
+
+				if(!tmpl) { return res.status(404).end(); }
+
+				if(req.get('X-Raw-Only')) {
+					res.json({
+						ok: true,
+						name: tmpl.name,
+						content: tmpl.content
+					});
+				} else {
+					res.render('admin/templates-edit', {
+						title: 'Edit',
+						tmpl
+					});
+				}
+
 			});
 		}
 	},

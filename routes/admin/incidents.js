@@ -91,22 +91,22 @@ module.exports = {
 	 * @return     {void}  void
 	 */
 	create(req, res, next) {
-		db.Template.new(req.body.name, req.body.content).then(() => {
+		/*db.Template.new(req.body.name, req.body.content).then(() => {
 			req.flash('alert', {
 	      class: 'success',
 	      title: 'Template created!',
 	      message:  'Template has been created successfully!',
 	      iconClass: 'fa-check'
-	    });
+	    });*/
 			return res.json({
 				ok: true
 			});
-		}).catch((ex) => {
+		/*}).catch((ex) => {
 			return res.json({
 				ok: false,
 				error: ex
 			});
-		});
+		});*/
 	},
 
 	/**
