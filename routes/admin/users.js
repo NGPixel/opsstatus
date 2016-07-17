@@ -27,6 +27,31 @@ module.exports = {
 		});
 	},
 
+		/**
+	 * Display Edit User Page
+	 *
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
+	 */
+	displayEdit(req, res, next) {
+			db.User
+			.findById(req.params.id)
+			.select('firstName lastName email rights')
+			.exec()
+			.then((usr) => {
+
+				if(!usr) { return res.status(404).end(); }
+
+				res.render('admin/users-edit', {
+					title: 'Edit',
+					usr
+				});
+
+			});
+	},
+
 	/**
 	 * Create a new User
 	 *
@@ -36,7 +61,7 @@ module.exports = {
 	 * @return     {void}  void
 	 */
 	create(req, res, next) {
-		db.User.new(req.body).then(() => {
+		db.User.new(req.body).then((nUsr) => {
 			req.flash('alert', {
 	      class: 'success',
 	      title: 'User created!',
@@ -44,7 +69,8 @@ module.exports = {
 	      iconClass: 'fa-check'
 	    });
 			return res.json({
-				ok: true
+				ok: true,
+				newId: nUsr.id
 			});
 		}).catch((ex) => {
 			return res.json({
@@ -69,7 +95,13 @@ module.exports = {
 			let data = JSON.parse(req.body.data);
 
 			db.User.edit(req.body.id, data).then(() => {
-				res.json({
+				req.flash('alert', {
+		      class: 'success',
+		      title: 'Changes saved',
+		      message:  'Changes have been saved successfully!',
+		      iconClass: 'fa-check'
+		    });
+				return res.json({
 					ok: true
 				});
 			}).catch((ex) => {
@@ -103,7 +135,7 @@ module.exports = {
 	      message:  req.body.email + ' has been deleted successfully!',
 	      iconClass: 'fa-trash-o'
 	    });
-			res.json({
+			return res.json({
 				ok: true
 			});
 		}).catch((ex) => {

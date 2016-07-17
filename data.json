@@ -1,1 +1,19 @@
-{}
+{
+	"rights": {
+		"admin": "Full administrative access (includes all other rights)",
+		"incidentCreate": "Create new incidents",
+		"incidentEdit": "Edit existing incidents",
+		"incidentDelete": "Delete incidents",
+		"templates": "Manage templates",
+		"components": "Manage components",
+		"regions": "Manage regions",
+		"metrics": "Manage metrics",
+		"monitors": "Manage monitors",
+		"userCreate": "Create new users",
+		"userManage": "Manage existing users",
+		"subscribers": "Manage subscribers",
+		"apiCreate": "Create new API keys",
+		"apiManage": "Manage existing API keys",
+		"settings": "Change system settings"
+	}
+}

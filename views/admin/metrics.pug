@@ -1,0 +1,15 @@
+extends ./layout
+
+block admin-header
+	i.fa.fa-bar-chart
+	| Metrics
+
+block admin-actions
+	button.btn.btn-teal
+		span
+			i.fa.fa-plus
+			| Create New Metric
+
+block admin-content
+	.admin-box
+		| No metric has been created yet.

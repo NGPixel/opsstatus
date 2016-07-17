@@ -100,6 +100,16 @@
 
 		}
 
+		&.grid {
+			margin: 0 -25px;
+			padding: 15px 35px;
+
+			.col {
+				padding: 0 15px;
+			}
+
+		}
+
 		label:first-child {
 			display: block;
 			color: material-color('grey', '600');

@@ -21,6 +21,6 @@ block admin-content
 							strong= usr.fullName
 							span= usr.email
 					span
-						i.fa.fa-edit.edit-action
+						a(href='/admin/users/' + usr.id): i.fa.fa-edit
 						if !_.eq(usr.id, user.id)
 							i.fa.fa-trash-o.delete-action

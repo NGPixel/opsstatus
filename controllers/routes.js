@@ -80,6 +80,12 @@ module.exports = () => {
 			router.delete('/regions', routes.admin.regions.delete);
 
 			// ====================================
+			// Metrics
+			// ====================================
+
+			router.get('/metrics', routes.admin.metrics.display);
+
+			// ====================================
 			// Monitors
 			// ====================================
 
@@ -93,15 +99,28 @@ module.exports = () => {
 			// ====================================
 
 			router.get('/users', routes.admin.users.display);
+			router.get('/users/:id', routes.admin.users.displayEdit);
 			router.put('/users', routes.admin.users.create);
 			router.post('/users', routes.admin.users.edit);
 			router.delete('/users', routes.admin.users.delete);
+
+			// ====================================
+			// Subscribers
+			// ====================================
+
+			router.get('/subscribers', routes.admin.subscribers.display);
 
 			// ====================================
 			// API
 			// ====================================
 
 			router.get('/api', routes.admin.api.display);
+
+			// ====================================
+			// Settings
+			// ====================================
+
+			router.get('/settings', routes.admin.settings.display);
 
 			return router;
 

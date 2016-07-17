@@ -41,7 +41,11 @@ var userSchema = modb.Schema({
     type: String,
     required: true,
     default: 'en'
-  }
+  },
+  rights: [{
+    type: String,
+    required: true
+  }]
 
 },
 {
@@ -92,7 +96,8 @@ userSchema.statics.new = function(nUserData) {
       email: nUserData.email,
       firstName: nUserData.firstName,
       lastName: nUserData.lastName,
-      password: passhash
+      password: passhash,
+      rights: ['admin']
     });
   });
   
@@ -114,7 +119,8 @@ userSchema.statics.edit = function(userId, data) {
   let fdata = {
     email: data.email,
     firstName: data.firstName,
-    lastName: data.lastName
+    lastName: data.lastName,
+    rights: data.rights
   };
   let waitTask = null;
 

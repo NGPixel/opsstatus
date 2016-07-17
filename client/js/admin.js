@@ -42,5 +42,6 @@ jQuery( document ).ready(function( $ ) {
 	//=include admin/components.js
 	//=include admin/regions.js
 	//=include admin/users.js
+	//=include admin/users-edit.js
 
 });

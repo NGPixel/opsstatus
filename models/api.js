@@ -20,10 +20,9 @@ var apiSchema = modb.Schema({
     type: String,
     required: true
   },
-  roles: [{
+  rights: [{
     type: String,
-    required: true,
-    enum: ['read','create','modify','delete']
+    required: true
   }]
 
 },

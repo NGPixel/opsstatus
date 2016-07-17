@@ -1,0 +1,45 @@
+extends ./layout
+
+block admin-header
+	i.fa.fa-users
+	| Users / #{usr.fullName}
+
+block admin-actions
+	a.btn.btn-indigo(href='/admin/users')
+		span
+			i.fa.fa-arrow-left
+			| Back to list
+
+block admin-content
+	#admin-users-edit
+		.admin-form
+				section.grid
+					.col
+						label First Name
+						input#user-firstName(type='text', placeholder='e.g. John', v-model='firstName')
+					.col
+						label Last Name
+						input(type='text', placeholder='e.g. Smith', v-model='lastName')
+				section
+					label Email
+					input(type='text', placeholder='e.g. john@company.com', v-model='email')
+				section
+					label Password
+					input(type='text', v-model='password', value='********')
+				if user.id !== usr.id
+					section
+						label Rights
+						each rText,rKey in appdata.rights
+							div
+								input(id='right-' + rKey, type='checkbox', v-model='rights', value=rKey)
+								label(for='right-' + rKey)= rText
+				section.form-footer
+					button.btn.btn-green#admin-users-save
+						span
+							i.fa.fa-check
+							| Save Changes
+
+	script(type='text/javascript')
+		| var usrData = 
+		!= JSON.stringify(usr)
+		| ;
