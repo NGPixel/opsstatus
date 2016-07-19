@@ -15,5 +15,12 @@
 		"apiCreate": "Create new API keys",
 		"apiManage": "Manage existing API keys",
 		"settings": "Change system settings"
+	},
+	"states": {
+		"ok": "Operational",
+		"scheduled": "Scheduled Maintenance",
+		"perfissues": "Performance Issues",
+		"partialdown": "Partial Outage",
+		"majordown": "Major Outage"
 	}
 }

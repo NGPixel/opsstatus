@@ -33,7 +33,7 @@ block admin-content
 					input#schedule_planned(name='schedule', type='radio', v-model='type', value='scheduled')
 					label(for='schedule_planned') Scheduled Maintenance
 				section(v-show='type=="unplanned"')
-					label Occured on
+					label Started on
 					input.datepicker#schedule_actual_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_actual_start')
 					|  at 
 					input.timepicker#schedule_actual_start_time(type='text', placeholder='HH:MM', v-model='schedule_actual_start_time')
@@ -53,6 +53,13 @@ block admin-content
 					+dropdown('incident-component', 'component', '')(placeholder='Choose...')
 						each comp in comps
 							+dropdownitem(comp.name, comp.id, 'tasks', 'grey', comp.group.name)
+				section(v-show='type!="scheduled"')
+					label Component State
+					+dropdown('incident-component', 'componentState', 'partialdown')(placeholder='Partial Outage')
+						+dropdownitem('Leave unchanged', 'unchanged', 'square', 'grey')
+						each stVal, stKey in appdata.states
+							if stKey !== 'scheduled'
+								+dropdownitem(stVal, stKey, 'circle', 'none status-' + stKey)
 				section
 					label Region(s)
 					each region in regions

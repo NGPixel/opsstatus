@@ -19,6 +19,7 @@ if($('#admin-incidents-create').length) {
 			schedule_actual_start: moment().utc().format('YYYY/MM/DD'),
 			schedule_actual_start_time: moment().utc().format('HH:mm'),
 			component: '',
+			componentState: 'partialdown',
 			regions: []
 		},
 		methods: {

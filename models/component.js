@@ -30,8 +30,8 @@ var componentSchema = modb.Schema({
   state: {
     type: String,
     required: true,
-    enum: ['operational','performance-issues','partial-outage','major-outage'],
-    default: 'operational'
+    enum: ['ok','scheduled','perfissues','partialdown','majordown'],
+    default: 'ok'
   },
   group: {
     type: modb.Schema.Types.ObjectId,

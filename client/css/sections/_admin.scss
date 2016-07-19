@@ -148,6 +148,12 @@
 
 		}
 
+		.dropdown li .fa {
+
+			@include status-colors('color');
+
+		}
+
 		&.form-footer {
 			display: flex;
 			justify-content: flex-end;
