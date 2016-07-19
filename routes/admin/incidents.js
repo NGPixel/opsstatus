@@ -83,7 +83,7 @@ module.exports = {
 	},
 
 	/**
-	 * Create a new Template
+	 * Create a new Incident
 	 *
 	 * @param      {Request}   req     The request
 	 * @param      {Response}  res     The Response
@@ -91,22 +91,22 @@ module.exports = {
 	 * @return     {void}  void
 	 */
 	create(req, res, next) {
-		/*db.Template.new(req.body.name, req.body.content).then(() => {
+		db.Incident.new(req.body).then(() => {
 			req.flash('alert', {
 	      class: 'success',
-	      title: 'Template created!',
-	      message:  'Template has been created successfully!',
+	      title: 'Incident created!',
+	      message:  'Incident has been created successfully!',
 	      iconClass: 'fa-check'
-	    });*/
+	    });
 			return res.json({
 				ok: true
 			});
-		/*}).catch((ex) => {
+		}).catch((ex) => {
 			return res.json({
 				ok: false,
 				error: ex
 			});
-		});*/
+		});
 	},
 
 	/**
