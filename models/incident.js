@@ -4,6 +4,8 @@ var _ = require('lodash');
 var modb = require('mongoose');
 var moment = require('moment');
 var Promise = require('bluebird');
+var V = require('promise-validate')
+var Vc = require('../modules/validators');
 
 /**
  * Incident Schema
@@ -15,6 +17,13 @@ var incidentSchema = modb.Schema({
   summary: {
     type: String,
     required: true
+  },
+  kind: {
+    type: String,
+    required: true,
+    index: true,
+    enum: ['unplanned','scheduled'],
+    default: 'unplanned'
   },
   state: {
     type: String,
@@ -93,39 +102,51 @@ incidentSchema.statics.new = function(data) {
   let nState = (isScheduled) ? 'scheduled' : 'open';
   let nRegions = JSON.parse(data.regions);
 
-  return db.Component.findById(data.component).then((comp) => {
+  // Validate input data
 
-    // Verify component
+  return Promise.join(
+    V.isLength('Invalid or missing summary.', 3, 255)(nSummary),
+    V.isIn('Invalid incident type.', ['unplanned','scheduled'])(data.type),
+    V.isMongoId('Invalid component selection.')(data.component),
+    Vc.isArray('At least 1 region required.')(nRegions),
+    V.isLength('Invalid or missing content.', 2)(data.content)
+  ).then(() => {
 
-    if(!comp) {
-      throw new Error('Invalid component');
-    }
+    return db.Component.findById(data.component).then((comp) => {
 
-    // Verify regions
+      // Verify if component exists
 
-    if(!_.isArray(nRegions) || nRegions.length < 1) {
-      throw new Error('Invalid regions set.');
-    }
+      if(!comp) {
+        throw new Error('Invalid component.');
+      }
 
-    // Set schedule properties
+      // Set schedule properties
 
-    let nSchedule = {};
+      let nSchedule = {};
 
-    if(isScheduled) {
-      nSchedule.plannedStartDate = moment.utc(data.schedule_planned_start + ' ' + data.schedule_planned_start_time, 'YYYY/MM/DD HH:mm').toDate();
-      nSchedule.plannedEndDate = moment.utc(data.schedule_planned_end + ' ' + data.schedule_planned_end_time, 'YYYY/MM/DD HH:mm').toDate();
-      data.componentState = 'scheduled';
-    } else {
-      nSchedule.actualStartDate = moment.utc(data.schedule_actual_start + ' ' + data.schedule_actual_start_time, 'YYYY/MM/DD HH:mm').toDate();
-    }
+      if(isScheduled) {
+        nSchedule.plannedStartDate = moment.utc(data.schedule_planned_start + ' ' + data.schedule_planned_start_time, 'YYYY/MM/DD HH:mm').toDate();
+        nSchedule.plannedEndDate = moment.utc(data.schedule_planned_end + ' ' + data.schedule_planned_end_time, 'YYYY/MM/DD HH:mm').toDate();
+        
+        if(!moment(nSchedule.plannedStartDate).isBefore(nSchedule.plannedEndDate)) {
+          throw new Error('End date cannot be before Start date.')
+        }
 
-    // Verify datetime objects
+        data.componentState = 'scheduled';
 
-    if( !_.every(nSchedule, (s) => { return _.isDate(s); }) ) {
-      throw new Error('Invalid date/time.');
-    }
+      } else {
+        nSchedule.actualStartDate = moment.utc(data.schedule_actual_start + ' ' + data.schedule_actual_start_time, 'YYYY/MM/DD HH:mm').toDate();
+      }
 
-    return nSchedule;
+      // Verify datetime objects
+
+      if( !_.every(nSchedule, (s) => { console.log(s); return _.isDate(s) && !_.isNaN(s.valueOf()); }) ) {
+        throw new Error('Invalid or missing date/time.');
+      }
+
+      return nSchedule;
+
+    });
 
   }).then((nSchedule) => {
 
@@ -134,6 +155,7 @@ incidentSchema.statics.new = function(data) {
     return this.create({
       _id: db.ObjectId(),
       summary: nSummary,
+      kind: data.type,
       state: nState,
       regions: nRegions,
       component: data.component,

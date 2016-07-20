@@ -314,10 +314,14 @@
 			display: flex;
 			align-items: center;
 
-			.fa {
+			> .fa, > a:not(.btn) .fa {
 				margin-left: 10px;
 				cursor: pointer;
 				color: material-color('teal', '700');
+			}
+
+			> a.btn {
+				margin-left: 10px;
 			}
 
 		} 

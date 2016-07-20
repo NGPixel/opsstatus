@@ -2,23 +2,42 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-bullhorn
-	| Incidents / #{title}
+	| Incidents / #{inc.summary}
 
 block admin-actions
-	a.btn.btn-indigo(href='/admin/templates')
+	a.btn.btn-indigo(href='/admin/incidents')
 		span
 			i.fa.fa-arrow-left
 			| Back to list
 
 block admin-content
-	#admin-templates-edit(data-id=tmpl.id)
+	#admin-incidents-edit(data-id=inc.id)
 		.admin-form
 			section
 				label Summary
-				input#tmpl-summary(type='text', placeholder='Incident Summary', value=tmpl.name)
-			section
-				label Initial Report Content
-				textarea#tmpl-editor= tmpl.content
+				input#inc-summary(type='text', placeholder='Incident Summary', value=inc.summary)
+			if inc.kind == 'unplanned'
+				section
+					label Started on
+					input.datepicker#schedule_actual_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_actual_start')
+					|  at 
+					input.timepicker#schedule_actual_start_time(type='text', placeholder='HH:MM', v-model='schedule_actual_start_time')
+					|  UTC and end on 
+					input.datepicker#schedule_planned_end(type='text', placeholder='YYYY/MM/DD', v-model='schedule_actual_end')
+					|  at 
+					input.timepicker#schedule_planned_end_time(type='text', placeholder='HH:MM', v-model='schedule_planned_end_time')
+					|  UTC
+			else
+				section(v-show='type=="scheduled"')
+					label Scheduled to start on
+					input.datepicker#schedule_planned_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_start')
+					|  at 
+					input.timepicker#schedule_planned_start_time(type='text', placeholder='HH:MM', v-model='schedule_planned_start_time')
+					|  UTC and end on 
+					input.datepicker#schedule_planned_end(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_end')
+					|  at 
+					input.timepicker#schedule_planned_end_time(type='text', placeholder='HH:MM', v-model='schedule_planned_end_time')
+					|  UTC
 			section.form-footer
 				button.btn.btn-green#admin-templates-save
 					span

@@ -64,7 +64,7 @@ module.exports = {
 	},
 
 	/**
-	 * Display Edit Template Page
+	 * Display Edit Incident Page
 	 *
 	 * @param      {Request}   req     The request
 	 * @param      {Response}  res     The Response
@@ -72,12 +72,12 @@ module.exports = {
 	 * @return     {void}  void
 	 */
 	displayEdit(req, res, next) {
-		db.Template
+		db.Incident
 		.findById(req.params.id)
 		.exec()
-		.then((tmpl) => {
-			res.render('admin/templates-edit', {
-				tmpl: tmpl.toObject({ transform: db.common.stringifyIds, virtuals: true })
+		.then((inc) => {
+			res.render('admin/incidents-edit', {
+				inc
 			});
 		});
 	},
@@ -105,7 +105,7 @@ module.exports = {
 		}).catch((ex) => {
 			return res.json({
 				ok: false,
-				error: ex
+				error: ex.message
 			});
 		});
 	},
