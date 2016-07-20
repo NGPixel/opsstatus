@@ -91,7 +91,8 @@ module.exports = {
 	 * @return     {void}  void
 	 */
 	create(req, res, next) {
-		db.Incident.new(req.body).then(() => {
+		let data = _.assign({ userId: req.user.id }, req.body);
+		db.Incident.new(data).then(() => {
 			req.flash('alert', {
 	      class: 'success',
 	      title: 'Incident created!',

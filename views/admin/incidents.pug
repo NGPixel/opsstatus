@@ -9,12 +9,14 @@ block admin-content
 		if incidents.length > 0
 			ul.admin-list
 				each incident in incidents
-					li(data-id=incident.id, data-name=incident.name)
+					li(data-id=incident.id, data-name=incident.summary)
 						span
 							i.fa.fa-copy
-							= incident.name
+							p
+								strong= incident.summary
+								span= incident.state
 						span
-							a(href='/admin/incidents/' + incident.id): i.fa.fa-edit.edit-action
+							a(href='/admin/incidents/' + incident.id): i.fa.fa-edit
 							i.fa.fa-trash-o.delete-action
 		else
 			.admin-box
