@@ -115,6 +115,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // ----------------------------------------
 
 app.locals._ = require('lodash');
+app.locals.moment = require('moment');
 app.locals.appconfig = appconfig;
 app.locals.appdata = require('./data.json');
 app.use(mw.flash);

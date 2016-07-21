@@ -280,10 +280,10 @@
 		> span:first-child {
 			display: flex;
 			align-items: center;
+			color: material-color('teal', '600');
 
 			.fa {
 				padding-right: 15px;
-				color: material-color('teal', '600');
 			}
 
 			p {
@@ -321,7 +321,7 @@
 			}
 
 			> a.btn {
-				margin-left: 10px;
+				margin-left: 5px;
 			}
 
 		} 

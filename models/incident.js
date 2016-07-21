@@ -101,6 +101,7 @@ incidentSchema.statics.new = function(data) {
   let nSummary = _.trim(data.summary);
   let nState = (isScheduled) ? 'scheduled' : 'open';
   let nRegions = JSON.parse(data.regions);
+  let nTimezone = data.timezone || 'UTC';
 
   // Validate input data
 
@@ -125,8 +126,8 @@ incidentSchema.statics.new = function(data) {
       let nSchedule = {};
 
       if(isScheduled) {
-        nSchedule.plannedStartDate = moment.utc(data.schedule_planned_start + ' ' + data.schedule_planned_start_time, 'YYYY/MM/DD HH:mm').toDate();
-        nSchedule.plannedEndDate = moment.utc(data.schedule_planned_end + ' ' + data.schedule_planned_end_time, 'YYYY/MM/DD HH:mm').toDate();
+        nSchedule.plannedStartDate = moment.tz(data.schedule_planned_start + ' ' + data.schedule_planned_start_time, 'YYYY/MM/DD HH:mm', nTimezone).utc().toDate();
+        nSchedule.plannedEndDate = moment.utc(data.schedule_planned_end + ' ' + data.schedule_planned_end_time, 'YYYY/MM/DD HH:mm', nTimezone).utc().toDate();
         
         if(!moment(nSchedule.plannedStartDate).isBefore(nSchedule.plannedEndDate)) {
           throw new Error('End date cannot be before Start date.')
@@ -135,7 +136,7 @@ incidentSchema.statics.new = function(data) {
         data.componentState = 'scheduled';
 
       } else {
-        nSchedule.actualStartDate = moment.utc(data.schedule_actual_start + ' ' + data.schedule_actual_start_time, 'YYYY/MM/DD HH:mm').toDate();
+        nSchedule.actualStartDate = moment.tz(data.schedule_actual_start + ' ' + data.schedule_actual_start_time, 'YYYY/MM/DD HH:mm', nTimezone).utc().toDate();
       }
 
       // Verify datetime objects

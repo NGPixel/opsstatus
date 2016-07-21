@@ -24,9 +24,7 @@ module.exports = {
 		.exec()
 		.then((incidents) => {
 			res.render('admin/incidents', {
-				incidents: _.map(incidents, (t) => {
-					return t.toObject({ transform: db.common.stringifyIds, virtuals: true });
-				})
+				incidents
 			});
 		});
 	},

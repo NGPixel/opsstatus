@@ -2,7 +2,16 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-bullhorn
-	| Incidents
+	| Active Incidents
+
+block admin-actions
+	a.btn.btn-solo.btn-teal(href='/admin/incidents/create')
+		span
+			i.fa.fa-plus
+	a.btn.btn-indigo(href='/admin/incidents/archive')
+		span
+			i.fa.fa-archive
+			| Archived incidents
 
 block admin-content
 	#admin-incidents
@@ -12,18 +21,40 @@ block admin-content
 					li(data-id=incident.id, data-name=incident.summary)
 						span
 							case incident.state
-								when open: i.fa.fa-copy
-								when scheduled: i.fa.fa-clock
-								default: i.fa.fa-times
-							p
-								strong= incident.summary
-								span= incident.state
+								when "open"
+									i.fa.fa-exclamation-triangle.color-red-600.fa-lg
+									p
+										strong= incident.summary
+										span
+											strong.color-red-600= _.capitalize(incident.state)
+											| , reported 
+											strong= moment(incident.schedule.actualStartDate).calendar()
+											|  and last updated 
+											strong= moment(incident.updatedAt).fromNow()
+								when "scheduled"
+									i.fa.fa-clock-o.color-light-blue-700.fa-lg
+									p
+										strong= incident.summary
+										span
+											strong.color-light-blue-700= _.capitalize(incident.state)
+											|  to start 
+											strong= moment(incident.schedule.plannedStartDate).calendar()
+											|  with a planned duration of 
+											strong= moment.duration(moment(incident.schedule.plannedStartDate).diff(incident.schedule.plannedEndDate)).humanize()
+								default
+									i.fa.fa-check
+									p
+										strong= incident.summary
+										span
+											strong= _.capitalize(incident.state)
+							
 						span
 							a.btn.btn-blue(href='/admin/incidents/' + incident.id)
 								span
 									i.fa.fa-rocket
 									| Post Update
-							i.fa.fa-trash-o.delete-action
+							a.btn.btn-solo.btn-red
+								span: i.fa.fa-trash-o.delete-action
 		else
 			.admin-box
 				| No incident has been filed yet.

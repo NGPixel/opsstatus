@@ -63,6 +63,13 @@
 		width: 100%;
 	}
 
+	&.btn-solo {
+		.fa {
+			margin-right: 0;
+			font-size: 14px;
+		}
+	}
+
 	// span container required for firefox not handling flexbox on buttons!
 	> span {
 		display: inline-flex;
