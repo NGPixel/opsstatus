@@ -28,13 +28,13 @@
 			@include status-colors('border-bottom-color', -2);
 
 			span {
-				font-size: 14px;
-				font-weight: 600;
+				font-size: 16px;
+				font-weight: 500;
 				color: #FFF;
 			}
 
 			.fa {
-				font-size: 14px;
+				font-size: 16px;
 				font-weight: 400;
 				display: inline-block;
 			}
@@ -53,11 +53,11 @@
 
 	li {
 		font-size: 13px;
-		padding: 2px 0;
+		padding: 0;
 
 		strong {
 			font-size: 12px;
-			font-weight: 600;
+			font-weight: 500;
 			text-transform: uppercase;
 			color: material-color('blue-grey','600');
 			display: inline-block;
@@ -110,7 +110,7 @@
 			font-size: 12px;
 			font-style: normal;
 			color: material-color('blue-grey','400');
-			margin-top: 3px;
+			margin-top: 0;
 		}
 
 	}

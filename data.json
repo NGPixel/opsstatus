@@ -22,5 +22,9 @@
 		"perfissues": "Performance Issues",
 		"partialdown": "Partial Outage",
 		"majordown": "Major Outage"
+	},
+	"lang": {
+		"en": "English",
+		"fr": "Français"
 	}
 }

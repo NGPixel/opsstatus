@@ -24,14 +24,14 @@
 			@include status-colors('border-bottom-color', -2);
 
 			span {
-				font-size: 14px;
-				font-weight: 600;
+				font-size: 16px;
+				font-weight: 500;
 				text-transform: uppercase;
 				color: #FFF;
 			}
 
 			.fa {
-				font-size: 14px;
+				font-size: 16px;
 				font-weight: 400;
 			}
 
@@ -63,13 +63,13 @@
 			strong {
 				color: material-color('blue-grey','800');
 				display: flex;
-				font-size: 14px;
-				font-weight: 600;
+				font-size: 15px;
+				font-weight: 500;
 			}
 
 			span {
 				color: material-color('blue-grey','700');
-				font-size: 12px;
+				font-size: 13px;
 				display: flex;
 			}
 
@@ -85,7 +85,7 @@
 			strong {
 				display: inline-flex;
 				font-size: 12px;
-				font-weight: 600;
+				font-weight: 500;
 				margin-right: 10px;
 				text-transform: uppercase;
 				text-align: right;

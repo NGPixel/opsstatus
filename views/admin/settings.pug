@@ -2,8 +2,31 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-gear
-	| Settings
+	| Site Settings
 
 block admin-content
-	.admin-box
-		| Coming soon.
+	#admin-settings
+		.admin-form
+			section
+				label Display Layout
+				input#layout_full(name='layout', type='radio', v-model='type', value='full', checked)
+				label(for='layout_full') Full
+				input#layout_condensed(name='layout', type='radio', v-model='type', value='condensed')
+				label(for='layout_condensed') Condensed
+				input#layout_minimal(name='layout', type='radio', v-model='type', value='minimal')
+				label(for='layout_minimal') Minimal
+			section
+				label Display Language
+				+dropdown('language', 'language', 'en')(placeholder='English')
+					each langName, langKey in appdata.lang
+						+dropdownitem(langName, langKey, 'language', 'blue-grey')
+			section
+				label Server Timezone
+				+dropdown('incident-timezone', 'timezone', 'UTC')(placeholder='UTC')
+					each tz in moment.tz.names()
+						+dropdownitem(tz, tz, 'clock-o', 'blue-grey', moment().tz(tz).format('Z z'))
+			section.form-footer
+				button.btn.btn-green#admin-settings-save
+					span
+						i.fa.fa-check
+						| Save Changes

@@ -59,7 +59,7 @@ componentSchema.statics.new = function(compName, compDescription) {
     name: _.trim(compName),
     description: _.trim(compDescription),
     sortIndex: 0,
-    state: 'operational',
+    state: 'ok',
     group: null
   });
   
