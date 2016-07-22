@@ -17,10 +17,13 @@
 	list-style-type: none;
 
 	> li {
-		padding: 10px 15px;
+		padding: 0 15px;
 		border-top: 1px solid material-color('blue-grey', '100');
-		font-size: 16px;
+		font-size: 14px;
 		font-weight: 500;
+		display: flex;
+		align-items: center;
+		height: 44px;
 		color: material-color('blue-grey', '800');
 		cursor: pointer;
 
@@ -58,6 +61,10 @@
 			margin-right: 10px;
 		}
 
+	}
+
+	> div {
+		display: flex;
 	}
 
 	button, a {
@@ -138,12 +145,14 @@
 			}
 
 			&.datepicker {
-				width: 120px;
+				width: 125px;
 				display: inline-block;
+				text-align: center;
 			}
 			&.timepicker {
-				width: 80px;
+				width: 90px;
 				display: inline-block;
+				text-align: center;
 			}
 
 		}

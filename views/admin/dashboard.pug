@@ -35,12 +35,6 @@ block admin-content
 											label(for=curCompId + '_partialdown') Partial Outage
 											input(id=curCompId + '_majordown', name=curCompId, type='radio', v-model=curCompId, value='majordown')
 											label(for=curCompId + '_majordown') Major Outage
-			.admin-form
-				section.form-footer
-					button.btn.btn-green#admin-dashboard-save
-						span
-							i.fa.fa-check
-							| Save Components State
 		else
 			.admin-box
 				| No components have been configured yet.

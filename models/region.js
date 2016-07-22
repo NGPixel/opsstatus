@@ -20,6 +20,11 @@ var regionSchema = modb.Schema({
     required: true,
     minlength: 2
   },
+  timezone: {
+    type: String,
+    required: true,
+    default: 'UTC'
+  },
   sortIndex: {
     type: Number,
     default: 0,
