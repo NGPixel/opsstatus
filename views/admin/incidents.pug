@@ -49,12 +49,15 @@ block admin-content
 											strong= _.capitalize(incident.state)
 							
 						span
-							a.btn.btn-blue(href='/admin/incidents/' + incident.id)
-								span
-									i.fa.fa-rocket
-									| Post Update
-							a.btn.btn-solo.btn-red
-								span: i.fa.fa-trash-o.delete-action
+							span.btn-group
+								a.btn.btn-teal(href='/admin/incidents/update/' + incident.id)
+									span
+										i.fa.fa-rocket
+										| Post Update
+								a.btn.btn-solo.btn-blue(href='/admin/incidents/edit/' + incident.id)
+									span: i.fa.fa-edit.edit-action
+								a.btn.btn-solo.btn-red
+									span: i.fa.fa-trash-o.delete-action
 		else
 			.admin-box
 				| No incident has been filed yet.

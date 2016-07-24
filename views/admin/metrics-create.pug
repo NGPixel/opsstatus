@@ -1,0 +1,66 @@
+extends ./layout
+
+block admin-header
+	i.fa.fa-bar-chart
+	| Metrics - Create
+
+block admin-actions
+	a.btn.btn-indigo(href='/admin/metrics')
+		span
+			i.fa.fa-arrow-left
+			| Back to list
+			
+block admin-content
+	#admin-metrics-create
+		.admin-form
+			section
+				label Title
+				input#metric-name(type='text', placeholder='Metric Name', v-model='name')
+			section
+				label Source
+				+dropdown('source', 'source', '')(placeholder='Choose...')
+					each sc in sources
+						+dropdownitem(sc.name, sc.id, sc.icon, 'grey', sc.type)
+			section.grid
+				.col-4_md-12
+					label Value Function
+					input#value_function_sum(type='radio', v-model='valueFunction', value='sum', checked)
+					label(for='value_function_sum') Sum
+					input#value_function_avg(type='radio', v-model='valueFunction', value='avg')
+					label(for='value_function_avg') Average
+				.col-4_md-12
+					label Default Value
+					input(type='text', placeholder='e.g. 0', v-model='valueDefault')
+				.col-4_md-12
+					label Value Suffix
+					input(type='text', placeholder='e.g. Percent', v-model='valueSuffix')
+			section
+				label Chart Timeframe
+				input#chart_timeframe_1(type='radio', v-model='valueDuration', value='1', checked)
+				label(for='chart_timeframe_1') Last Hour
+				input#chart_timeframe_6(type='radio', v-model='valueDuration', value='6')
+				label(for='chart_timeframe_6') Last 6 Hours
+				input#chart_timeframe_12(type='radio', v-model='valueDuration', value='12')
+				label(for='chart_timeframe_12') Last 12 Hours
+				input#chart_timeframe_24(type='radio', v-model='valueDuration', value='24')
+				label(for='chart_timeframe_24') Last 24 Hours
+				input#chart_timeframe_168(type='radio', v-model='valueDuration', value='168')
+				label(for='chart_timeframe_168') Last Week (from now)
+				input#chart_timeframe_744(type='radio', v-model='valueDuration', value='744')
+				label(for='chart_timeframe_744') Last Month (from now)
+			section
+				label Display Chart on Homepage?
+				input#chart_homepage_yes(type='radio', v-model='chartHomepage', value='yes', checked)
+				label(for='chart_homepage_yes') Yes
+				input#chart_homepage_no(type='radio', v-model='chartHomepage', value='no')
+				label(for='chart_homepage_no') No
+			section
+				label Display Chart on Regional Page(s)?
+				each region in regions
+					input(id='region-' + region.id, type='checkbox', v-model='regions', value=region.id)
+					label(for='region-' + region.id)= region.name
+			section.form-footer
+				button.btn.btn-green#admin-metrics-save
+					span
+						i.fa.fa-check
+						| Save Metric

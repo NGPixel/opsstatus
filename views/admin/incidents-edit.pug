@@ -2,44 +2,83 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-bullhorn
-	| Incidents / #{inc.summary}
+	| Incidents - Create
 
 block admin-actions
 	a.btn.btn-indigo(href='/admin/incidents')
 		span
 			i.fa.fa-arrow-left
 			| Back to list
-
+	button.btn.btn-indigo#btn-load-from-template
+		span
+			i.fa.fa-file-o
+			| Load Template
+			
 block admin-content
-	#admin-incidents-edit(data-id=inc.id)
-		.admin-form
-			section
-				label Summary
-				input#inc-summary(type='text', placeholder='Incident Summary', value=inc.summary)
-			if inc.kind == 'unplanned'
+	if comps.length > 0 && regions.length > 0
+		#admin-incidents-create
+			.admin-form
+				section.hidden#sct-load-from-template
+					label Load from Template...
+					+dropdown('incident-template', 'template', '')(placeholder='Choose...')
+						each tmpl in templates
+							+dropdownitem(tmpl.name, tmpl.id, 'file-o', 'grey')
 				section
-					label Started on
-					input.datepicker#schedule_actual_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_actual_start')
-					|  at 
-					input.timepicker#schedule_actual_start_time(type='text', placeholder='HH:MM', v-model='schedule_actual_start_time')
-					|  UTC and end on 
-					input.datepicker#schedule_planned_end(type='text', placeholder='YYYY/MM/DD', v-model='schedule_actual_end')
-					|  at 
-					input.timepicker#schedule_planned_end_time(type='text', placeholder='HH:MM', v-model='schedule_planned_end_time')
-					|  UTC
-			else
-				section(v-show='type=="scheduled"')
-					label Scheduled to start on
-					input.datepicker#schedule_planned_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_start')
-					|  at 
-					input.timepicker#schedule_planned_start_time(type='text', placeholder='HH:MM', v-model='schedule_planned_start_time')
-					|  UTC and end on 
-					input.datepicker#schedule_planned_end(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_end')
-					|  at 
-					input.timepicker#schedule_planned_end_time(type='text', placeholder='HH:MM', v-model='schedule_planned_end_time')
-					|  UTC
-			section.form-footer
-				button.btn.btn-green#admin-templates-save
-					span
-						i.fa.fa-check
-						| Save Incident
+					label Summary
+					input#incident-summary(type='text', placeholder='Incident Summary', v-model='summary')
+				section
+					label Type
+					input#schedule_unplanned(name='schedule', type='radio', v-model='type', value='unplanned', checked)
+					label(for='schedule_unplanned') Unplanned Incident
+					input#schedule_planned(name='schedule', type='radio', v-model='type', value='scheduled')
+					label(for='schedule_planned') Scheduled Maintenance
+				section.grid
+					.col-8_md-12(v-show='type=="unplanned"')
+						label Started on
+						input.datepicker#schedule_actual_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_actual_start')
+						|  at 
+						input.timepicker#schedule_actual_start_time(type='text', placeholder='HH:MM', v-model='schedule_actual_start_time')
+					.col-8_md-12(v-show='type=="scheduled"')
+						label Scheduled to start on
+						input.datepicker#schedule_planned_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_start')
+						|  at 
+						input.timepicker#schedule_planned_start_time(type='text', placeholder='HH:MM', v-model='schedule_planned_start_time')
+						|  and end on 
+						input.datepicker#schedule_planned_end(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_end')
+						|  at 
+						input.timepicker#schedule_planned_end_time(type='text', placeholder='HH:MM', v-model='schedule_planned_end_time')
+					.col-4_md-12
+						label Reference Timezone
+						+dropdown('incident-timezone', 'timezone', 'UTC')(placeholder='UTC')
+							each tz in moment.tz.names()
+								+dropdownitem(tz, tz, 'clock-o', 'blue-grey', moment().tz(tz).format('Z z'))
+				section
+					label Component
+					+dropdown('incident-component', 'component', '')(placeholder='Choose...')
+						each comp in comps
+							+dropdownitem(comp.name, comp.id, 'tasks', 'grey', comp.group.name)
+				section(v-show='type!="scheduled"')
+					label Component State
+					+dropdown('incident-component', 'componentState', 'partialdown')(placeholder='Partial Outage')
+						+dropdownitem('Leave unchanged', 'unchanged', 'square', 'grey')
+						each stVal, stKey in appdata.states
+							if stKey !== 'scheduled'
+								+dropdownitem(stVal, stKey, 'circle', 'none status-' + stKey)
+				section
+					label Region(s)
+					each region in regions
+						input(id='region-' + region.id, type='checkbox', v-model='regions', value=region.id)
+						label(for='region-' + region.id)= region.name
+				section
+					label Content
+					textarea#incident-editor
+				section.form-footer
+					button.btn.btn-green#admin-incidents-save
+						span
+							i.fa.fa-check
+							| Save Incident
+	else
+		.admin-box
+			| You must create a least one component
+			strong  and 
+			| one region to create an incident!

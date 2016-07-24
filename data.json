@@ -23,6 +23,33 @@
 		"partialdown": "Partial Outage",
 		"majordown": "Major Outage"
 	},
+	"updates": {
+		"identified": {
+			"name": "Identified",
+			"icon": "flag",
+			"action": "open"
+		},
+		"investigating": {
+			"name": "Investigating",
+			"icon": "search",
+			"action": "open"
+		},
+		"update": {
+			"name": "Update",
+			"icon": "sticky-note-o",
+			"action": "open"
+		},
+		"watching": {
+			"name": "Watching",
+			"icon": "eye",
+			"action": "open"
+		},
+		"resolved": {
+			"name": "Resolved",
+			"icon": "check",
+			"action": "closed"
+		}
+	},
 	"lang": {
 		"en": "English",
 		"fr": "Français"

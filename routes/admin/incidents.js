@@ -29,7 +29,7 @@ module.exports = {
 		});
 	},
 
-		/**
+	/**
 	 * Display Create Incident Page
 	 *
 	 * @param      {Request}   req     The request
@@ -75,6 +75,25 @@ module.exports = {
 		.exec()
 		.then((inc) => {
 			res.render('admin/incidents-edit', {
+				inc
+			});
+		});
+	},
+
+	/**
+	 * Display Update Incident Page
+	 *
+	 * @param      {Request}   req     The request
+	 * @param      {Response}  res     The Response
+	 * @param      {Function}  next    The next callback
+	 * @return     {void}  void
+	 */
+	displayUpdate(req, res, next) {
+		db.Incident
+		.findById(req.params.id)
+		.exec()
+		.then((inc) => {
+			res.render('admin/incidents-update', {
 				inc
 			});
 		});

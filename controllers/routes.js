@@ -38,7 +38,8 @@ module.exports = () => {
 
 			router.get('/incidents', routes.admin.incidents.display);
 			router.get('/incidents/create', routes.admin.incidents.displayCreate);
-			router.get('/incidents/:id', routes.admin.incidents.displayEdit);
+			router.get('/incidents/edit/:id', routes.admin.incidents.displayEdit);
+			router.get('/incidents/update/:id', routes.admin.incidents.displayUpdate);
 			router.put('/incidents', routes.admin.incidents.create);
 			router.post('/incidents', routes.admin.incidents.edit);
 			router.delete('/incidents', routes.admin.incidents.delete);
@@ -84,6 +85,7 @@ module.exports = () => {
 			// ====================================
 
 			router.get('/metrics', routes.admin.metrics.display);
+			router.get('/metrics/create', routes.admin.metrics.displayCreate);
 
 			// ====================================
 			// Monitors
