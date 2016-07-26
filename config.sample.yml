@@ -52,3 +52,12 @@ sessionSecret: 1234567890abcdefghijklmnopqrstuvxyz
 # The password is set to "admin123" by default. Change it immediately upon login!!!
 
 admin: admin@company.com
+
+# ------------------------------------------
+# Whether the server is the master or a slave
+# ------------------------------------------
+# Unless you have multiple instances of Ops Status running on multiple servers, this should always be set to 'master'.
+# Only a single server can be set as 'master'. Other instances should be set as 'slave'.
+# All instances MUST point to the same database and the same redis collections.
+
+serverLevel: master

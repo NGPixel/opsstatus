@@ -46,6 +46,12 @@ global.ROOTPATH = __dirname;
 var _isDebug = (app.get('env') === 'development');
 
 // ----------------------------------------
+// Background Handler
+// ----------------------------------------
+
+var bgHandler = require('./modules/bghandler')(appconfig);
+
+// ----------------------------------------
 // Security
 // ----------------------------------------
 

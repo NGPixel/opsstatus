@@ -158,4 +158,15 @@ componentSchema.statics.erase = function(compId) {
   });
 };
 
+/**
+ * MODEL - Refresh the cache
+ *
+ * @return     {Boolean}  True on success
+ */
+componentSchema.statics.refresh = function() {
+  return this.find().lean().exec().then((c) => {
+    return red.set('ops:components', JSON.stringify(c));
+  });
+};
+
 module.exports = modb.model('Component', componentSchema);
