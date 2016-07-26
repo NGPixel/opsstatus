@@ -3,11 +3,11 @@
 // Templates - Create
 // ====================================
 
-if($('#admin-incidents-create').length) {
+if($('#admin-incidents-update').length) {
 
 	let mde = null;
 	let vueIncident = new Vue({
-		el: '#admin-incidents-create',
+		el: '#admin-incidents-update',
 		data: {
 			template: '',
 			summary: '',
@@ -22,34 +22,6 @@ if($('#admin-incidents-create').length) {
 			component: '',
 			componentState: 'partialdown',
 			regions: []
-		},
-		methods: {
-			toggleTemplatePicker: () => {
-				$('#sct-load-from-template').slideToggle().toggleClass('hidden');
-			}
-		},
-		watch: {
-			template: (nVal, oVal) => {
-				
-				$.ajax('/admin/templates/' + nVal, {
-					dataType: 'json',
-					method: 'GET',
-					headers: {
-						'X-Raw-Only': true
-					}
-				}).then((res) => {
-					if(res.ok === true) {
-						vueIncident.summary = res.name;
-						mde.value(res.content);
-						vueIncident.toggleTemplatePicker();
-					} else {
-						alerts.pushError('Failed fetch template content', res.error.message || res.error);
-					}
-				}, () => {
-					alerts.pushError('Connection error', 'An unexpected error when connecting to the server.');
-				});
-
-			}
 		}
 	});
 

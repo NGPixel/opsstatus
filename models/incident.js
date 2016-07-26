@@ -4,7 +4,7 @@ var _ = require('lodash');
 var modb = require('mongoose');
 var moment = require('moment');
 var Promise = require('bluebird');
-var V = require('promise-validate')
+var V = require('validator-as-promised')
 var Vc = require('../modules/validators');
 
 /**
@@ -105,13 +105,13 @@ incidentSchema.statics.new = function(data) {
 
   // Validate input data
 
-  return Promise.join(
-    V.isLength('Invalid or missing summary.', 3, 255)(nSummary),
-    V.isIn('Invalid incident type.', ['unplanned','scheduled'])(data.type),
-    V.isMongoId('Invalid component selection.')(data.component),
-    Vc.isArray('At least 1 region required.')(nRegions),
-    V.isLength('Invalid or missing content.', 2)(data.content)
-  ).then(() => {
+  return Promise.all([
+    V.isLengthAsync('Invalid or missing summary.', nSummary, { min: 3, max:255 }),
+    V.isInAsync('Invalid incident type.', data.type, ['unplanned','scheduled']),
+    V.isMongoIdAsync('Invalid component selection.', data.component),
+    V.custom('At least 1 region required.', Vc.isArray, nRegions),
+    V.isLengthAsync('Invalid or missing content.', data.content, 2)
+  ]).then(() => {
 
     return db.Component.findById(data.component).then((comp) => {
 
