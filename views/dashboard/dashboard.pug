@@ -1,5 +1,14 @@
 extends ../layout
 
+block header
+	if pdata.comps
+		nav
+			ul
+				each compgroup in pdata.comps
+					li
+						span= compgroup.shortName
+						i.fa.fa-check.status-ok
+
 block content
 	.dashboard
 		.grid-3_lg-2_sm-1
@@ -9,116 +18,22 @@ block content
 						i.fa.fa-check-circle 
 						| Overview
 					.box
-						ul.status-list
-							li
-								h3
-									span Web Applications
-									i.fa.fa-check
-								ul.components-list
+						if pdata.comps
+							ul.status-list
+								each compgroup in pdata.comps
 									li
-										span
-											strong Corporate Website
-											span Public facing website, investors relations, careers, etc.
-										span
-											strong OK
+										h3
+											span= compgroup.name
 											i.fa.fa-check
-									li
-										span
-											strong Intranet
-											span Employee portal with news, documents and people search
-										span
-											strong OK
-											i.fa.fa-check
-									li
-										span
-											strong Extranet
-											span Document libraries for projects and external stakeholders
-										span
-											strong OK
-											i.fa.fa-check
-							li
-								h3
-									span Communications
-									i.fa.fa-check
-								ul.components-list
-									li
-										span
-											strong Exchange
-											span Email and Calendar services
-										span
-											strong OK
-											i.fa.fa-check
-									li
-										span
-											strong Skype for Business
-											span Instant-messaging, audio and video conferencing services
-										span
-											strong OK
-											i.fa.fa-check
-							li
-								h3.status-perfissues
-									span Network
-									i.fa.fa-check
-								ul.components-list
-									li
-										span
-											strong LAN
-											span Internal network within offices
-										span
-											strong OK
-											i.fa.fa-check
-									li
-										span
-											strong WAN
-											span Internet access and external resources
-										span.status-perfissues
-											strong Performance Issues
-											i.fa.fa-minus-square
-									li
-										span
-											strong VPN
-											span Encrypted tunnel between a client and the private internal network
-										span
-											strong OK
-											i.fa.fa-check
-							li
-								h3
-									span Data Storage
-									i.fa.fa-check
-								ul.components-list
-									li
-										span
-											strong File Shares
-											span Network storage for users / projects
-										span
-											strong OK
-											i.fa.fa-check
-									li
-										span
-											strong Databases
-											span Application databases
-										span
-											strong OK
-											i.fa.fa-check
-							li
-								h3
-									span Cloud Services
-									i.fa.fa-check
-								ul.components-list
-									li
-										span
-											strong Office 365
-											span Microsoft online services for businesses
-										span
-											strong OK
-											i.fa.fa-check
-									li
-										span
-											strong Visual Studio Online
-											span Services for developers and testers
-										span
-											strong OK
-											i.fa.fa-check
+										ul.components-list
+											each comp in compgroup.components
+												li
+													span
+														strong= comp.name
+														span= comp.description
+													span
+														strong OK
+														i.fa.fa-check
 			.col
 				section
 					h2
@@ -200,42 +115,14 @@ block content
 						i.fa.fa-globe
 						| Regions
 					.box.no-content
-						ul.regions-list
-							li
-								span
-									i.fa.fa-globe
-									a(href='/') Global
-								span 0 incidents
-							li
-								span
-									i.fa.fa-globe
-									a(href='/canada') Africa
-								span 0 incidents
-							li
-								span
-									i.fa.fa-globe
-									a(href='/canada') Australia
-								span 0 incidents
-							li
-								span
-									i.fa.fa-globe
-									a(href='/canada') Canada
-								span 1 incident
-							li
-								span
-									i.fa.fa-globe
-									a(href='/canada') Sweden
-								span 0 incidents
-							li
-								span
-									i.fa.fa-globe
-									a(href='/canada') United States
-								span 1 incident
-							li
-								span
-									i.fa.fa-globe
-									a(href='/canada') United Kingdom
-								span 1 incident
+						if pdata.regions
+							ul.regions-list
+								each region in pdata.regions
+									li
+										span
+											i.fa.fa-globe
+											a(href='/' + region._id)= region.name
+										span 0 incidents
 				section
 					h2
 						i.fa.fa-line-chart

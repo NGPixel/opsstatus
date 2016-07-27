@@ -102,6 +102,22 @@ componentSchema.statics.reorder = function(newOrder) {
         // Update group assignment
 
         if(curGroupId !== groupRefs[curCompId]) {
+          queries.push(db.ComponentGroup.findById(curGroupId).then((cg) => {
+            if(cg) {
+              cg.components.pull(comp);
+              return cg.save();
+            } else {
+              return true;
+            }
+          }));
+          queries.push(db.ComponentGroup.findById(groupRefs[curCompId]).then((cg) => {
+            if(cg) {
+              cg.components.push(comp);
+              return cg.save();
+            } else {
+              return true;
+            }
+          }));
           comp.group = db.ObjectId(groupRefs[curCompId]);
           isModified = true;
         }

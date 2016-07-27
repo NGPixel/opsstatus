@@ -15,13 +15,18 @@ module.exports = (appconfig) => {
 	}
 
 	// Init subscriber connection to Redis
+	// and refresh everything
 
 	let rd = require('./redis')(appconfig);
 	rd.psubscribe("ops.*", (err, count) => {
 		if(err) { throw err; };
 
 		red.publish('ops.components', 'refresh');
+		red.publish('ops.componentgroups', 'refresh');
+		red.publish('ops.regions', 'refresh');
 	});
+
+	// Process received messages
 
 	rd.on('pmessage', (pattern, channel, msg) => {
 

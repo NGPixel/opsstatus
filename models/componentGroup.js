@@ -27,7 +27,11 @@ var componentGroupSchema = modb.Schema({
     type: Number,
     default: 0,
     required: true
-  }
+  },
+  components: [{
+    type: modb.Schema.Types.ObjectId,
+    ref: 'Component'
+  }]
 
 },
 {
@@ -100,6 +104,23 @@ componentGroupSchema.statics.erase = function(groupId) {
     this.findByIdAndRemove(groupId),
     db.Component.update({ group: db.ObjectId(groupId) },{ group: null }, { multi: true })
   ]);
+};
+
+/**
+ * MODEL - Refresh the cache
+ *
+ * @return     {Boolean}  True on success
+ */
+componentGroupSchema.statics.refresh = function() {
+  return this.find({
+      $where: "this.components.length > 0"
+    })
+    .sort({ sortIndex: 1 })
+    .populate('components')
+    .exec()
+    .then((cg) => {
+      return red.set('ops:componentgroups', JSON.stringify(cg));
+  });
 };
 
 module.exports = modb.model('ComponentGroup', componentGroupSchema);

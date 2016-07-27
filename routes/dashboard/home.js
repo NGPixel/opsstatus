@@ -1,4 +1,6 @@
 
+var Promise = require('bluebird');
+
 // ====================================
 // DASHBOARD (PUBLIC)
 // ====================================
@@ -14,9 +16,15 @@ module.exports = {
 	 * @return     {void}  void
 	 */
 	 display(req, res, next) {
-		res.render('dashboard/dashboard', {
-			usr: res.locals.usr
-		});
+	 	Promise.props({
+	 		comps: red.get('ops:componentgroups').then((r) => { return JSON.parse(r); }),
+	 		regions: red.get('ops:regions').then((r) => { return JSON.parse(r); }),
+	 	}).then((pdata) => {
+	 		res.render('dashboard/dashboard', {
+				usr: res.locals.usr,
+				pdata
+			});
+	 	});
 	}
 
 };
