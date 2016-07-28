@@ -28,6 +28,12 @@ var incidentSchema = modb.Schema({
   state: {
     type: String,
     required: true,
+    enum: ['ok','scheduled','perfissues','partialdown','majordown'],
+    default: 'ok'
+  },
+  inferredState: {
+    type: String,
+    required: true,
     index: true,
     enum: ['open','scheduled','closed'],
     default: 'open'
@@ -61,10 +67,6 @@ var incidentSchema = modb.Schema({
     }
   },
   updates: [{
-    summary: {
-      type: String,
-      required: true
-    },
     content: {
       type: String,
       required: true
@@ -157,7 +159,8 @@ incidentSchema.statics.new = function(data) {
       _id: db.ObjectId(),
       summary: nSummary,
       kind: data.type,
-      state: nState,
+      state: data.componentState,
+      inferredState: nState,
       regions: nRegions,
       component: data.component,
       author: data.userId,
@@ -170,20 +173,6 @@ incidentSchema.statics.new = function(data) {
         status: 'Identified'
       }]
     });
-
-  }).then((nInc) => {
-
-    // Change component state
-
-    if(data.componentState !== 'unchanged') {
-      return db.Component.findByIdAndUpdate(data.component, {
-        state: data.componentState
-      }, {
-        runValidators: true
-      });
-    }
-    
-    return nInc;
 
   });
   

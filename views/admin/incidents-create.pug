@@ -60,7 +60,6 @@ block admin-content
 				section(v-show='type!="scheduled"')
 					label Component State
 					+dropdown('incident-component', 'componentState', 'partialdown')(placeholder='Partial Outage')
-						+dropdownitem('Leave unchanged', 'unchanged', 'square', 'grey')
 						each stVal, stKey in appdata.states
 							if stKey !== 'scheduled'
 								+dropdownitem(stVal, stKey, 'circle', 'none status-' + stKey)

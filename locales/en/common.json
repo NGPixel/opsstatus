@@ -1,1 +1,36 @@
-{}
+{
+	"systemstatus": "System Status",
+	"headers": {
+		"overview": "Overview",
+		"incidents": "Incidents",
+		"pastincidents": "Past Incidents",
+		"regions": "Regions",
+		"uptime": "Uptime"
+	},
+	"states": {
+		"ok": "OK",
+		"scheduled": "Scheduled",
+		"perfissues": "Performance Issues",
+		"partialdown": "Parial Outage",
+		"majordown": "Major Outage"
+	},
+	"actions": {
+		"subscribe": "Subscribe"
+	},
+	"dashboard": {
+		"component": "Component",
+		"severity": "Severity",
+		"loggedOn": "Logged On",
+		"affectedRegions": "Affected Regions",
+		"affectedRegionsAnd": "and",
+		"incidentCount": "{{count}} incident",
+		"incidentCount_plural": "{{count}} incidents"
+	},
+	"footer": {
+		"poweredby": "Powered by",
+		"home": "Home",
+		"admin": "Administration",
+		"rss": "RSS",
+		"atom": "Atom"
+	}
+}

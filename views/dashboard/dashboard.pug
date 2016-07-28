@@ -7,7 +7,7 @@ block header
 				each compgroup in pdata.comps
 					li
 						span= compgroup.shortName
-						i.fa.fa-check.status-ok
+						+stateicon(compgroup.state)
 
 block content
 	.dashboard
@@ -16,104 +16,74 @@ block content
 				section
 					h2
 						i.fa.fa-check-circle 
-						| Overview
+						= t('headers.overview')
 					.box
 						if pdata.comps
 							ul.status-list
 								each compgroup in pdata.comps
 									li
-										h3
+										h3(class='status-' + compgroup.state)
 											span= compgroup.name
-											i.fa.fa-check
+											+stateicon(compgroup.state)
 										ul.components-list
 											each comp in compgroup.components
 												li
 													span
 														strong= comp.name
 														span= comp.description
-													span
-														strong OK
-														i.fa.fa-check
+													span(class='status-' + comp.state)
+														strong= t('states.' + comp.state)
+														+stateicon(comp.state)
 			.col
 				section
 					h2
 						i.fa.fa-bullhorn
-						| Incidents
-					.box
-						ul.incidents-list
-							li
-								h3.status-perfissues
-									span WAN intermittent packet loss
-									i.fa.fa-minus-square
-								ul.incident-properties
+						= t('headers.incidents')
+					if pdata.incidents
+						.box
+							ul.incidents-list
+								each inc in pdata.incidents
 									li
-										strong Component:
-										span Network - WAN
-									li
-										strong Severity:
-										span Performance Issues
-									li
-										strong Logged on:
-										span Jun 29, 15:10 UTC
-									li
-										strong Affected Regions:
-										span
-											a(href='/canada') Canada
-											| , 
-											a(href='/canada') USA
-											|  and 
-											a(href='/canada') UK
-								ul.updates-list
-									li
-										strong Update
-										span We are working with our internet provider to resolve this issue.
-										em Jun 29, 15:14 UTC
-									li
-										strong Identified
-										span We are currently experiencing intermittent packet loss on the WAN.
-										em Jun 29, 15:10 UTC
-							li
-								h3.status-majordown
-									span WAN intermittent packet loss
-									i.fa.fa-circle
-								ul.incident-properties
-									li
-										strong Component:
-										span Network - WAN
-									li
-										strong Severity:
-										span Performance Issues
-									li
-										strong Logged on:
-										span Jun 29, 15:10 UTC
-									li
-										strong Affected Regions:
-										span
-											a(href='/canada') Canada
-											| , 
-											a(href='/canada') USA
-											|  and 
-											a(href='/canada') UK
-								ul.updates-list
-									li
-										strong Update
-										span We are working with our internet provider to resolve this issue.
-										em Jun 29, 15:14 UTC
-									li
-										strong Identified
-										span We are currently experiencing intermittent packet loss on the WAN.
-										em Jun 29, 15:10 UTC
+										h3.status-perfissues
+											span= inc.summary
+											i.fa.fa-minus-square
+										ul.incident-properties
+											li
+												strong Component:
+												span Network - WAN
+											li
+												strong Severity:
+												span Performance Issues
+											li
+												strong Logged on:
+												span Jun 29, 15:10 UTC
+											li
+												strong Affected Regions:
+												span
+													each reg, idx in inc.regions
+														if idx > 0 && idx < inc.regions.length - 1
+															| , 
+														else if idx > 0 && idx >= inc.regions.length - 1
+															= ' ' + t('dashboard.affectedRegionsAnd') + ' '
+														a(href='/region/' + reg._id)= reg.name
+
+										ul.updates-list
+											each upd in inc.updates
+												li
+													strong= upd.status
+													span= upd.content
+													em= moment.tz(upd.postedDate, 'UTC').format('lll z')
 				section
 					h2
 						i.fa.fa-history
-						| Past Incidents
+						= t('headers.pastincidents')
 					.box.no-content
 						| No recent past incidents
 			.col
 				section
 					h2
 						i.fa.fa-globe
-						| Regions
+						= t('headers.regions')
 					.box.no-content
 						if pdata.regions
 							ul.regions-list
@@ -121,11 +91,11 @@ block content
 									li
 										span
 											i.fa.fa-globe
-											a(href='/' + region._id)= region.name
-										span 0 incidents
+											a(href='/region/' + region._id)= region.name
+										span= t('dashboard.incidentCount', { count: region.incidents })
 				section
 					h2
 						i.fa.fa-line-chart
-						| Uptime
+						= t('headers.uptime')
 					.box.no-content
 						| Coming soon

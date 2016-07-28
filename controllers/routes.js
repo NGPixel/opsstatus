@@ -18,6 +18,13 @@ module.exports = () => {
 
 			router.get('/', routes.dashboard.home.display);
 
+			// ====================================
+			// REGIONS
+			// ====================================
+
+			router.get('/region', routes.dashboard.region.home);
+			router.get('/region/:id', routes.dashboard.region.display);
+
 			return router;
 
 		},

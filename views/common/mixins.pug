@@ -17,3 +17,16 @@ mixin dropdownitem(label, value, icon, iconcolor, description)
 		= label
 		if description
 			span= description
+
+mixin stateicon(id)
+	case id
+		when "ok"
+			i.fa.fa-check.status-ok
+		when "scheduled"
+			i.fa.fa-clock-o.status-scheduled
+		when "perfissues"
+			i.fa.fa-minus-square.status-perfissues
+		when "partialdown"
+			i.fa.fa-exclamation-triangle.status-partialdown
+		when "majordown"
+			i.fa.fa-circle.status-majordown

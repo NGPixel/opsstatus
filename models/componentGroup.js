@@ -52,6 +52,8 @@ componentGroupSchema.statics.new = function(compgrpName, compgrpShortName) {
     name: _.trim(compgrpName),
     shortName: _.trim(compgrpShortName),
     sortIndex: 0
+  }).then(() => {
+    return this.refresh();
   });
   
 };
@@ -75,6 +77,8 @@ componentGroupSchema.statics.reorder = function(newOrder) {
       }
     });
     return (queries.length > 0) ? Promise.all(queries) : Promise.resolve(true);
+  }).then(() => {
+    return this.refresh();
   });
 };
 
@@ -90,7 +94,9 @@ componentGroupSchema.statics.edit = function(groupId, groupName, groupShortName)
   return this.findByIdAndUpdate(db.ObjectId(groupId), {
     name: groupName,
     shortName: groupShortName
-  }, { runValidators: true });
+  }, { runValidators: true }).then(() => {
+    return this.refresh();
+  });
 };
 
 /**
@@ -103,7 +109,9 @@ componentGroupSchema.statics.erase = function(groupId) {
   return Promise.all([
     this.findByIdAndRemove(groupId),
     db.Component.update({ group: db.ObjectId(groupId) },{ group: null }, { multi: true })
-  ]);
+  ]).then(() => {
+    return this.refresh();
+  });
 };
 
 /**
@@ -116,9 +124,30 @@ componentGroupSchema.statics.refresh = function() {
       $where: "this.components.length > 0"
     })
     .sort({ sortIndex: 1 })
-    .populate('components')
+    .populate({
+      path: 'components',
+      options: {
+        sort: { 'sortIndex': 1 }
+      }
+    })
+    .lean()
     .exec()
     .then((cg) => {
+
+      // Set component group state
+
+      cg = _.map(cg, (c) => {
+        let states = _.groupBy(c.components, 'state');
+        let cgState = 'ok';
+        _.forEach(['ok', 'scheduled', 'perfissues', 'partialdown', 'majordown'], (s) => {
+          if(_.has(states, s)) {
+            cgState = s;
+          }
+        });
+        c.state = cgState;
+        return c;
+      });
+
       return red.set('ops:componentgroups', JSON.stringify(cg));
   });
 };

@@ -1,10 +1,10 @@
 footer
 	span
-		| Powered by 
+		= t('footer.poweredby') + ' '
 		a(href='https://github.com/wspglobal/opsstatus') Ops Status
 		| .
 	ul
-		li: a(href='/') Home
-		li: a(href='/admin') Administration
-		li: a(href='/rss') RSS
-		li: a(href='/atom') Atom
+		li: a(href='/')= t('footer.home')
+		li: a(href='/admin')= t('footer.admin')
+		li: a(href='/rss')= t('footer.rss')
+		li: a(href='/atom')= t('footer.atom')

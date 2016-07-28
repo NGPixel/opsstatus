@@ -3,6 +3,7 @@
 var modb = require('mongoose');
 var _ = require('lodash');
 var modb_delete = require('mongoose-delete');
+var Promise = require('bluebird');
 
 /**
  * Component Schema
@@ -61,6 +62,8 @@ componentSchema.statics.new = function(compName, compDescription) {
     sortIndex: 0,
     state: 'ok',
     group: null
+  }).then(() => {
+    return this.refresh();
   });
   
 };
@@ -144,6 +147,8 @@ componentSchema.statics.reorder = function(newOrder) {
 
     return (queries.length > 0) ? Promise.all(queries) : Promise.resolve(true);
 
+  }).then(() => {
+    return this.refresh();
   });
 };
 
@@ -159,7 +164,9 @@ componentSchema.statics.edit = function(compId, compName, compDescription) {
   return this.findByIdAndUpdate(db.ObjectId(compId), {
     name: compName,
     description: compDescription
-  }, { runValidators: true });
+  }, { runValidators: true }).then(() => {
+    return this.refresh();
+  });
 };
 
 /**
@@ -171,6 +178,8 @@ componentSchema.statics.edit = function(compId, compName, compDescription) {
 componentSchema.statics.erase = function(compId) {
   return this.findById(db.ObjectId(compId)).then((c) => {
     return c.delete();
+  }).then(() => {
+    return this.refresh();
   });
 };
 
@@ -181,7 +190,10 @@ componentSchema.statics.erase = function(compId) {
  */
 componentSchema.statics.refresh = function() {
   return this.find().lean().exec().then((c) => {
-    return red.set('ops:components', JSON.stringify(c));
+    return Promise.all([
+      red.set('ops:components', JSON.stringify(c)),
+      db.ComponentGroup.refresh()
+    ]);
   });
 };
 

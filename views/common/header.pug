@@ -1,11 +1,11 @@
 header
 	.logo
-		span System Status
+		span= t('systemstatus')
 		a(href='/'): img(src='/images/logo.png',alt="Logo")
 		div
 			i#notifload
 			button
 				span
 					i.fa.fa-bell
-					| Subscribe
+					= t('actions.subscribe')
 	block header
