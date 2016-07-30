@@ -105,15 +105,4 @@ regionSchema.statics.erase = function(regionId) {
   });
 };
 
-/**
- * MODEL - Refresh the cache
- *
- * @return     {Boolean}  True on success
- */
-regionSchema.statics.refresh = function() {
-  return this.find().lean().exec().then((c) => {
-    return red.set('ops:regions', JSON.stringify(c));
-  });
-};
-
 module.exports = modb.model('Region', regionSchema);

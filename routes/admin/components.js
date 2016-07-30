@@ -55,6 +55,7 @@ module.exports = {
 	 */
 	create(req, res, next) {
 		db.Component.new(req.body.name, req.body.description).then(() => {
+			red.publish('ops.refresh', 'all');
 			req.flash('alert', {
 	      class: 'success',
 	      title: 'Component created!',
@@ -89,6 +90,7 @@ module.exports = {
 			let compsOrder = JSON.parse(req.body.compsOrder);
 			if(_.isPlainObject(compsOrder)) {
 				db.Component.reorder(compsOrder).then(() => {
+					red.publish('ops.refresh', 'all');
 					return res.json({
 						ok: true
 					});
@@ -111,6 +113,7 @@ module.exports = {
 
 			if(!_.isEmpty(req.body.editCompName) && !_.isEmpty(req.body.editCompDescription)) {
 				db.Component.edit(req.body.editCompId, req.body.editCompName, req.body.editCompDescription).then(() => {
+					red.publish('ops.refresh', 'all');
 					return res.json({
 						ok: true
 					});
@@ -150,6 +153,7 @@ module.exports = {
 	 */
 	delete(req, res, next) {
 		db.Component.erase(req.body.compId).then(() => {
+			red.publish('ops.refresh', 'all');
 			req.flash('alert', {
 	      class: 'success',
 	      title: 'Component deleted',

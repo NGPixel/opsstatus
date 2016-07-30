@@ -110,6 +110,7 @@ module.exports = {
 	create(req, res, next) {
 		let data = _.assign({ userId: req.user.id }, req.body);
 		db.Incident.new(data).then(() => {
+			red.publish('ops.refresh', 'all');
 			req.flash('alert', {
 	      class: 'success',
 	      title: 'Incident created!',

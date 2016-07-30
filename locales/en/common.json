@@ -11,7 +11,7 @@
 		"ok": "OK",
 		"scheduled": "Scheduled",
 		"perfissues": "Performance Issues",
-		"partialdown": "Parial Outage",
+		"partialdown": "Partial Outage",
 		"majordown": "Major Outage"
 	},
 	"actions": {

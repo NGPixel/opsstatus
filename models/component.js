@@ -28,12 +28,6 @@ var componentSchema = modb.Schema({
     default: 0,
     required: true
   },
-  state: {
-    type: String,
-    required: true,
-    enum: ['ok','scheduled','perfissues','partialdown','majordown'],
-    default: 'ok'
-  },
   group: {
     type: modb.Schema.Types.ObjectId,
     ref: 'ComponentGroup'
@@ -62,8 +56,6 @@ componentSchema.statics.new = function(compName, compDescription) {
     sortIndex: 0,
     state: 'ok',
     group: null
-  }).then(() => {
-    return this.refresh();
   });
   
 };
@@ -147,8 +139,6 @@ componentSchema.statics.reorder = function(newOrder) {
 
     return (queries.length > 0) ? Promise.all(queries) : Promise.resolve(true);
 
-  }).then(() => {
-    return this.refresh();
   });
 };
 
@@ -164,9 +154,7 @@ componentSchema.statics.edit = function(compId, compName, compDescription) {
   return this.findByIdAndUpdate(db.ObjectId(compId), {
     name: compName,
     description: compDescription
-  }, { runValidators: true }).then(() => {
-    return this.refresh();
-  });
+  }, { runValidators: true });
 };
 
 /**
@@ -178,22 +166,6 @@ componentSchema.statics.edit = function(compId, compName, compDescription) {
 componentSchema.statics.erase = function(compId) {
   return this.findById(db.ObjectId(compId)).then((c) => {
     return c.delete();
-  }).then(() => {
-    return this.refresh();
-  });
-};
-
-/**
- * MODEL - Refresh the cache
- *
- * @return     {Boolean}  True on success
- */
-componentSchema.statics.refresh = function() {
-  return this.find().lean().exec().then((c) => {
-    return Promise.all([
-      red.set('ops:components', JSON.stringify(c)),
-      db.ComponentGroup.refresh()
-    ]);
   });
 };
 

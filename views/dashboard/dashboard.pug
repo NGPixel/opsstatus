@@ -1,13 +1,24 @@
 extends ../layout
 
+block navright
+	if pdata.componentGroups
+		button
+			span
+				i.fa.fa-bell
+				= t('actions.subscribe')
+
 block header
-	if pdata.comps
+	if pdata.componentGroups
 		nav
 			ul
-				each compgroup in pdata.comps
+				each compgroup in pdata.componentGroups
 					li
 						span= compgroup.shortName
 						+stateicon(compgroup.state)
+	else
+		nav
+			ul
+				li No components have been setup yet.
 
 block content
 	.dashboard
@@ -17,10 +28,10 @@ block content
 					h2
 						i.fa.fa-check-circle 
 						= t('headers.overview')
-					.box
-						if pdata.comps
+					if pdata.componentGroups
+						.box
 							ul.status-list
-								each compgroup in pdata.comps
+								each compgroup in pdata.componentGroups
 									li
 										h3(class='status-' + compgroup.state)
 											span= compgroup.name
@@ -34,6 +45,8 @@ block content
 													span(class='status-' + comp.state)
 														strong= t('states.' + comp.state)
 														+stateicon(comp.state)
+					else
+						.box.no-content No components have been setup yet.
 			.col
 				section
 					h2
@@ -44,19 +57,17 @@ block content
 							ul.incidents-list
 								each inc in pdata.incidents
 									li
-										h3.status-perfissues
+										h3(class='status-' + inc.state)
 											span= inc.summary
-											i.fa.fa-minus-square
+											+stateicon(inc.state)
 										ul.incident-properties
 											li
+												- var comp = pdata.components[inc.component]
 												strong Component:
-												span Network - WAN
+												span= comp.name + ' - ' + comp.group.name
 											li
 												strong Severity:
-												span Performance Issues
-											li
-												strong Logged on:
-												span Jun 29, 15:10 UTC
+												span= t('states.' + inc.state)
 											li
 												strong Affected Regions:
 												span
@@ -73,19 +84,21 @@ block content
 													strong= upd.status
 													span= upd.content
 													em= moment.tz(upd.postedDate, 'UTC').format('lll z')
+					else
+						.box.no-content No active incidents.
 				section
 					h2
 						i.fa.fa-history
 						= t('headers.pastincidents')
 					.box.no-content
-						| No recent past incidents
+						| No recent past incidents.
 			.col
 				section
 					h2
 						i.fa.fa-globe
 						= t('headers.regions')
-					.box.no-content
-						if pdata.regions
+					if pdata.regions
+						.box
 							ul.regions-list
 								each region in pdata.regions
 									li
@@ -93,9 +106,10 @@ block content
 											i.fa.fa-globe
 											a(href='/region/' + region._id)= region.name
 										span= t('dashboard.incidentCount', { count: region.incidents })
+					else
+						.box.no-content No regions have been setup yet.
 				section
 					h2
 						i.fa.fa-line-chart
 						= t('headers.uptime')
-					.box.no-content
-						| Coming soon
+					.box.no-content No metrics have been setup yet.

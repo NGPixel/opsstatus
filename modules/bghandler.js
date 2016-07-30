@@ -15,14 +15,26 @@ module.exports = (appconfig) => {
 		return;
 	}
 
+	let getMostCriticalState = (states) => {
+		let mcState = 'ok';
+		_.forEach(['ok', 'scheduled', 'perfissues', 'partialdown', 'majordown'], (s) => {
+		  if(_.has(states, s)) {
+		    mcState = s;
+		  }
+		});
+		return mcState;
+	};
+
 	// Update cache
 
 	let updateCache = _.debounce(() => {
 
+		winston.info('Updating cache...');
+
 		// Incidents
 
 		return db.Incident.find({
-			state: { $ne: 'closed' }
+			currentState: { $ne: 'closed' }
 		})
 		.sort({ updatedAt: 1, createdAt: 1 })
 		.populate({ path: 'regions', select: 'name' })
@@ -43,30 +55,29 @@ module.exports = (appconfig) => {
 		      path: 'components',
 		      options: {
 		        sort: { 'sortIndex': 1 }
-		      }
+		      },
+		      populate: {	path: 'group', select: 'name' }
 		    })
 		    .lean()
 		    .exec()
 		    .then((cg) => {
 
-		    	let allComponents = [];
+		    	let allComponents = _.flatten(_.map(cg, 'components'));
+
+		    	// Set component state
+
+		    	allComponents = _.keyBy(_.map(allComponents, (c) => {
+						let states = _.groupBy(_.filter(inc, { component: c._id }), 'state');
+		    		c.state = getMostCriticalState(states);
+		    		return c;
+		    	}), '_id');
 
 		      // Set component group state
 
 		      cg = _.map(cg, (c) => {
-
-		      	allComponents = _.concat(allComponents, c.components);
-
 		        let states = _.groupBy(c.components, 'state');
-		        let cgState = 'ok';
-		        _.forEach(['ok', 'scheduled', 'perfissues', 'partialdown', 'majordown'], (s) => {
-		          if(_.has(states, s)) {
-		            cgState = s;
-		          }
-		        });
-		        c.state = cgState;
+		        c.state = getMostCriticalState(states);
 		        return c;
-
 		      });
 
 		      return Promise.join(
@@ -76,6 +87,7 @@ module.exports = (appconfig) => {
 
 			  }),
 			  db.Region.find()
+			  .sort({ sortIndex: 1 })
 			  .lean()
 			  .exec()
 			  .then((regions) => {
@@ -92,6 +104,8 @@ module.exports = (appconfig) => {
 			  })
 		  );
 
+		}).then(() => {
+			winston.info('Cache updated successfully.');
 		});
 	}, 3000);
 
@@ -101,7 +115,7 @@ module.exports = (appconfig) => {
 	let rd = require('./redis')(appconfig);
 	rd.psubscribe("ops.*", (err, count) => {
 		if(err) { throw err; };
-		red.publish('ops.refresh', 'refresh');
+		red.publish('ops.refresh', 'all');
 	});
 
 	// Process received messages

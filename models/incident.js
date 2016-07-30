@@ -31,7 +31,7 @@ var incidentSchema = modb.Schema({
     enum: ['ok','scheduled','perfissues','partialdown','majordown'],
     default: 'ok'
   },
-  inferredState: {
+  currentState: {
     type: String,
     required: true,
     index: true,
@@ -160,7 +160,7 @@ incidentSchema.statics.new = function(data) {
       summary: nSummary,
       kind: data.type,
       state: data.componentState,
-      inferredState: nState,
+      currentState: nState,
       regions: nRegions,
       component: data.component,
       author: data.userId,

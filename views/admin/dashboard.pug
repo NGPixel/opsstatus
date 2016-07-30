@@ -12,29 +12,5 @@ block admin-actions
 
 block admin-content
 	#admin-dashboard
-		if comps
-			ul.admin-headlist-simple
-				each grp in groups
-					li
-						h2
-							i.fa.fa-object-group
-							= grp.name
-						ul.admin-list
-							if _.has(comps, 'g_' + grp.id)
-								each comp in _.get(comps, 'g_' + grp.id)
-									- var curCompId = 'state_' + comp._id.toString();
-									li(data-id=comp._id.toString(), data-state=comp.state)
-										span
-											strong= comp.name
-										span
-											input(id=curCompId + '_ok', name=curCompId, type='radio', v-model=curCompId, value='ok')
-											label(for=curCompId + '_ok') Operational
-											input(id=curCompId + '_perfissues', name=curCompId, type='radio', v-model=curCompId, value='perfissues')
-											label(for=curCompId + '_perfissues') Performance Issues
-											input(id=curCompId + '_partialdown', name=curCompId, type='radio', v-model=curCompId, value='partialdown')
-											label(for=curCompId + '_partialdown') Partial Outage
-											input(id=curCompId + '_majordown', name=curCompId, type='radio', v-model=curCompId, value='majordown')
-											label(for=curCompId + '_majordown') Major Outage
-		else
-			.admin-box
-				| No components have been configured yet.
+		.admin-box
+			| Coming soon

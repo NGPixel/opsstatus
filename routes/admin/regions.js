@@ -38,6 +38,7 @@ module.exports = {
 	 */
 	create(req, res, next) {
 		db.Region.new(req.body.newRegionName).then(() => {
+			red.publish('ops.refresh', 'all');
 			req.flash('alert', {
 	      class: 'success',
 	      title: 'Region created!',
@@ -72,6 +73,7 @@ module.exports = {
 			let regionOrder = JSON.parse(req.body.regionOrder);
 			if(_.isArray(regionOrder)) {
 				db.Region.reorder(regionOrder).then(() => {
+					red.publish('ops.refresh', 'all');
 					return res.json({
 						ok: true
 					});
@@ -94,6 +96,7 @@ module.exports = {
 
 			if(!_.isEmpty(req.body.editRegionName)) {
 				db.Region.edit(req.body.editRegionId, req.body.editRegionName).then(() => {
+					red.publish('ops.refresh', 'all');
 					return res.json({
 						ok: true
 					});
@@ -133,6 +136,7 @@ module.exports = {
 	 */
 	delete(req, res, next) {
 		db.Region.erase(req.body.regionId).then(() => {
+			red.publish('ops.refresh', 'all');
 			req.flash('alert', {
 	      class: 'success',
 	      title: 'Region deleted!',

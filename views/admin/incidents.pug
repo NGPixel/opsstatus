@@ -26,7 +26,7 @@ block admin-content
 									p
 										strong= incident.summary
 										span
-											strong.color-red-600= _.capitalize(incident.state)
+											strong.color-red-600= _.capitalize(incident.currentState)
 											| , reported 
 											strong= moment(incident.schedule.actualStartDate).calendar()
 											|  and last updated 
@@ -36,7 +36,7 @@ block admin-content
 									p
 										strong= incident.summary
 										span
-											strong.color-light-blue-700= _.capitalize(incident.state)
+											strong.color-light-blue-700= _.capitalize(incident.currentState)
 											|  to start 
 											strong= moment(incident.schedule.plannedStartDate).calendar()
 											|  with a planned duration of 
@@ -46,7 +46,7 @@ block admin-content
 									p
 										strong= incident.summary
 										span
-											strong= _.capitalize(incident.state)
+											strong= _.capitalize(incident.currentState)
 							
 						span
 							span.btn-group

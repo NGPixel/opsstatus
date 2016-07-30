@@ -17,6 +17,7 @@ module.exports = {
 	 */
 	create(req, res, next) {
 		db.ComponentGroup.new(req.body.name, req.body.shortname).then(() => {
+			red.publish('ops.refresh', 'all');
 			req.flash('alert', {
 	      class: 'success',
 	      title: 'Component Group created!',
@@ -51,6 +52,7 @@ module.exports = {
 			let groupsOrder = JSON.parse(req.body.groupsOrder);
 			if(_.isArray(groupsOrder)) {
 				db.ComponentGroup.reorder(groupsOrder).then(() => {
+					red.publish('ops.refresh', 'all');
 					return res.json({
 						ok: true
 					});
@@ -73,6 +75,7 @@ module.exports = {
 
 			if(!_.isEmpty(req.body.editGroupName) && !_.isEmpty(req.body.editGroupShortName)) {
 				db.ComponentGroup.edit(req.body.editGroupId, req.body.editGroupName, req.body.editGroupShortName).then(() => {
+					red.publish('ops.refresh', 'all');
 					return res.json({
 						ok: true
 					});
@@ -112,6 +115,7 @@ module.exports = {
 	 */
 	delete(req, res, next) {
 		db.ComponentGroup.erase(req.body.groupId).then(() => {
+			red.publish('ops.refresh', 'all');
 			req.flash('alert', {
 	      class: 'success',
 	      title: 'Component Group deleted',
