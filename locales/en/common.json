@@ -15,6 +15,14 @@
 		"majordown": "Major Outage"
 	},
 	"actions": {
+		"backToList": "Back to List",
+		"cancel": "Cancel",
+		"delete": "Delete",
+		"edit": "Edit",
+		"logout": "Logout",
+		"reorder": "Re-Order",
+		"ok": "OK",
+		"saveChanges": "Save Changes",
 		"subscribe": "Subscribe"
 	},
 	"dashboard": {
@@ -25,6 +33,60 @@
 		"affectedRegionsAnd": "and",
 		"incidentCount": "{{count}} incident",
 		"incidentCount_plural": "{{count}} incidents"
+	},
+	"admin": {
+		"sections": {
+			"dashboard": "Dashboard",
+			"incidents": "Incidents",
+			"templates": "Templates",
+			"components": "Components",
+			"regions": "Regions",
+			"metrics": "Metrics",
+			"monitors": "Monitors",
+			"users": "Users",
+			"subscribers": "Subscribers",
+			"api": "API",
+			"siteSettings": "Site Settings"
+		},
+		"dashboard": {
+			"welcome": "Welcome {{name}}",
+			"viewPublicDashboard": "View Publish Dashboard"
+		},
+		"incidents": {
+			"active": "Active Incidents",
+			"archived": "Archived Incidents",
+			"create": "Create New Incident",
+			"openInfo": "Reported <strong>{{created}}</strong> and last updated <strong>{{updated}}</strong>.",
+			"postUpdate": "Post Update",
+			"save": "Save Incident",
+			"scheduledInfo": "Scheduled to start <strong>{{startdate}}</strong> with a planned duration of <strong>{{duration}}</strong>."
+		},
+		"regions": {
+			"create": "New Region",
+			"create_title": "Enter the name of the new region:",
+			"edit_title": "Enter the new name of region <%= region %>:",
+			"delete_title": "Are you sure you want to delete region <%= region %>?",
+			"name": "Region",
+			"name_placeholder": "Region name",
+			"noRegionsCreatedYet": "Aucune région n'a été créé."
+		},
+		"users": {
+			"create": "Create User",
+			"create_title": "Enter new user info:",
+			"delete_title": "Are you sure you want to delete user <%= email %>?",
+			"displayLanguage": "Display Language",
+			"email": "Email",
+			"email_placeholder": "e.g. john@company.com",
+			"firstName": "First Name",
+			"firstName_placeholder": "e.g. John",
+			"lastName": "Last Name",
+			"lastName_placeholder": "e.g. Smith",
+			"myAccount": "My Account",
+			"password": "Password",
+			"password_placeholder": "Password (min 8 chars.)",
+			"rights": "Rights",
+			"timezone": "Timezone"
+		}
 	},
 	"footer": {
 		"poweredby": "Powered by",

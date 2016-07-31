@@ -2,13 +2,13 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-globe
-	| Regions
+	= t('admin.sections.regions')
 
 block admin-actions
 	button.btn.btn-teal#admin-regions-new
 		span
 			i.fa.fa-plus
-			| New Region
+			= t('admin.regions.create')
 
 block admin-content
 	#admin-regions
@@ -17,12 +17,20 @@ block admin-content
 				each region in regions
 					li(data-id=region._id, data-name=region.name)
 						span
-							i.fa.fa-sort.handle
+							i.fa.fa-sort.handle(title=t('actions.reorder'))
 							p
 								strong= region.name
 						span
-							i.fa.fa-edit.edit-action
-							i.fa.fa-trash-o.delete-action
+							i.fa.fa-edit.edit-action(title=t('actions.edit'))
+							i.fa.fa-trash-o.delete-action(title=t('actions.delete'))
 		else
 			.admin-box
-				| No region have been created yet.
+				= t('admin.regions.noRegionsCreatedYet')
+
+	script(type='text/javascript').
+		var pgLangData = {
+			create_title: "#{t('admin.regions.create_title')}",
+			edit_title: _.template("!{t('admin.regions.edit_title')}"),
+			delete_title: _.template("!{t('admin.regions.delete_title')}"),
+			name: "#{t('admin.regions.name_placeholder')}"
+		};

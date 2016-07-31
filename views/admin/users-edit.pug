@@ -2,33 +2,45 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-users
-	| Users / #{usr.fullName}
+	| #{t('admin.sections.users')} / #{usr.fullName}
 
 block admin-actions
 	a.btn.btn-indigo(href='/admin/users')
 		span
 			i.fa.fa-arrow-left
-			| Back to list
+			= t('actions.backToList')
 
 block admin-content
 	#admin-users-edit
 		.admin-form
 				section.grid
 					.col
-						label First Name
-						input#user-firstName(type='text', placeholder='e.g. John', v-model='firstName')
+						label= t('admin.users.firstName')
+						input#user-firstName(type='text', placeholder=t('admin.users.firstName_placeholder'), v-model='firstName')
 					.col
-						label Last Name
-						input(type='text', placeholder='e.g. Smith', v-model='lastName')
+						label= t('admin.users.lastName')
+						input(type='text', placeholder=t('admin.users.lastName_placeholder'), v-model='lastName')
 				section
-					label Email
-					input(type='text', placeholder='e.g. john@company.com', v-model='email')
+					label= t('admin.users.email')
+					input(type='text', placeholder=t('admin.users.email_placeholder'), v-model='email')
 				section
-					label Password
+					label= t('admin.users.password')
 					input(type='text', v-model='password', value='********')
+				section
+					.grid
+						.col
+							label= t('admin.users.timezone')
+							+dropdown('timezone', 'timezone', usr.timezone)(placeholder=usr.timezone)
+								each tz in moment.tz.names()
+									+dropdownitem(tz, tz, 'clock-o', 'blue-grey', moment().tz(tz).format('Z z'))
+						.col
+							label= t('admin.users.displayLanguage')
+							+dropdown('language', 'lang', usr.lang)(placeholder=appdata.lang[usr.lang])
+								each langName, langKey in appdata.lang
+									+dropdownitem(langName, langKey, 'language', 'blue-grey')
 				if user.id !== usr.id
 					section
-						label Rights
+						label= t('admin.users.rights')
 						each rText,rKey in appdata.rights
 							div
 								input(id='right-' + rKey, type='checkbox', v-model='rights', value=rKey)
@@ -37,9 +49,7 @@ block admin-content
 					button.btn.btn-green#admin-users-save
 						span
 							i.fa.fa-check
-							| Save Changes
+							= t('actions.saveChanges')
 
-	script(type='text/javascript')
-		| var usrData = 
-		!= JSON.stringify(usr)
-		| ;
+	script(type='text/javascript').
+		var usrData = !{JSON.stringify(usr)};

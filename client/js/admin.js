@@ -3,6 +3,15 @@
 jQuery( document ).ready(function( $ ) {
 
 	// ====================================
+	// Localization
+	// ====================================
+
+	vex.dialog.buttons.YES.text = langData.ok;
+	vex.dialog.buttons.NO.text = langData.cancel;
+
+	moment.locale(userData.locale);
+
+	// ====================================
 	// Sidebar
 	// ====================================
 

@@ -21,19 +21,20 @@ block admin-content
 				+dropdown('source', 'source', '')(placeholder='Choose...')
 					each sc in sources
 						+dropdownitem(sc.name, sc.id, sc.icon, 'grey', sc.type)
-			section.grid
-				.col-4_md-12
-					label Value Function
-					input#value_function_sum(type='radio', v-model='valueFunction', value='sum', checked)
-					label(for='value_function_sum') Sum
-					input#value_function_avg(type='radio', v-model='valueFunction', value='avg')
-					label(for='value_function_avg') Average
-				.col-4_md-12
-					label Default Value
-					input(type='text', placeholder='e.g. 0', v-model='valueDefault')
-				.col-4_md-12
-					label Value Suffix
-					input(type='text', placeholder='e.g. Percent', v-model='valueSuffix')
+			section
+				.grid
+					.col-4_md-12
+						label Value Function
+						input#value_function_sum(type='radio', v-model='valueFunction', value='sum', checked)
+						label(for='value_function_sum') Sum
+						input#value_function_avg(type='radio', v-model='valueFunction', value='avg')
+						label(for='value_function_avg') Average
+					.col-4_md-12
+						label Default Value
+						input(type='text', placeholder='e.g. 0', v-model='valueDefault')
+					.col-4_md-12
+						label Value Suffix
+						input(type='text', placeholder='e.g. Percent', v-model='valueSuffix')
 			section
 				label Chart Timeframe
 				input#chart_timeframe_1(type='radio', v-model='valueDuration', value='1', checked)

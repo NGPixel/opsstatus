@@ -16,9 +16,9 @@ if($('#admin-incidents-create').length) {
 			schedule_planned_start_time: '',
 			schedule_planned_end: '',
 			schedule_planned_end_time: '',
-			schedule_actual_start: moment().utc().format('YYYY/MM/DD'),
-			schedule_actual_start_time: moment().utc().format('HH:mm'),
-			timezone: 'UTC',
+			schedule_actual_start: moment.tz(userData.timezone).format('YYYY/MM/DD'),
+			schedule_actual_start_time: moment.tz(userData.timezone).format('HH:mm'),
+			timezone: userData.timezone,
 			component: '',
 			componentState: 'partialdown',
 			regions: []

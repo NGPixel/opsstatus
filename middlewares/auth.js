@@ -21,10 +21,9 @@ module.exports = (req, res, next) => {
 
 	// Set i18n locale
 
-	/*req.i18n.changeLanguage(UserData.getLang(req.user.locale));
-	res.locals.usrtime = moment();
-	res.locals.usrtime.tz(UserData.getTimezone(req.user.timezone));
-	res.locals.usrtime.locale(req.user.locale);*/
+	req.i18n.changeLanguage(req.user.lang);
+	res.locals.userMoment = moment;
+	res.locals.userMoment.locale(req.user.lang);
 
 	// Expose user data
 

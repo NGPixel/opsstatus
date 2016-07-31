@@ -1,1 +1,98 @@
-{}
+{
+	"systemstatus": "Statut du système",
+	"headers": {
+		"overview": "Sommaire",
+		"incidents": "Incidents",
+		"pastincidents": "Incidents passés",
+		"regions": "Régions",
+		"uptime": "Uptime"
+	},
+	"states": {
+		"ok": "OK",
+		"scheduled": "Planifié",
+		"perfissues": "Performance impacté",
+		"partialdown": "Panne partielle",
+		"majordown": "Panne majeure"
+	},
+	"actions": {
+		"backToList": "Retour à la liste",
+		"cancel": "Annuler",
+		"delete": "Supprimer",
+		"edit": "Modifier",
+		"logout": "Déconnexion",
+		"ok": "OK",
+		"reorder": "Changer l'ordre",
+		"saveChanges": "Enregistrer",
+		"subscribe": "Alertes"
+	},
+	"dashboard": {
+		"component": "Component",
+		"severity": "Severity",
+		"loggedOn": "Logged On",
+		"affectedRegions": "Affected Regions",
+		"affectedRegionsAnd": "and",
+		"incidentCount": "{{count}} incident",
+		"incidentCount_plural": "{{count}} incidents"
+	},
+	"admin": {
+		"sections": {
+			"dashboard": "Tableau de bord",
+			"incidents": "Incidents",
+			"templates": "Modèles",
+			"components": "Composants",
+			"regions": "Régions",
+			"metrics": "Métriques",
+			"monitors": "Moniteurs",
+			"users": "Usagers",
+			"subscribers": "Abonnés aux alertes",
+			"api": "API",
+			"siteSettings": "Paramètres du site"
+		},
+		"dashboard": {
+			"welcome": "Bonjour {{name}}",
+			"viewPublicDashboard": "Tableau de bord public"
+		},
+		"incidents": {
+			"active": "Incidents actifs",
+			"archived": "Incidents archivés",
+			"create": "Créer un nouvel incident",
+			"openInfo": "Ouvert <strong>{{created}}</strong> et mise à jour <strong>{{updated}}</strong>.",
+			"postUpdate": "Publier MAJ",
+			"save": "Enregistrer",
+			"scheduledInfo": "Planifié pour <strong>{{startdate}}</strong> avec une durée de <strong>{{duration}}</strong>."
+		},
+		"regions": {
+			"create": "Nouvelle région",
+			"create_title": "Entrer le nom de la nouvelle région:",
+			"edit_title": "Entrer le nouveau nom pour la région <%= region %>:",
+			"delete_title": "Êtes-vous certain de vouloir supprimer <%= region %>?",
+			"name": "Région",
+			"name_placeholder": "Nom de la région",
+			"noRegionsCreatedYet": "Aucune région n'a été créé."
+		},
+		"users": {
+			"create": "Créer un usager",
+			"create_title": "Entrer les données utilisateur:",
+			"delete_title": "Êtes-vous certain de vouloir supprimer <%= email %>?",
+			"displayLanguage": "Langue d'affichage",
+			"email": "Courriel",
+			"email_placeholder": "ex.: jean@compagnie.com",
+			"firstName": "Prénom",
+			"firstName_placeholder": "ex.: Jean",
+			"lastName": "Nom de famille",
+			"lastName_placeholder": "ex.: Dupont",
+			"myAccount": "Mon Compte",
+			"password": "Mot de passe",
+			"password_placeholder": "Mot de passe (min 8 caract.)",
+			"rights": "Droits d'accès",
+			"timezone": "Fuseau horaire"
+		}
+	},
+	"footer": {
+		"poweredby": "Propulsé par",
+		"home": "Accueil",
+		"admin": "Administration",
+		"rss": "RSS",
+		"atom": "Atom"
+	}
+}

@@ -38,7 +38,7 @@ module.exports = {
 	displayEdit(req, res, next) {
 			db.User
 			.findById(req.params.id)
-			.select('firstName lastName email rights')
+			.select('firstName lastName email timezone lang rights')
 			.exec()
 			.then((usr) => {
 

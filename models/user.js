@@ -35,7 +35,7 @@ var userSchema = modb.Schema({
   timezone: {
     type: String,
     required: true,
-    default: 'America/Montreal'
+    default: 'UTC'
   },
   lang: {
     type: String,
@@ -120,6 +120,8 @@ userSchema.statics.edit = function(userId, data) {
     email: data.email,
     firstName: data.firstName,
     lastName: data.lastName,
+    timezone: data.timezone,
+    lang: data.lang,
     rights: data.rights
   };
   let waitTask = null;

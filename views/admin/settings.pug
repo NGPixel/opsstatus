@@ -2,7 +2,7 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-gear
-	| Site Settings
+	= t('admin.sections.siteSettings')
 
 block admin-content
 	#admin-settings
@@ -29,4 +29,4 @@ block admin-content
 				button.btn.btn-green#admin-settings-save
 					span
 						i.fa.fa-check
-						| Save Changes
+						= t('actions.saveChanges')

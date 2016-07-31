@@ -2,15 +2,15 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-th-large
-	| Dashboard | Welcome #{user.firstName}
+	| #{t('admin.sections.dashboard')}
 
 block admin-actions
-	a.btn.btn-indigo(href='/admin/account')
+	a.btn.btn-indigo(href='/admin/users/' + user.id)
 		span
 			i.fa.fa-user
-			| My Account
+			= t('admin.users.myAccount')
 
 block admin-content
 	#admin-dashboard
 		.admin-box
-			| Coming soon
+			= t('admin.dashboard.welcome', { name: user.firstName })

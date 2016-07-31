@@ -18,11 +18,13 @@ var include = require("gulp-include");
  * @type       {Object}
  */
 var paths = {
-	scriptlibs: [
+	scriptlibs: {
+		admin: [
       './node_modules/lodash/lodash.min.js',
       './node_modules/jquery/dist/jquery.min.js',
       './node_modules/bluebird/js/browser/bluebird.min.js',
       './node_modules/moment/min/moment-with-locales.min.js',
+      './node_modules/moment-timezone/builds/moment-timezone-with-data.min.js',
       './node_modules/vue/dist/vue.min.js',
       './node_modules/pikaday/pikaday.js',
       './node_modules/pikaday/plugins/pikaday.jquery.js',
@@ -30,7 +32,13 @@ var paths = {
       './node_modules/vex-js/js/vex.combined.min.js',
       './node_modules/simplemde/dist/simplemde.min.js',
       './node_modules/timepicker/jquery.timepicker.min.js'
-	],
+		],
+		client: [
+			'./node_modules/lodash/lodash.min.js',
+      './node_modules/jquery/dist/jquery.min.js',
+      './node_modules/vex-js/js/vex.combined.min.js',
+		]
+	},
 	scriptapps: [
 		'./client/js/components/*.js',
 		'./client/js/app.js'
@@ -92,12 +100,23 @@ gulp.task("scripts", ['scripts-libs', 'scripts-app']);
  * TASK - Combine js libraries
  */
 gulp.task("scripts-libs", function () {
-	return gulp.src(paths.scriptlibs)
-	.pipe(plumber())
-	.pipe(concat('libs.js'))
-	.pipe(uglify({ mangle: false }))
-	.pipe(plumber.stop())
-	.pipe(gulp.dest("./public/js"));
+	return merge(
+
+		gulp.src(paths.scriptlibs.admin)
+		.pipe(plumber())
+		.pipe(concat('libs.admin.js'))
+		.pipe(uglify({ mangle: false }))
+		.pipe(plumber.stop())
+		.pipe(gulp.dest("./public/js")),
+
+		gulp.src(paths.scriptlibs.client)
+		.pipe(plumber())
+		.pipe(concat('libs.client.js'))
+		.pipe(uglify({ mangle: false }))
+		.pipe(plumber.stop())
+		.pipe(gulp.dest("./public/js"))
+
+	);
 });
 
 /**
@@ -124,7 +143,6 @@ gulp.task("scripts-app", function () {
 		.pipe(gulp.dest("./public/js"))
 
 	);
-
 });
 
 /**

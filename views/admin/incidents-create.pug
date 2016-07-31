@@ -32,26 +32,27 @@ block admin-content
 					label(for='schedule_unplanned') Unplanned Incident
 					input#schedule_planned(name='schedule', type='radio', v-model='type', value='scheduled')
 					label(for='schedule_planned') Scheduled Maintenance
-				section.grid
-					.col-8_md-12(v-show='type=="unplanned"')
-						label Started on
-						input.datepicker#schedule_actual_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_actual_start')
-						|  at 
-						input.timepicker#schedule_actual_start_time(type='text', placeholder='HH:MM', v-model='schedule_actual_start_time')
-					.col-8_md-12(v-show='type=="scheduled"')
-						label Scheduled to start on
-						input.datepicker#schedule_planned_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_start')
-						|  at 
-						input.timepicker#schedule_planned_start_time(type='text', placeholder='HH:MM', v-model='schedule_planned_start_time')
-						|  and end on 
-						input.datepicker#schedule_planned_end(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_end')
-						|  at 
-						input.timepicker#schedule_planned_end_time(type='text', placeholder='HH:MM', v-model='schedule_planned_end_time')
-					.col-4_md-12
-						label Reference Timezone
-						+dropdown('incident-timezone', 'timezone', 'UTC')(placeholder='UTC')
-							each tz in moment.tz.names()
-								+dropdownitem(tz, tz, 'clock-o', 'blue-grey', moment().tz(tz).format('Z z'))
+				section
+					.grid
+						.col-8_md-12(v-show='type=="unplanned"')
+							label Started on
+							input.datepicker#schedule_actual_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_actual_start')
+							|  at 
+							input.timepicker#schedule_actual_start_time(type='text', placeholder='HH:MM', v-model='schedule_actual_start_time')
+						.col-8_md-12(v-show='type=="scheduled"')
+							label Scheduled to start on
+							input.datepicker#schedule_planned_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_start')
+							|  at 
+							input.timepicker#schedule_planned_start_time(type='text', placeholder='HH:MM', v-model='schedule_planned_start_time')
+							|  and end on 
+							input.datepicker#schedule_planned_end(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_end')
+							|  at 
+							input.timepicker#schedule_planned_end_time(type='text', placeholder='HH:MM', v-model='schedule_planned_end_time')
+						.col-4_md-12
+							label Reference Timezone
+							+dropdown('incident-timezone', 'timezone', user.timezone)(placeholder=user.timezone)
+								each tz in moment.tz.names()
+									+dropdownitem(tz, tz, 'clock-o', 'blue-grey', moment().tz(tz).format('Z z'))
 				section
 					label Component
 					+dropdown('incident-component', 'component', '')(placeholder='Choose...')

@@ -1,44 +1,44 @@
 a.btn.btn-teal.btn-block(href='/admin/incidents/create')
 	span
 		i.fa.fa-plus
-		| Create New Incident
+		= t('admin.incidents.create')
 
 ul.admin-sd
 	li(data-link='/admin')
 		i.fa.fa-th-large
-		| Dashboard
+		= t('admin.sections.dashboard')
 	li(data-link='/admin/incidents')
 		i.fa.fa-bullhorn
-		| Incidents
+		= t('admin.sections.incidents')
 	li(data-link='/admin/templates')
 		i.fa.fa-copy
-		| Templates
+		= t('admin.sections.templates')
 	li(data-link='/admin/components')
 		i.fa.fa-tasks
-		| Components
+		= t('admin.sections.components')
 	li(data-link='/admin/regions')
 		i.fa.fa-globe
-		| Regions
+		= t('admin.sections.regions')
 	li(data-link='/admin/metrics')
 		i.fa.fa-bar-chart
-		| Metrics
+		= t('admin.sections.metrics')
 	li(data-link='/admin/monitors')
 		i.fa.fa-heartbeat
-		| Monitors
+		= t('admin.sections.monitors')
 	li(data-link='/admin/users')
 		i.fa.fa-users
-		| Users
+		= t('admin.sections.users')
 	li(data-link='/admin/subscribers')
 		i.fa.fa-bell
-		| Subscribers
+		= t('admin.sections.subscribers')
 	li(data-link='/admin/api')
 		i.fa.fa-sitemap
-		| API
+		= t('admin.sections.api')
 	li(data-link='/admin/settings')
 		i.fa.fa-gear
-		| Site Settings
+		= t('admin.sections.siteSettings')
 
 a.btn.btn-light-blue.btn-block(href='/')
 	span
 		i.fa.fa-home
-		| View Public Dashboard
+		= t('admin.dashboard.viewPublicDashboard')

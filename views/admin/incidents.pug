@@ -2,47 +2,39 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-bullhorn
-	| Active Incidents
+	= t('admin.incidents.active')
 
 block admin-actions
-	a.btn.btn-solo.btn-teal(href='/admin/incidents/create')
+	a.btn.btn-solo.btn-teal(href='/admin/incidents/create', title=t('admin.incidents.create'))
 		span
 			i.fa.fa-plus
-	a.btn.btn-indigo(href='/admin/incidents/archive')
+	a.btn.btn-indigo(href='/admin/incidents/archive', title=t('admin.incidents.archived'))
 		span
 			i.fa.fa-archive
-			span Archived incidents
+			span= t('admin.incidents.archived')
 
 block admin-content
 	#admin-incidents
 		if incidents.length > 0
-			ul.admin-list
+			ul.admin-list.admin-incidents-list
 				each incident in incidents
 					li(data-id=incident.id, data-name=incident.summary)
 						span
-							case incident.state
+							case incident.currentState
 								when "open"
-									i.fa.fa-exclamation-triangle.color-red-600.fa-lg
+									+stateicon(incident.state)
 									p
 										strong= incident.summary
 										span
-											strong.color-red-600= _.capitalize(incident.currentState)
-											| , reported 
-											strong= moment(incident.schedule.actualStartDate).calendar()
-											|  and last updated 
-											strong= moment(incident.updatedAt).fromNow()
+											!= t('admin.incidents.openInfo', { created: moment(incident.schedule.actualStartDate).calendar(), updated: moment(incident.updatedAt).fromNow() })
 								when "scheduled"
-									i.fa.fa-clock-o.color-light-blue-700.fa-lg
+									i.fa.fa-clock-o.status-scheduled
 									p
 										strong= incident.summary
 										span
-											strong.color-light-blue-700= _.capitalize(incident.currentState)
-											|  to start 
-											strong= moment(incident.schedule.plannedStartDate).calendar()
-											|  with a planned duration of 
-											strong= moment.duration(moment(incident.schedule.plannedStartDate).diff(incident.schedule.plannedEndDate)).humanize()
+											!= t('admin.incidents.scheduledInfo', { startdate: userMoment(incident.schedule.plannedStartDate).calendar(), duration: userMoment.duration(moment(incident.schedule.plannedStartDate).diff(incident.schedule.plannedEndDate)).humanize() })
 								default
-									i.fa.fa-check
+									i.fa.fa-check.status-ok
 									p
 										strong= incident.summary
 										span
@@ -50,13 +42,13 @@ block admin-content
 							
 						span
 							span.btn-group
-								a.btn.btn-teal(href='/admin/incidents/update/' + incident.id)
+								a.btn.btn-teal(href='/admin/incidents/update/' + incident.id, title=t('admin.incidents.postUpdate'))
 									span
 										i.fa.fa-rocket
-										| Post Update
-								a.btn.btn-solo.btn-blue(href='/admin/incidents/edit/' + incident.id)
+										= t('admin.incidents.postUpdate')
+								a.btn.btn-solo.btn-blue(href='/admin/incidents/edit/' + incident.id, title=t('actions.edit'))
 									span: i.fa.fa-edit.edit-action
-								a.btn.btn-solo.btn-red
+								a.btn.btn-solo.btn-red(title=t('actions.delete'))
 									span: i.fa.fa-trash-o.delete-action
 		else
 			.admin-box

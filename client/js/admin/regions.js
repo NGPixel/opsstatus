@@ -37,7 +37,7 @@ if($('#admin-regions').length) {
 	$('#admin-regions-new').on('click', (ev) => {
 
 		vex.dialog.prompt({
-		  message: 'Enter the name of the new region:',
+		  message: pgLangData.create_title,
 		  placeholder: 'Region name',
 		  callback(value) {
 
@@ -71,8 +71,8 @@ if($('#admin-regions').length) {
 		let parentElm = $(ev.currentTarget).closest('li').get(0);
 
 		vex.dialog.prompt({
-		  message: 'Enter a new name for region ' + parentElm.dataset.name + ':',
-		  placeholder: 'Region name',
+		  message: pgLangData.edit_title({ region: parentElm.dataset.name }),
+		  placeholder: pgLangData.name,
 		  value: parentElm.dataset.name,
 		  callback(value) {
 
@@ -107,7 +107,7 @@ if($('#admin-regions').length) {
 		let parentElm = $(ev.currentTarget).closest('li').get(0);
 
 		vex.dialog.confirm({
-		  message: 'Are you sure you want to delete region ' + parentElm.dataset.name + '?',
+		  message: pgLangData.delete_title({ region: parentElm.dataset.name }),
 		  callback(value) {
 
 		  	if(value) {

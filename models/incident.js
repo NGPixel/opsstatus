@@ -102,6 +102,7 @@ incidentSchema.statics.new = function(data) {
   let isScheduled = data.type === 'scheduled';
   let nSummary = _.trim(data.summary);
   let nState = (isScheduled) ? 'scheduled' : 'open';
+  let nUpdateStatus = (isScheduled) ? 'Planned' : 'Identified';
   let nRegions = JSON.parse(data.regions);
   let nTimezone = data.timezone || 'UTC';
 
@@ -129,7 +130,7 @@ incidentSchema.statics.new = function(data) {
 
       if(isScheduled) {
         nSchedule.plannedStartDate = moment.tz(data.schedule_planned_start + ' ' + data.schedule_planned_start_time, 'YYYY/MM/DD HH:mm', nTimezone).utc().toDate();
-        nSchedule.plannedEndDate = moment.utc(data.schedule_planned_end + ' ' + data.schedule_planned_end_time, 'YYYY/MM/DD HH:mm', nTimezone).utc().toDate();
+        nSchedule.plannedEndDate = moment.tz(data.schedule_planned_end + ' ' + data.schedule_planned_end_time, 'YYYY/MM/DD HH:mm', nTimezone).utc().toDate();
         
         if(!moment(nSchedule.plannedStartDate).isBefore(nSchedule.plannedEndDate)) {
           throw new Error('End date cannot be before Start date.')
@@ -170,7 +171,7 @@ incidentSchema.statics.new = function(data) {
         content: data.content,
         postedDate: moment().utc().toDate(),
         author: data.userId,
-        status: 'Identified'
+        status: nUpdateStatus
       }]
     });
 

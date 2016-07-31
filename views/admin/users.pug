@@ -2,13 +2,13 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-users
-	| Users
+	= t('admin.sections.users')
 
 block admin-actions
 	button.btn.btn-teal#admin-users-new
 		span
 			i.fa.fa-plus
-			| Create User
+			= t('admin.users.create')
 
 block admin-content
 	#admin-users
@@ -21,6 +21,16 @@ block admin-content
 							strong= usr.fullName
 							span= usr.email
 					span
-						a(href='/admin/users/' + usr.id): i.fa.fa-edit
+						a(href='/admin/users/' + usr.id, title=t('actions.edit')): i.fa.fa-edit
 						if !_.eq(usr.id, user.id)
-							i.fa.fa-trash-o.delete-action
+							i.fa.fa-trash-o.delete-action(title=t('actions.delete'))
+
+	script(type='text/javascript').
+		var pgLangData = {
+			create_title: "#{t('admin.users.create_title')}",
+			delete_title: _.template("!{t('admin.users.delete_title')}"),
+			email: "#{t('admin.users.email')}",
+			password: "#{t('admin.users.password_placeholder')}",
+			firstName: "#{t('admin.users.firstName')}",
+			lastName: "#{t('admin.users.lastName')}"
+		};

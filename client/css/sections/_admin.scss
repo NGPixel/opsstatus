@@ -117,6 +117,15 @@
 
 		}
 
+		> .grid {
+			margin: 0 -15px;
+
+			.col {
+				padding: 0 15px;
+			}
+
+		}
+
 		label:first-child {
 			display: block;
 			color: material-color('grey', '600');
@@ -346,6 +355,11 @@
 					display: block;
 					font-size: 12px;
 					color: material-color('grey', '600');
+
+					strong {
+						font-weight: 600;
+					}
+
 				}
 
 			}
@@ -368,6 +382,15 @@
 
 		} 
 
+	}
+
+}
+
+.admin-incidents-list {
+
+	> li > span:first-child > .fa {
+		@include status-colors('color');
+		font-size: 18px;
 	}
 
 }

@@ -10,11 +10,11 @@ if($('#admin-users').length) {
 	$('#admin-users-new').on('click', (ev) => {
 
 		vex.dialog.open({
-		  message: 'Enter new user info:',
-		  input: '<input name="email" type="text" placeholder="Email Address" autocomplete="email" pattern="[^@]+@[^@]+" required />' + 
-		  			 '<input name="password" type="text" placeholder="Password (min 8 chars.)" autocomplete="off" pattern=".{8,}" required />' +
-		  			 '<input name="firstName" type="text" placeholder="First Name" autocomplete="given-name" pattern=".+" required />' +
-		  			 '<input name="lastName" type="text" placeholder="Last Name" autocomplete="family-name" pattern=".+" required />',
+		  message: pgLangData.create_title,
+		  input: '<input name="email" type="text" placeholder="' + pgLangData.email + '" autocomplete="email" pattern="[^@]+@[^@]+" required />' + 
+		  			 '<input name="password" type="text" placeholder="' + pgLangData.password + '" autocomplete="off" pattern=".{8,}" required />' +
+		  			 '<input name="firstName" type="text" placeholder="' + pgLangData.firstName + '" autocomplete="given-name" pattern=".+" required />' +
+		  			 '<input name="lastName" type="text" placeholder="' + pgLangData.lastName + '" autocomplete="family-name" pattern=".+" required />',
 		  callback(data) {
 
 		  	if(_.isPlainObject(data)) {
@@ -45,7 +45,7 @@ if($('#admin-users').length) {
 		let parentElm = $(ev.currentTarget).closest('li').get(0);
 
 		vex.dialog.confirm({
-		  message: 'Are you sure you want to delete user ' + parentElm.dataset.email + '?',
+		  message: pgLangData.delete_title({ email: parentElm.dataset.email }),
 		  callback(value) {
 
 		  	if(value) {
