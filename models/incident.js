@@ -82,6 +82,7 @@ var incidentSchema = modb.Schema({
     },
     status: {
       type: String,
+      enum: ['identified','planned','investigating','update','watching','resolved'],
       required: true
     }
   }]
@@ -102,7 +103,7 @@ incidentSchema.statics.new = function(data) {
   let isScheduled = data.type === 'scheduled';
   let nSummary = _.trim(data.summary);
   let nState = (isScheduled) ? 'scheduled' : 'open';
-  let nUpdateStatus = (isScheduled) ? 'Planned' : 'Identified';
+  let nUpdateStatus = (isScheduled) ? 'planned' : 'identified';
   let nRegions = JSON.parse(data.regions);
   let nTimezone = data.timezone || 'UTC';
 
@@ -167,7 +168,6 @@ incidentSchema.statics.new = function(data) {
       author: data.userId,
       schedule: nSchedule,
       updates: [{
-        summary: nSummary,
         content: data.content,
         postedDate: moment().utc().toDate(),
         author: data.userId,
@@ -177,6 +177,45 @@ incidentSchema.statics.new = function(data) {
 
   });
   
+};
+
+/**
+ * MODEL - Update an incident
+ *
+ * @param      {Object}   data    Update content
+ * @return     {Promise}  Promise of the update operation
+ */
+incidentSchema.statics.postUpdate = function(data) {
+  return this.findById(data.id).then((inc) => {
+    if(inc) {
+
+      inc.updates.push({
+        content: data.content,
+        postedDate: moment().utc().toDate(),
+        author: data.userId,
+        status: data.state
+      });
+
+      if(data.state === 'resolved') {
+        inc.schedule.actualEndDate = moment().utc().toDate();
+        inc.currentState = 'closed';
+      }
+
+      return inc.save();
+    } else {
+      throw new Error('Invalid Incident Id');
+    }
+  });
+};
+
+/**
+ * MODEL - Delete an incident
+ *
+ * @param      {String}   incidentId  The incident identifier
+ * @return     {Promise}  Promise of the delete operation
+ */
+incidentSchema.statics.erase = function(incidentId) {
+  return this.findByIdAndRemove(incidentId);
 };
 
 module.exports = modb.model('Incident', incidentSchema);

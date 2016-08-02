@@ -5,37 +5,30 @@
 
 if($('#admin-dashboard').length) {
 
-	let vueData = {};
-
-	$('.admin-list > li').each((idx, c) => {
-		vueData['state_' + $(c).data('id')] = $(c).data('state');
-	});
-
-	console.log(vueData);
-
-	let vueDashboard = new Vue({
-		el: '#admin-dashboard',
-		data: vueData
-	});
-
-	// Save Components State
-
-	$('#admin-dashboard-save').on('click', (ev) => {
-
-		$.ajax('/admin/dashboard', {
-			dataType: 'json',
-			method: 'POST',
-			data: vueIncident.$data
-		}).then((res) => {
-			if(res.ok === true) {
-				window.location.assign('/admin/dashboard');
-			} else {
-				alerts.pushError('Failed to save components state', res.error.message || res.error);
-			}
-		}, () => {
-			alerts.pushError('Connection error', 'An unexpected error when connecting to the server.');
-		});
-
+	var ctx = document.getElementById("chartIncidents");
+	var myChart = new Chart(ctx, {
+    type: 'line',
+    data: {
+	        labels: ["March", "April", "May", "June", "July", "August"],
+	        datasets: [{
+	            label: '# of Incidents',
+	            data: [12, 19, 3, 5, 2, 3],
+	            backgroundColor: 'rgba(255, 99, 132, 0.2)',
+	            borderColor: 'rgba(255,99,132,1)',
+	            borderWidth: 1
+	        }]
+	    },
+	    options: {
+	    	responsiveAnimationDuration: 400,
+	    	maintainAspectRatio: false,
+        scales: {
+            yAxes: [{
+                ticks: {
+                    beginAtZero:true
+                }
+            }]
+        }
+	    }
 	});
 
 }

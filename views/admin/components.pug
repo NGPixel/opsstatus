@@ -24,8 +24,8 @@ block admin-content
 					ul.admin-list
 						each comp in comps.uncategorized
 							li(data-id=comp._id.toString(), data-name=comp.name, data-description=comp.description)
-								span
-									i.fa.fa-sort.handle
+								span.handle
+									i.fa.fa-sort
 									p
 										strong= comp.name
 										span= comp.description
@@ -36,8 +36,8 @@ block admin-content
 				each grp in groups
 					li(data-id=grp.id, data-name=grp.name, data-shortname=grp.shortName)
 						h2
-							span
-								i.fa.fa-sort.handle
+							span.handle
+								i.fa.fa-sort
 								= grp.name
 							span
 								i.fa.fa-edit.edit-action
@@ -46,8 +46,8 @@ block admin-content
 							if _.has(comps, 'g_' + grp.id)
 								each comp in _.get(comps, 'g_' + grp.id)
 									li(data-id=comp._id.toString(), data-name=comp.name, data-description=comp.description)
-										span
-											i.fa.fa-sort.handle
+										span.handle
+											i.fa.fa-sort
 											p
 												strong= comp.name
 												span= comp.description

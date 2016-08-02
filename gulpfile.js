@@ -25,18 +25,21 @@ var paths = {
       './node_modules/bluebird/js/browser/bluebird.min.js',
       './node_modules/moment/min/moment-with-locales.min.js',
       './node_modules/moment-timezone/builds/moment-timezone-with-data.min.js',
+      './node_modules/chart.js/dist/Chart.min.js',
       './node_modules/vue/dist/vue.min.js',
       './node_modules/pikaday/pikaday.js',
       './node_modules/pikaday/plugins/pikaday.jquery.js',
       './node_modules/sortablejs/Sortable.min.js',
       './node_modules/vex-js/js/vex.combined.min.js',
       './node_modules/simplemde/dist/simplemde.min.js',
-      './node_modules/timepicker/jquery.timepicker.min.js'
+      './node_modules/timepicker/jquery.timepicker.min.js',
 		],
 		client: [
 			'./node_modules/lodash/lodash.min.js',
       './node_modules/jquery/dist/jquery.min.js',
+      './node_modules/vue/dist/vue.min.js',
       './node_modules/vex-js/js/vex.combined.min.js',
+      './node_modules/chart.js/dist/Chart.bundle.min.js'
 		]
 	},
 	scriptapps: [

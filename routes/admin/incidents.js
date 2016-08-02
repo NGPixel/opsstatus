@@ -129,7 +129,7 @@ module.exports = {
 	},
 
 	/**
-	 * Edit a Template
+	 * Edit / Update an Incident
 	 *
 	 * @param      {Request}   req     The request
 	 * @param      {Response}  res     The Response
@@ -138,16 +138,19 @@ module.exports = {
 	 */
 	edit(req, res, next) {
 
-		if(req.body.id && _.isString(req.body.name) && _.isString(req.body.content)) {
+		let data = _.assign({ userId: req.user.id }, req.body);
 
-			db.Template.edit(req.body.id, req.body.name, req.body.content).then(() => {
+		if(req.body.mode === 'update' && req.body.id && _.isString(req.body.state) && _.isString(req.body.content)) {
+
+			db.Incident.postUpdate(data).then(() => {
+				red.publish('ops.refresh', 'all');
 				req.flash('alert', {
 		      class: 'success',
-		      title: 'Template saved!',
-		      message:  'Template has been saved successfully!',
+		      title: 'Incident updated!',
+		      message:  'Incident update has been posted successfully!',
 		      iconClass: 'fa-check'
 		    });
-				res.json({
+				return res.json({
 					ok: true
 				});
 			}).catch((ex) => {
@@ -156,17 +159,22 @@ module.exports = {
 					error: ex
 				});
 			});
+
+		} else if(req.body.mode === 'edit' && req.body.id) {
+
+			// todo
+
 		} else {
 			res.json({
 				ok: false,
-				error: 'Invalid template data.'
+				error: 'Invalid data.'
 			});
 		}
 
 	},
 
 	/**
-	 * Delete a Template
+	 * Delete an Incident
 	 * 
 	 * @param      {Request}   req     The request
 	 * @param      {Response}  res     The Response
@@ -174,14 +182,15 @@ module.exports = {
 	 * @return     {void}  void
 	 */
 	delete(req, res, next) {
-		db.Template.erase(req.body.id).then(() => {
+		db.Incident.erase(req.body.id).then(() => {
+			red.publish('ops.refresh', 'all');
 			req.flash('alert', {
 	      class: 'success',
-	      title: 'Template deleted!',
+	      title: 'Incident deleted!',
 	      message:  req.body.name + ' has been deleted successfully!',
 	      iconClass: 'fa-trash-o'
 	    });
-			res.json({
+			return res.json({
 				ok: true
 			});
 		}).catch((ex) => {

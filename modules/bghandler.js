@@ -1,6 +1,7 @@
 "use strict";
 
 var _ = require('lodash');
+var moment = require('moment');
 var Promise = require('bluebird');
 
 /**
@@ -34,13 +35,26 @@ module.exports = (appconfig) => {
 		// Incidents
 
 		return db.Incident.find({
-			currentState: { $ne: 'closed' }
+			$or: [
+				{	currentState: { $ne: 'closed' } },
+				{ currentState: 'closed', updatedAt: { $gte: moment().utc().subtract(1, 'weeks') } }
+			]
 		})
-		.sort({ updatedAt: 1, createdAt: 1 })
+		.sort({ updatedAt: -1, createdAt: -1 })
 		.populate({ path: 'regions', select: 'name' })
 		.lean()
 		.exec()
-		.then((inc) => {
+		.then((incRaw) => {
+
+			incRaw = _.map(incRaw, (i) => {
+				i.updates = _.orderBy(i.updates, ['postedDate'], ['desc']);
+				return i;
+			});
+
+			let inc = {
+				active: _.filter(incRaw, (i) => { return i.currentState !== 'closed'; }),
+				recent: _.filter(incRaw, { currentState: 'closed' })
+			};
 
 			red.set('ops:incidents', JSON.stringify(inc));
 
@@ -67,7 +81,7 @@ module.exports = (appconfig) => {
 		    	// Set component state
 
 		    	allComponents = _.keyBy(_.map(allComponents, (c) => {
-						let states = _.groupBy(_.filter(inc, { component: c._id }), 'state');
+						let states = _.groupBy(_.filter(inc.active, { component: c._id }), 'state');
 		    		c.state = getMostCriticalState(states);
 		    		return c;
 		    	}), '_id');
@@ -93,7 +107,7 @@ module.exports = (appconfig) => {
 			  .then((regions) => {
 
 			  	regions = _.map(regions, (reg) => {
-			  		reg.incidents = _.size(_.filter(inc, (i) => {
+			  		reg.incidents = _.size(_.filter(inc.active, (i) => {
 			  			return _.includes(_.map(i.regions, '_id'), reg._id);
 			  		}));
 			  		return reg;

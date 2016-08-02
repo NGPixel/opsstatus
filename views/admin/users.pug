@@ -21,9 +21,14 @@ block admin-content
 							strong= usr.fullName
 							span= usr.email
 					span
-						a(href='/admin/users/' + usr.id, title=t('actions.edit')): i.fa.fa-edit
-						if !_.eq(usr.id, user.id)
-							i.fa.fa-trash-o.delete-action(title=t('actions.delete'))
+						span.btn-group
+							a.btn.btn-blue(href='/admin/users/' + usr.id, title=t('actions.edit')).edit-action
+								span
+									i.fa.fa-edit
+									= t('actions.edit')
+							if !_.eq(usr.id, user.id)
+								a.btn.btn-solo.btn-red(title=t('actions.delete')).delete-action
+									span: i.fa.fa-trash-o
 
 	script(type='text/javascript').
 		var pgLangData = {

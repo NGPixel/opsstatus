@@ -26,8 +26,13 @@ a {
 }
 
 main {
+	display: block; // IE fix
 	background-color: material-color('grey', '50');
 	z-index: 0;
+}
+
+template {
+	display: none; // IE fix
 }
 
 .server-error {

@@ -20,8 +20,13 @@ block admin-content
 							i.fa.fa-copy
 							= tmpl.name
 						span
-							a(href='/admin/templates/' + tmpl.id): i.fa.fa-edit.edit-action
-							i.fa.fa-trash-o.delete-action
+							span.btn-group
+								a.btn.btn-blue(href='/admin/templates/' + tmpl.id, title=t('actions.edit')).edit-action
+									span
+										i.fa.fa-edit
+										= t('actions.edit')
+								a.btn.btn-solo.btn-red(title=t('actions.delete')).delete-action
+									span: i.fa.fa-trash-o
 		else
 			.admin-box
 				| No template has been created yet.

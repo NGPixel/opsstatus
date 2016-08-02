@@ -46,10 +46,10 @@ block admin-content
 									span
 										i.fa.fa-rocket
 										= t('admin.incidents.postUpdate')
-								a.btn.btn-solo.btn-blue(href='/admin/incidents/edit/' + incident.id, title=t('actions.edit'))
-									span: i.fa.fa-edit.edit-action
-								a.btn.btn-solo.btn-red(title=t('actions.delete'))
-									span: i.fa.fa-trash-o.delete-action
+								a.btn.btn-solo.btn-blue(href='/admin/incidents/edit/' + incident.id, title=t('actions.edit')).edit-action
+									span: i.fa.fa-edit
+								a.btn.btn-solo.btn-red(title=t('actions.delete')).delete-action
+									span: i.fa.fa-trash-o
 		else
 			.admin-box
 				| No incident has been filed yet.

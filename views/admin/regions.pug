@@ -16,8 +16,8 @@ block admin-content
 			ul.admin-list
 				each region in regions
 					li(data-id=region._id, data-name=region.name)
-						span
-							i.fa.fa-sort.handle(title=t('actions.reorder'))
+						span.handle
+							i.fa.fa-sort(title=t('actions.reorder'))
 							p
 								strong= region.name
 						span

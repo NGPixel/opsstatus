@@ -2,52 +2,27 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-bullhorn
-	| Update Incident - #{inc.summary}
+	| #{t('admin.incidents.update')} - #{inc.summary}
 
 block admin-actions
 	a.btn.btn-indigo(href='/admin/incidents')
 		span
 			i.fa.fa-arrow-left
-			| Back to list
+			= t('actions.backToList')
 
 block admin-content
 	#admin-incidents-update(data-id=inc.id)
 		.admin-form
 			section
-				label State
-				+dropdown('incident-template', 'template', '')(placeholder='Choose...')
+				label= t('admin.incidents.state')
+				+dropdown('incident-state', 'state', 'update')(placeholder=t('updateStates.update'))
 					each up, upId in appdata.updates
-						+dropdownitem(up.name, upId, up.icon, 'grey')
+						+dropdownitem(t('updateStates.' + upId), upId, up.icon, 'grey')
 			section
-				label Summary
-				input#inc-summary(type='text', placeholder='Incident Summary', value=inc.summary)
-			if inc.kind == 'unplanned'
-				section
-					label Started on
-					input.datepicker#schedule_actual_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_actual_start')
-					|  at 
-					input.timepicker#schedule_actual_start_time(type='text', placeholder='HH:MM', v-model='schedule_actual_start_time')
-					|  UTC and end on 
-					input.datepicker#schedule_planned_end(type='text', placeholder='YYYY/MM/DD', v-model='schedule_actual_end')
-					|  at 
-					input.timepicker#schedule_planned_end_time(type='text', placeholder='HH:MM', v-model='schedule_planned_end_time')
-					|  UTC
-			else
-				section(v-show='type=="scheduled"')
-					label Scheduled to start on
-					input.datepicker#schedule_planned_start(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_start')
-					|  at 
-					input.timepicker#schedule_planned_start_time(type='text', placeholder='HH:MM', v-model='schedule_planned_start_time')
-					|  UTC and end on 
-					input.datepicker#schedule_planned_end(type='text', placeholder='YYYY/MM/DD', v-model='schedule_planned_end')
-					|  at 
-					input.timepicker#schedule_planned_end_time(type='text', placeholder='HH:MM', v-model='schedule_planned_end_time')
-					|  UTC
-			section
-				label Content
+				label= t('admin.incidents.content')
 				textarea#incident-editor
 			section.form-footer
 				button.btn.btn-green#admin-incidents-save
 					span
 						i.fa.fa-check
-						| Post Update
+						= t('admin.incidents.postUpdate')

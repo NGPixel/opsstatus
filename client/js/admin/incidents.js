@@ -1,22 +1,22 @@
 
 // ====================================
-// Templates
+// Incidents
 // ====================================
 
-if($('#admin-templates').length) {
+if($('#admin-incidents').length) {
 
-	// Delete a template
+	// Delete an incident
 
-	$('#admin-templates .admin-list .delete-action').on('click', (ev) => {
+	$('#admin-incidents .admin-list .delete-action').on('click', (ev) => {
 
 		let parentElm = $(ev.currentTarget).closest('li').get(0);
 
 		vex.dialog.confirm({
-		  message: 'Are you sure you want to delete template <strong>' + parentElm.dataset.name + '</strong>?',
+		  message: 'Are you sure you want to delete incident <strong>' + parentElm.dataset.name + '</strong>? If an incident is resolved / completed, you should post an update and set it to <strong>Resolved</strong> instead!',
 		  callback(value) {
 
 		  	if(value) {
-		  		$.ajax('/admin/templates', {
+		  		$.ajax('/admin/incidents', {
 		  			dataType: 'json',
 		  			method: 'DELETE',
 		  			data: {
@@ -27,7 +27,7 @@ if($('#admin-templates').length) {
 		  			if(res.ok === true) {
 		  				window.location.reload(true);
 		  			} else {
-		  				alerts.pushError('Delete template failed', res.error.message || res.error);
+		  				alerts.pushError('Delete incident failed', res.error.message || res.error);
 		  			}
 		  		}, () => {
 		  			alerts.pushError('Connection error', 'An unexpected error when connecting to the server.');
