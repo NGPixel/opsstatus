@@ -56,7 +56,7 @@ block content
 					h2
 						i.fa.fa-bullhorn
 						= t('headers.incidents')
-					if pdata.incidents.active
+					if pdata.incidents.active.length > 0
 						.box
 							ul.incidents-list
 								each inc in pdata.incidents.active
@@ -94,7 +94,7 @@ block content
 					h2
 						i.fa.fa-history
 						= t('headers.pastincidents')
-					if pdata.incidents.recent
+					if pdata.incidents.recent.length > 0
 						.box
 							ul.incidents-list
 								each inc in pdata.incidents.recent

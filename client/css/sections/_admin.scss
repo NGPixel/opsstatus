@@ -398,3 +398,23 @@
 .chartContainer {
 	overflow: hidden;
 }
+
+.admin-content h3 {
+	border-top: 1px dotted material-color('blue-grey', '200');
+	margin: 15px 0 10px 0;
+	padding: 15px 0 0 0;
+	font-size: 16px;
+	font-weight: 400;
+	color: material-color('teal', '700');
+
+	.fa {
+		margin-right: 10px;
+	}
+
+	&.first {
+		border-top: none;
+		margin-top: 0;
+		padding-top: 0;
+	}
+
+}

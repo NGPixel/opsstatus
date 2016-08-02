@@ -2,7 +2,7 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-bullhorn
-	= t('admin.incidents.active')
+	= t('admin.sections.incidents')
 
 block admin-actions
 	a.btn.btn-solo.btn-teal(href='/admin/incidents/create', title=t('admin.incidents.create'))
@@ -15,9 +15,12 @@ block admin-actions
 
 block admin-content
 	#admin-incidents
-		if incidents.length > 0
+		if incidents.active.length > 0
+			h3.first
+				i.fa.fa-circle-o
+				= t('admin.incidents.active')
 			ul.admin-list.admin-incidents-list
-				each incident in incidents
+				each incident in incidents.active
 					li(data-id=incident.id, data-name=incident.summary)
 						span
 							case incident.currentState
@@ -33,12 +36,6 @@ block admin-content
 										strong= incident.summary
 										span
 											!= t('admin.incidents.scheduledInfo', { startdate: userMoment(incident.schedule.plannedStartDate).calendar(), duration: userMoment.duration(moment(incident.schedule.plannedStartDate).diff(incident.schedule.plannedEndDate)).humanize() })
-								default
-									i.fa.fa-check.status-ok
-									p
-										strong= incident.summary
-										span
-											strong= _.capitalize(incident.currentState)
 							
 						span
 							span.btn-group
@@ -52,4 +49,28 @@ block admin-content
 									span: i.fa.fa-trash-o
 		else
 			.admin-box
-				| No incident has been filed yet.
+				| No active incident at the moment.
+
+		if incidents.recent.length > 0
+			h3
+				i.fa.fa-check-circle
+				| Recently Resolved Incidents
+			ul.admin-list.admin-incidents-list
+				each incident in incidents.recent
+					li(data-id=incident.id, data-name=incident.summary)
+						span
+							i.fa.fa-check.status-ok
+							p
+								strong= incident.summary
+								span
+									!= t('admin.incidents.closedInfo', { ended: moment(incident.schedule.actualEndDate).calendar(), duration: userMoment.duration(moment(incident.schedule.actualStartDate).diff(incident.schedule.actualEndDate)).humanize() })
+						span
+							span.btn-group
+								a.btn.btn-teal(href='/admin/incidents/update/' + incident.id, title=t('admin.incidents.postUpdate'))
+									span
+										i.fa.fa-rocket
+										= t('admin.incidents.postUpdate')
+								a.btn.btn-solo.btn-blue(href='/admin/incidents/edit/' + incident.id, title=t('actions.edit')).edit-action
+									span: i.fa.fa-edit
+								a.btn.btn-solo.btn-red(title=t('actions.delete')).delete-action
+									span: i.fa.fa-trash-o

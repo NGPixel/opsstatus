@@ -64,6 +64,7 @@
 		"incidents": {
 			"active": "Active Incidents",
 			"archived": "Archived Incidents",
+			"closedInfo": "Resolved <strong>{{ended}}</strong> with a duration of <strong>{{duration}}</strong>.",
 			"create": "Create New Incident",
 			"component": "Component",
 			"componentState": "Component State",

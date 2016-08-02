@@ -1,6 +1,7 @@
 
 var _ = require('lodash');
 var Promise = require('bluebird');
+var moment = require('moment');
 
 // ====================================
 // INCIDENTS
@@ -17,16 +18,15 @@ module.exports = {
 	 * @return     {void}  void
 	 */
 	display(req, res, next) {
-		db.Incident
-		.find()
-		.sort({ createdAt: -1 })
-		.select('-updates')
-		.exec()
-		.then((incidents) => {
+		Promise.props({
+			active: db.Incident.find({ currentState: { $ne: 'closed' } }).sort({ createdAt: -1 }).select('-updates').exec(),
+			recent: db.Incident.find({ currentState: 'closed', updatedAt: { $gte: moment().utc().subtract(1, 'weeks') } }).sort({ updatedAt: -1 }).select('-updates').exec(),
+		}).then((incidents) => {
 			res.render('admin/incidents', {
 				incidents
 			});
 		});
+		
 	},
 
 	/**
