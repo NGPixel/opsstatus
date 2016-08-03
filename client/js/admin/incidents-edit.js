@@ -40,7 +40,7 @@ if($('#admin-incidents-edit').length) {
 	console.log('DUDE');
 
 	mde = _.map($(".update-editor"), (el) => {
-		new SimpleMDE({
+		return new SimpleMDE({
 			element: el,
 			autoDownloadFontAwesome: false,
 			placeholder: 'Enter Markdown formatted content here...',
