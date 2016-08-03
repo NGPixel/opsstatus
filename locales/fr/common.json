@@ -70,6 +70,8 @@
 			"content": "Contenu",
 			"date_placeholder": "AAAA/MM/JJ",
 			"datetimeSeparator": "à",
+			"edit": "Modifier un incident",
+			"endedOn": "Résolu le",
 			"loadTemplate": "Ouvrir un modèle",
 			"missingCompRegion": "Vous devez créer au moins un composant <strong>et</strong> une région avant de créer un incident!",
 			"openInfo": "Ouvert <strong>{{created}}</strong> et mise à jour <strong>{{updated}}</strong>.",
@@ -88,7 +90,8 @@
 			"type": "Type",
 			"typeScheduled": "Maintenance planifiée",
 			"typeUnplanned": "Incident imprévu",
-			"update": "MAJ de l'incident"
+			"update": "MAJ de l'incident",
+			"updates": "Mise à jours"
 		},
 		"regions": {
 			"create": "Nouvelle région",

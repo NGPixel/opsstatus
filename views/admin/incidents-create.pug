@@ -39,12 +39,13 @@ block admin-content
 							input.datepicker#schedule_actual_start(type='text', placeholder= t('admin.incidents.date_placeholder'), v-model='schedule_actual_start')
 							= ' ' + t('admin.incidents.datetimeSeparator') + ' '
 							input.timepicker#schedule_actual_start_time(type='text', placeholder= t('admin.incidents.time_placeholder'), v-model='schedule_actual_start_time')
-						.col-8_md-12(v-show='type=="scheduled"')
+						.col-4_md-12(v-show='type=="scheduled"')
 							label= t('admin.incidents.scheduledStartOn')
 							input.datepicker#schedule_planned_start(type='text', placeholder= t('admin.incidents.date_placeholder'), v-model='schedule_planned_start')
 							= ' ' + t('admin.incidents.datetimeSeparator') + ' '
 							input.timepicker#schedule_planned_start_time(type='text', placeholder= t('admin.incidents.time_placeholder'), v-model='schedule_planned_start_time')
-							= ' ' + t('admin.incidents.scheduledEndOn') + ' '
+						.col-4_md-12(v-show='type=="scheduled"')
+							label= t('admin.incidents.scheduledEndOn')
 							input.datepicker#schedule_planned_end(type='text', placeholder= t('admin.incidents.date_placeholder'), v-model='schedule_planned_end')
 							= ' ' + t('admin.incidents.datetimeSeparator') + ' '
 							input.timepicker#schedule_planned_end_time(type='text', placeholder= t('admin.incidents.time_placeholder'), v-model='schedule_planned_end_time')

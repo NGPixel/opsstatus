@@ -12,7 +12,7 @@ if($('#admin-incidents').length) {
 		let parentElm = $(ev.currentTarget).closest('li').get(0);
 
 		vex.dialog.confirm({
-		  message: 'Are you sure you want to delete incident <strong>' + parentElm.dataset.name + '</strong>? If an incident is resolved / completed, you should post an update and set it to <strong>Resolved</strong> instead!',
+		  message: 'Are you sure you want to delete incident <strong>' + parentElm.dataset.name + '</strong>?<br /><br />If an incident is resolved / completed, you should post an update and set it to <strong>Resolved</strong> instead!',
 		  callback(value) {
 
 		  	if(value) {

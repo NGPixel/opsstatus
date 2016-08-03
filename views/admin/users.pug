@@ -29,6 +29,9 @@ block admin-content
 							if !_.eq(usr.id, user.id)
 								a.btn.btn-solo.btn-red(title=t('actions.delete')).delete-action
 									span: i.fa.fa-trash-o
+							else
+								a.btn.btn-solo.btn-grey
+									span: i.fa.fa-trash-o
 
 	script(type='text/javascript').
 		var pgLangData = {

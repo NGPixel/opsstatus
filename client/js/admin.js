@@ -48,6 +48,7 @@ jQuery( document ).ready(function( $ ) {
 	//=include admin/dashboard.js
 	//=include admin/incidents.js
 	//=include admin/incidents-create.js
+	//=include admin/incidents-edit.js
 	//=include admin/incidents-update.js
 	//=include admin/templates.js
 	//=include admin/templates-edit.js

@@ -4,7 +4,7 @@ var _ = require('lodash');
 var modb = require('mongoose');
 var moment = require('moment');
 var Promise = require('bluebird');
-var V = require('validator-as-promised')
+var V = require('validator-as-promised');
 var Vc = require('../modules/validators');
 
 /**
@@ -134,7 +134,7 @@ incidentSchema.statics.new = function(data) {
         nSchedule.plannedEndDate = moment.tz(data.schedule_planned_end + ' ' + data.schedule_planned_end_time, 'YYYY/MM/DD HH:mm', nTimezone).utc().toDate();
         
         if(!moment(nSchedule.plannedStartDate).isBefore(nSchedule.plannedEndDate)) {
-          throw new Error('End date cannot be before Start date.')
+          throw new Error('End date cannot be before Start date.');
         }
 
         data.componentState = 'scheduled';

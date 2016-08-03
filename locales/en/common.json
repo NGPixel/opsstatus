@@ -71,6 +71,8 @@
 			"content": "Content",
 			"date_placeholder": "YYYY/MM/DD",
 			"datetimeSeparator": "at",
+			"edit": "Edit Incident",
+			"endedOn": "Resolved on",
 			"loadTemplate": "Load Template",
 			"missingCompRegion": "You must create a least one component <strong>and</strong> one region to create an incident!",
 			"openInfo": "Reported <strong>{{created}}</strong> and last updated <strong>{{updated}}</strong>.",
@@ -89,7 +91,8 @@
 			"type": "Type",
 			"typeScheduled": "Scheduled Maintenance",
 			"typeUnplanned": "Unplanned Incident",
-			"update": "Update Incident"
+			"update": "Update Incident",
+			"updates": "Updates"
 		},
 		"regions": {
 			"create": "New Region",

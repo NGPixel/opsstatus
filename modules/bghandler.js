@@ -128,7 +128,7 @@ module.exports = (appconfig) => {
 
 	let rd = require('./redis')(appconfig);
 	rd.psubscribe("ops.*", (err, count) => {
-		if(err) { throw err; };
+		if(err) { throw err; }
 		red.publish('ops.refresh', 'all');
 	});
 

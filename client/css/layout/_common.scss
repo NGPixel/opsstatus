@@ -45,6 +45,10 @@ template {
 
 }
 
+.CodeMirror, .CodeMirror-scroll {
+	min-height: 100px;
+}
+
 // ========================================
 // Animations
 // ========================================

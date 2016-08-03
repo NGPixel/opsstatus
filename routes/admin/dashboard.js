@@ -36,7 +36,7 @@ module.exports = {
 						});
 
 						groups = _.filter(groups, (g) => {
-							return _.has(comps, 'g_' + g.id)
+							return _.has(comps, 'g_' + g.id);
 						});
 
 						return res.render('admin/dashboard', {

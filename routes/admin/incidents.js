@@ -70,14 +70,50 @@ module.exports = {
 	 * @return     {void}  void
 	 */
 	displayEdit(req, res, next) {
-		db.Incident
-		.findById(req.params.id)
-		.exec()
-		.then((inc) => {
-			res.render('admin/incidents-edit', {
-				inc
-			});
+
+		Promise.props({
+
+			comps: db.Component.find()
+				.where('group').ne(null)
+				.populate('group')
+				.exec().then((comps) => { return _.sortBy(comps, ['group.sortIndex', 'sortIndex']);	}),
+
+			regions: db.Region.find()
+				.sort('sortIndex')
+				.exec(),
+
+			incident: db.Incident
+				.findById(req.params.id)
+				.populate({
+					path: 'author',
+					select: 'firstName lastName'
+				})
+				.populate({
+					path: 'updates.author',
+					select: 'firstName lastName'
+				})
+				.exec()
+
+		}).then((data) => {
+
+			// Adjust datetimes
+
+			let sch = data.incident.schedule;
+			data.adjSchedule = {
+				plannedStartDate: (sch.plannedStartDate) ? moment.utc(sch.plannedStartDate).tz(res.locals.user.timezone).format('YYYY/MM/DD') : '',
+				plannedStartDateTime: (sch.plannedStartDate) ? moment.utc(sch.plannedStartDate).tz(res.locals.user.timezone).format('HH:mm') : '',
+    		plannedEndDate: (sch.plannedEndDate) ? moment.utc(sch.plannedEndDate).tz(res.locals.user.timezone).format('YYYY/MM/DD') : '',
+    		plannedEndDateTime: (sch.plannedEndDate) ? moment.utc(sch.plannedEndDate).tz(res.locals.user.timezone).format('HH:mm') : '',
+		    actualStartDate: (sch.actualStartDate) ? moment.utc(sch.actualStartDate).tz(res.locals.user.timezone).format('YYYY/MM/DD') : '',
+		    actualStartDateTime: (sch.actualStartDate) ? moment.utc(sch.actualStartDate).tz(res.locals.user.timezone).format('HH:mm') : '',
+    		actualEndDate: (sch.actualEndDate) ? moment.utc(sch.actualEndDate).tz(res.locals.user.timezone).format('YYYY/MM/DD') : '',
+    		actualEndDateTime: (sch.actualEndDate) ? moment.utc(sch.actualEndDate).tz(res.locals.user.timezone).format('HH:mm') : ''
+			};
+
+			res.render('admin/incidents-edit', data);
+
 		});
+
 	},
 
 	/**

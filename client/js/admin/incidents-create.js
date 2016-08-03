@@ -78,7 +78,8 @@ if($('#admin-incidents-create').length) {
 		autoDownloadFontAwesome: false,
 		placeholder: 'Enter Markdown formatted content here...',
 		hideIcons: ['heading', 'quote'],
-		showIcons: ['strikethrough', 'heading-1', 'heading-2', 'heading-3', 'code', 'table', 'horizontal-rule']
+		showIcons: ['strikethrough', 'heading-1', 'heading-2', 'heading-3', 'code', 'table', 'horizontal-rule'],
+		spellChecker: false
 	});
 
 	// Save incident

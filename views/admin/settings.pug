@@ -21,7 +21,7 @@ block admin-content
 					each langName, langKey in appdata.lang
 						+dropdownitem(langName, langKey, 'language', 'blue-grey')
 			section
-				label Server Timezone
+				label Default Timezone
 				+dropdown('incident-timezone', 'timezone', 'UTC')(placeholder='UTC')
 					each tz in moment.tz.names()
 						+dropdownitem(tz, tz, 'clock-o', 'blue-grey', moment().tz(tz).format('Z z'))

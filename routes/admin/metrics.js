@@ -52,7 +52,7 @@ module.exports = {
 								name: 'Incidents - ' + r.name,
 								type: 'Incidents',
 								icon: 'bullhorn'
-							}
+							};
 						}),
 						{
 							id: 'monitor_12345',
