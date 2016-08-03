@@ -2,7 +2,7 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-users
-	| #{t('admin.sections.users')} / #{usr.fullName}
+	| #{t('admin.sections.users')} - #{usr.fullName}
 
 block admin-actions
 	a.btn.btn-indigo(href='/admin/users')

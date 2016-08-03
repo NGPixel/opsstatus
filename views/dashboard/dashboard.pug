@@ -51,7 +51,7 @@ block content
 														+stateicon(comp.state)
 					else
 						.box.no-content No components have been setup yet.
-			.col
+			.col.mid
 				section
 					h2
 						i.fa.fa-bullhorn
@@ -85,9 +85,10 @@ block content
 										ul.updates-list
 											each upd in inc.updates
 												li
-													strong= t('updateStates.' + upd.status)
-													span= upd.content
-													em= moment.tz(upd.postedDate, 'UTC').format('lll z')
+													div!= upd.contentHTML
+													span
+														strong= t('updateStates.' + upd.status)
+														em= moment.tz(upd.postedDate, 'UTC').format('lll z')
 					else
 						.box.no-content No active incidents.
 				section
@@ -123,9 +124,10 @@ block content
 										ul.updates-list.past
 											each upd in inc.updates
 												li
-													strong= t('updateStates.' + upd.status)
-													span= upd.content
-													em= moment.tz(upd.postedDate, 'UTC').format('lll z')
+													!= upd.contentHTML
+													span
+														strong= t('updateStates.' + upd.status)
+														em= moment.tz(upd.postedDate, 'UTC').format('lll z')
 										.updates-list-more
 											i.fa.fa-chevron-down
 											i.fa.fa-chevron-up

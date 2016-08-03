@@ -12,6 +12,9 @@ block admin-actions
 
 block admin-content
 	#admin-templates
+		h3.first
+			i.fa.fa-bullhorn
+			| Incident Templates
 		if tmpls.length > 0
 			ul.admin-list
 				each tmpl in tmpls
@@ -29,4 +32,10 @@ block admin-content
 									span: i.fa.fa-trash-o
 		else
 			.admin-box
-				| No template has been created yet.
+				| No incident templates have been created yet.
+
+		h3
+			i.fa.fa-envelope
+			| Email Templates
+		.admin-box
+				| No email templates have been created yet.

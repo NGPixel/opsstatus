@@ -3,6 +3,11 @@
 var _ = require('lodash');
 var moment = require('moment');
 var Promise = require('bluebird');
+var md = require('markdown-it')({
+	breaks: true,
+  linkify: true,
+  typographer: true
+});
 
 /**
  * Background Handler
@@ -47,7 +52,10 @@ module.exports = (appconfig) => {
 		.then((incRaw) => {
 
 			incRaw = _.map(incRaw, (i) => {
-				i.updates = _.orderBy(i.updates, ['postedDate'], ['desc']);
+				i.updates = _.chain(i.updates).orderBy(['postedDate'], ['desc']).map((u) => {
+					u.contentHTML = md.render(u.content);
+					return u;
+				});
 				return i;
 			});
 

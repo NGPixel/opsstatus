@@ -197,7 +197,7 @@ incidentSchema.statics.postUpdate = function(data) {
       });
 
       if(data.state === 'resolved') {
-        inc.schedule.actualEndDate = mome;nt().utc().toDate();
+        inc.schedule.actualEndDate = moment().utc().toDate();
         inc.currentState = 'closed';
       } else if(data.currentState !== 'scheduled') {
         inc.currentState = 'open';

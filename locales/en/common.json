@@ -101,7 +101,7 @@
 			"delete_title": "Are you sure you want to delete region <%= region %>?",
 			"name": "Region",
 			"name_placeholder": "Region name",
-			"noRegionsCreatedYet": "Aucune région n'a été créé."
+			"noRegionsCreatedYet": "No regions have been created yet."
 		},
 		"users": {
 			"create": "Create User",

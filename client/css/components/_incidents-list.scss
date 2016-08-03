@@ -14,7 +14,7 @@
 			margin-top: 15px;
 		}
 
-		h3 {
+		> h3 {
 			background-color: material-color('blue-grey','500');
 			border-bottom: 4px solid material-color('blue-grey','300');
 			color: #FFF;
@@ -80,38 +80,62 @@
 
 	> li {
 		border-top: 1px dotted material-color('blue-grey','100');
-		padding: 15px 15px;
+		padding: 0 15px 5px;
 
 		&:first-child {
 			border-top: none;
 		}
 
-		> strong {
-			display: inline-block;
-			font-size: 14px;
-			color: material-color('blue-grey','700');
-			margin-right: 5px;
-			font-weight: 500;
+		> div {
+			
+			p {
+				font-size: 14px;
+				color: material-color('blue-grey','600');
+			}
 
-			&::after {
-				content: ' \2014';
+			strong {
+				font-weight: 600;
+			}
+
+			h1, h2, h3 {
+				border-bottom: 1px solid #CCC;
+				margin: 0;
+				font-weight: 500;
 				color: material-color('blue-grey','500');
-				font-weight: 300;
+			}
+			
+			h1 {
+				font-size: 20px;
+			}
+
+			h2 {
+				font-size: 18px;
+			}
+
+			h3 {
+				font-size: 16px;
 			}
 
 		}
 
 		> span {
-			font-size: 14px;
-			color: material-color('blue-grey','600');
-		}
-
-		> em {
-			display: block;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
 			font-size: 12px;
-			font-style: normal;
-			color: material-color('blue-grey','400');
-			margin-top: 0;
+
+			> strong {
+				color: material-color('green','700');
+				font-weight: 500;
+				text-transform: uppercase;
+			}
+
+			> em {
+				font-size: 12px;
+				font-style: normal;
+				color: material-color('blue-grey','400');
+			}
+
 		}
 
 	}

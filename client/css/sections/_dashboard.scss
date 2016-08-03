@@ -6,6 +6,23 @@
 		padding: 0 1rem 1rem;
 	}
 
+	.col.mid {
+		border-left: 2px dotted material-color('grey','300');
+		border-right: 2px dotted material-color('grey','300');
+	}
+
+	@media screen and (max-width: 80em) {
+		.col.mid {
+			border-right: none;
+		}
+	}
+
+	@media screen and (max-width: 48em) {
+		.col.mid {
+			border-left: none;
+		}
+	}
+
 	section {
 
 		h2 {
