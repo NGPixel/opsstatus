@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server",
     "dev": "gulp",
-    "test": "istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec ./tests/index.js && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage"
+    "test": "snyk test && istanbul cover ./node_modules/mocha/bin/_mocha --report lcovonly -- -R spec ./tests/index.js && cat ./coverage/lcov.info | ./node_modules/.bin/codacy-coverage && rm -rf ./coverage"
   },
   "repository": {
     "type": "git",
@@ -90,6 +90,7 @@
     "sortablejs": "^1.4.2",
     "timepicker": "^1.11.1",
     "vex-js": "^2.3.4",
-    "vue": "^1.0.26"
+    "vue": "^1.0.26",
+    "snyk": "^1.18.0"
   }
 }

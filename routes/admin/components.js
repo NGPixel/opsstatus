@@ -35,6 +35,8 @@ module.exports = {
 							comps[grpId] = c.comps;
 						});
 
+						console.log(comps);
+
 						return res.render('admin/components', {
 							groups,
 							comps

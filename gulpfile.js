@@ -78,7 +78,7 @@ var paths = {
 		'!client/js', '!client/js/**',
 		'!dist', '!dist/**',
 		'!tests', '!tests/**',
-		'!gulpfile.js', '!inch.json', '!config.json'
+		'!gulpfile.js', '!inch.json', '!config.json', '!opsstatus.sublime-project'
 	]
 };
 

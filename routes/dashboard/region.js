@@ -29,7 +29,9 @@ module.exports = {
 	 */
 	display(req, res, next) {
 	 	Promise.props({
-	 		comps: red.get('ops:componentgroups').then((r) => { return JSON.parse(r); })
+	 		componentGroups: red.get('ops:componentgroups').then((r) => { return JSON.parse(r); }),
+	 		components: red.get('ops:components').then((r) => { return JSON.parse(r); }),
+	 		incidents: red.get('ops:incidents').then((r) => { return JSON.parse(r); })
 	 	}).then((pdata) => {
 	 		res.render('dashboard/region', {
 				usr: res.locals.usr,

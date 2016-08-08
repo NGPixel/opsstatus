@@ -16,7 +16,7 @@ block admin-actions
 
 block admin-content
 	#admin-components
-		if comps
+		if comps.length || groups
 			if _.has(comps, 'uncategorized')
 				.admin-prelist
 					h2 Uncategorized
