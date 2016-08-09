@@ -24,30 +24,35 @@
 		"majordown": "Major Outage"
 	},
 	"updates": {
+		"planned": {
+			"icon": "calendar-check-o",
+			"action": "scheduled",
+			"selectable": false
+		},
 		"identified": {
-			"name": "Identified",
 			"icon": "flag",
-			"action": "open"
+			"action": "open",
+			"selectable": false
 		},
 		"investigating": {
-			"name": "Investigating",
 			"icon": "search",
-			"action": "open"
+			"action": "open",
+			"selectable": true
 		},
 		"update": {
-			"name": "Update",
 			"icon": "sticky-note-o",
-			"action": "open"
+			"action": "open",
+			"selectable": true
 		},
 		"watching": {
-			"name": "Watching",
 			"icon": "eye",
-			"action": "open"
+			"action": "open",
+			"selectable": true
 		},
 		"resolved": {
-			"name": "Resolved",
 			"icon": "check",
-			"action": "closed"
+			"action": "closed",
+			"selectable": true
 		}
 	},
 	"lang": {

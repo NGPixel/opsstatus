@@ -47,6 +47,7 @@
 
 .incident-properties {
 	background-color: lighten(material-color('blue-grey','50'), 3%);
+	box-shadow:	0 1px 1px rgba(0,0,0,0.15);
 	border: 1px solid #FFF;
 	margin: 0;
 	padding: 9px 15px;
@@ -79,17 +80,20 @@
 	list-style-type: none;
 
 	> li {
-		border-top: 1px dotted material-color('blue-grey','100');
-		padding: 0 15px 5px;
+		box-shadow:	0 1px 1px rgba(0,0,0,0.15);
 
 		&:first-child {
 			border-top: none;
 		}
 
 		> div {
+			padding: 15px 15px 0;
 			
 			p {
+				margin: 0;
+				padding: 0 0 10px;
 				font-size: 14px;
+				line-height: 18px;
 				color: material-color('blue-grey','600');
 			}
 
@@ -99,7 +103,7 @@
 
 			h1, h2, h3 {
 				border-bottom: 1px solid #CCC;
-				margin: 0;
+				margin: 0 0 8px;
 				font-weight: 500;
 				color: material-color('blue-grey','500');
 			}
@@ -123,11 +127,19 @@
 			align-items: center;
 			justify-content: space-between;
 			font-size: 12px;
+			background-color: lighten(material-color('blue-grey','50'), 3%);
+			padding: 5px 15px;
 
 			> strong {
 				color: material-color('green','700');
 				font-weight: 500;
 				text-transform: uppercase;
+				
+				> i {
+					display: inline-block;
+					margin-right: 5px;
+				}
+
 			}
 
 			> em {
@@ -162,7 +174,7 @@
 	height: 30px;
 	font-size: 12px;
 	background-color: lighten(material-color('blue-grey','50'), 3%);
-	border: 1px solid #FFF;
+	border-bottom: 1px solid material-color('blue-grey','100');
 	color: material-color('blue-grey','300');
 	padding-top: 10px;
 	cursor: pointer;

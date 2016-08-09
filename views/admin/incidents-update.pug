@@ -17,7 +17,8 @@ block admin-content
 				label= t('admin.incidents.state')
 				+dropdown('incident-state', 'state', 'update')(placeholder=t('updateStates.update'))
 					each up, upId in appdata.updates
-						+dropdownitem(t('updateStates.' + upId), upId, up.icon, 'grey')
+						if up.selectable
+							+dropdownitem(t('updateStates.' + upId), upId, up.icon, 'grey')
 			section
 				label= t('admin.incidents.content')
 				textarea#incident-editor

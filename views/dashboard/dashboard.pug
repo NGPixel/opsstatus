@@ -87,7 +87,9 @@ block content
 												li
 													div!= upd.contentHTML
 													span
-														strong= t('updateStates.' + upd.status)
+														strong
+															i.fa(class='fa-' + appdata.updates[upd.status].icon)
+															= t('updateStates.' + upd.status)
 														em= moment.tz(upd.postedDate, 'UTC').format('lll z')
 					else
 						.box.no-content No active incidents.
@@ -124,9 +126,11 @@ block content
 										ul.updates-list.past
 											each upd in inc.updates
 												li
-													!= upd.contentHTML
+													div!= upd.contentHTML
 													span
-														strong= t('updateStates.' + upd.status)
+														strong
+															i.fa(class='fa-' + appdata.updates[upd.status].icon)
+															= t('updateStates.' + upd.status)
 														em= moment.tz(upd.postedDate, 'UTC').format('lll z')
 										.updates-list-more
 											i.fa.fa-chevron-down
