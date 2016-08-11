@@ -16,6 +16,7 @@
 
 		> h3 {
 			background-color: material-color('blue-grey','500');
+			box-shadow:	0 0 2px rgba(0,0,0,0.15);
 			border-bottom: 4px solid material-color('blue-grey','300');
 			color: #FFF;
 			margin: 0;
@@ -128,6 +129,8 @@
 			justify-content: space-between;
 			font-size: 12px;
 			background-color: lighten(material-color('blue-grey','50'), 3%);
+			border: 1px solid #FFF;
+			border-top: none;
 			padding: 5px 15px;
 
 			> strong {

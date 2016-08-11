@@ -1,5 +1,6 @@
 
 var Promise = require('bluebird');
+var _ = require('lodash');
 
 // ====================================
 // REGIONAL DASHBOARD (PUBLIC)
@@ -20,7 +21,7 @@ module.exports = {
 	},
 
 	/**
-	 * Display Display
+	 * Display Regional Dashboard
 	 *
 	 * @param      {Request}   req     The request
 	 * @param      {Response}  res     The Response
@@ -31,8 +32,11 @@ module.exports = {
 	 	Promise.props({
 	 		componentGroups: red.get('ops:componentgroups').then((r) => { return JSON.parse(r); }),
 	 		components: red.get('ops:components').then((r) => { return JSON.parse(r); }),
-	 		incidents: red.get('ops:incidents').then((r) => { return JSON.parse(r); })
+	 		incidents: red.get('ops:incidents').then((r) => { return JSON.parse(r); }),
+	 		regions: red.get('ops:regions').then((r) => { return JSON.parse(r); })
 	 	}).then((pdata) => {
+	 		pdata.region = _.find(pdata.regions, { '_id': req.params.id });
+	 		console.log(pdata.region);
 	 		res.render('dashboard/region', {
 				usr: res.locals.usr,
 				pdata
