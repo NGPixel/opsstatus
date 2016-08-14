@@ -26,11 +26,7 @@ module.exports = (confPath) => {
 		host: "http://localhost",
 		port: process.env.PORT,
 		db: "mongodb://localhost/opsstatus",
-		redis: {
-		  host: "localhost",
-		  port: 6379,
-		  db: 0
-		},
+		redis: null,
 		sessionSecret: null,
 		admin: null
 	});
