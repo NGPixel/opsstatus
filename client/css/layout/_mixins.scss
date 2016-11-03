@@ -86,7 +86,9 @@
 
 @mixin status-colors($prop, $ref:0) {
 
-  $basecolor: 500 + $ref * 100;
+  $basecolor: $ref;
+
+  @if $ref < 3 { $basecolor: 500 + $ref * 100; }
 
   &.status-ok {
     #{$prop}: material-color('green', inspect($basecolor));
@@ -95,7 +97,8 @@
     #{$prop}: material-color('blue', inspect($basecolor));
   }
   &.status-perfissues {
-    #{$prop}: material-color('purple', inspect($basecolor - 200));
+    @if $ref > 2 { #{$prop}: material-color('purple', inspect($basecolor)); }
+    @else { #{$prop}: material-color('purple', inspect($basecolor - 200)); }
   }
   &.status-partialdown {
     #{$prop}: material-color('orange', inspect($basecolor));

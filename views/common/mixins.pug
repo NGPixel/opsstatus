@@ -30,3 +30,54 @@ mixin stateicon(id)
 			i.fa.fa-exclamation-triangle.status-partialdown
 		when "majordown"
 			i.fa.fa-circle.status-majordown
+
+mixin incidentItem(incs)
+	.box
+		ul.incidents-list
+			each inc in incs
+				li
+					h3(class='status-' + inc.state)
+						span= inc.summary
+						+stateicon(inc.state)
+					ul.incident-properties(class='status-' + inc.state)
+						li
+							- var comp = pdata.components[inc.component]
+							strong Component:
+							span= comp.name + ' - ' + comp.group.name
+						li
+							strong Severity:
+							span= t('states.' + inc.state)
+						li
+							strong Affected Regions:
+							span
+								each reg, idx in inc.regions
+									if idx > 0 && idx < inc.regions.length - 1
+										| , 
+									else if idx > 0 && idx >= inc.regions.length - 1
+										= ' ' + t('dashboard.affectedRegionsAnd') + ' '
+									a(href='/region/' + reg._id)= reg.name
+
+					if inc.updates.length > 1
+						ul.updates-list
+							each upd in _.initial(inc.updates)
+								li
+									div!= upd.contentHTML
+									span
+										strong
+											i.fa(class='fa-' + appdata.updates[upd.status].icon)
+											= t('updateStates.' + upd.status)
+										em= moment.tz(upd.postedDate, 'UTC').format('lll z')
+					if inc.updates.length > 2
+						.updates-list-more
+						.updates-list-morebtn
+							i.fa.fa-chevron-down
+							i.fa.fa-chevron-up
+					ul.updates-list
+						- var upd = _.last(inc.updates)
+							li
+								div!= upd.contentHTML
+								span
+									strong
+										i.fa(class='fa-' + appdata.updates[upd.status].icon)
+										= t('updateStates.' + upd.status)
+									em= moment.tz(upd.postedDate, 'UTC').format('lll z')

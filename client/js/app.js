@@ -32,10 +32,10 @@ jQuery( document ).ready(function( $ ) {
 	
 	if($('.dashboard').length) {
 
-		$('.updates-list-more').on('click', (ev) => {
-			let listElm = $(ev.currentTarget).prev('.updates-list').get(0);
+		$('.updates-list-morebtn').on('click', (ev) => {
+			let listElm = $(ev.currentTarget).prevAll('.updates-list').get(0);
 			$('li', listElm).slice(1).slideToggle();
-			$(ev.currentTarget).toggleClass('reverse');
+			$(ev.currentTarget).toggleClass('reverse').prev().toggleClass('reverse');
 		});
 
 	}

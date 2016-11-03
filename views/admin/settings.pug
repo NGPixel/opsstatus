@@ -26,6 +26,11 @@ block admin-content
 					each tz in moment.tz.names()
 						+dropdownitem(tz, tz, 'clock-o', 'blue-grey', moment().tz(tz).format('Z z'))
 			section
+				label Components Display
+				div
+					input(id='incidents_active_collapsed', type='checkbox', v-model='components_groups_collapsed', value='yes')
+					label(for='incidents_active_collapsed') Component Groups that have no incidents should be collapsed by default. <em>Default: no</em>
+			section
 				label Incidents Display
 				div
 					input(id='incidents_active_collapsed', type='checkbox', v-model='incidents_active_collapsed', value='yes')

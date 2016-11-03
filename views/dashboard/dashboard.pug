@@ -56,85 +56,25 @@ block content
 					h2
 						i.fa.fa-bullhorn
 						= t('headers.incidents')
-					if pdata.incidents.active.length > 0
-						.box
-							ul.incidents-list
-								each inc in pdata.incidents.active
-									li
-										h3(class='status-' + inc.state)
-											span= inc.summary
-											+stateicon(inc.state)
-										ul.incident-properties
-											li
-												- var comp = pdata.components[inc.component]
-												strong Component:
-												span= comp.name + ' - ' + comp.group.name
-											li
-												strong Severity:
-												span= t('states.' + inc.state)
-											li
-												strong Affected Regions:
-												span
-													each reg, idx in inc.regions
-														if idx > 0 && idx < inc.regions.length - 1
-															| , 
-														else if idx > 0 && idx >= inc.regions.length - 1
-															= ' ' + t('dashboard.affectedRegionsAnd') + ' '
-														a(href='/region/' + reg._id)= reg.name
-
-										ul.updates-list
-											each upd in inc.updates
-												li
-													div!= upd.contentHTML
-													span
-														strong
-															i.fa(class='fa-' + appdata.updates[upd.status].icon)
-															= t('updateStates.' + upd.status)
-														em= moment.tz(upd.postedDate, 'UTC').format('lll z')
+					if pdata.incidents && pdata.incidents.active.length > 0
+						+incidentItem(pdata.incidents.active)
 					else
 						.box.no-content No active incidents.
 				section
 					h2
+						i.fa.fa-clock-o
+						= t('headers.scheduledmaintenance')
+					if pdata.incidents && pdata.incidents.scheduled.length > 0
+						+incidentItem(pdata.incidents.scheduled)
+					else
+						.box.no-content
+							| No maintenance is planned for now.
+				section
+					h2
 						i.fa.fa-history
 						= t('headers.pastincidents')
-					if pdata.incidents.recent.length > 0
-						.box
-							ul.incidents-list
-								each inc in pdata.incidents.recent
-									li
-										h3(class='status-' + inc.state)
-											span= inc.summary
-											+stateicon(inc.state)
-										ul.incident-properties
-											li
-												- var comp = pdata.components[inc.component]
-												strong Component:
-												span= comp.name + ' - ' + comp.group.name
-											li
-												strong Severity:
-												span= t('states.' + inc.state)
-											li
-												strong Affected Regions:
-												span
-													each reg, idx in inc.regions
-														if idx > 0 && idx < inc.regions.length - 1
-															| , 
-														else if idx > 0 && idx >= inc.regions.length - 1
-															= ' ' + t('dashboard.affectedRegionsAnd') + ' '
-														a(href='/region/' + reg._id)= reg.name
-
-										ul.updates-list.past
-											each upd in inc.updates
-												li
-													div!= upd.contentHTML
-													span
-														strong
-															i.fa(class='fa-' + appdata.updates[upd.status].icon)
-															= t('updateStates.' + upd.status)
-														em= moment.tz(upd.postedDate, 'UTC').format('lll z')
-										.updates-list-more
-											i.fa.fa-chevron-down
-											i.fa.fa-chevron-up
+					if pdata.incidents && pdata.incidents.recent.length > 0
+						+incidentItem(pdata.incidents.recent)
 					else
 						.box.no-content
 							| No recent past incidents.

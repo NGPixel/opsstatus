@@ -3,6 +3,7 @@
 	"headers": {
 		"overview": "Overview",
 		"incidents": "Incidents",
+		"scheduledmaintenance": "Scheduled Maintenance",
 		"pastincidents": "Past Incidents",
 		"regions": "Regions",
 		"uptime": "Uptime"

@@ -60,7 +60,8 @@ module.exports = (appconfig) => {
 			});
 
 			let inc = {
-				active: _.filter(incRaw, (i) => { return i.currentState !== 'closed'; }),
+				active: _.filter(incRaw, (i) => { return i.kind !== 'scheduled' && i.currentState !== 'closed'; }),
+				scheduled: _.filter(incRaw, (i) => { return i.kind === 'scheduled' && i.currentState !== 'closed' }),
 				recent: _.filter(incRaw, { currentState: 'closed' })
 			};
 
