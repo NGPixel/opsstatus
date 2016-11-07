@@ -39,7 +39,7 @@ var paths = {
 				'./node_modules/lodash/lodash.min.js',
 				'./node_modules/jquery/dist/jquery.min.js',
 				'./node_modules/vue/dist/vue.min.js',
-				'./node_modules/vex-js/js/vex.combined.min.js',
+				'./node_modules/vex-js/dist/js/vex.combined.min.js',
 				'./node_modules/chart.js/dist/Chart.bundle.min.js'
 			]
 		},
@@ -53,7 +53,7 @@ var paths = {
 	css: {
 		combine: [
 			'./node_modules/font-awesome/css/font-awesome.min.css',
-			'./node_modules/gridlex/docs/gridlex.min.css',
+			'./node_modules/gridlex/dist/gridlex.min.css',
 			'./node_modules/vex-js/dist/css/vex.css',
 			'./node_modules/vex-js/dist/css/vex-theme-os.css',
 			'./node_modules/simplemde/dist/simplemde.min.css',

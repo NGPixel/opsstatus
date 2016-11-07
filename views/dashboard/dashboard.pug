@@ -62,15 +62,6 @@ block content
 						.box.no-content No active incidents.
 				section
 					h2
-						i.fa.fa-clock-o
-						= t('headers.scheduledmaintenance')
-					if pdata.incidents && pdata.incidents.scheduled.length > 0
-						+incidentItem(pdata.incidents.scheduled)
-					else
-						.box.no-content
-							| No maintenance is planned for now.
-				section
-					h2
 						i.fa.fa-history
 						= t('headers.pastincidents')
 					if pdata.incidents && pdata.incidents.recent.length > 0
@@ -79,6 +70,15 @@ block content
 						.box.no-content
 							| No recent past incidents.
 			.col
+				section
+					h2
+						i.fa.fa-clock-o
+						= t('headers.scheduledmaintenance')
+					if pdata.incidents && pdata.incidents.scheduled.length > 0
+						+incidentItem(pdata.incidents.scheduled)
+					else
+						.box.no-content
+							| No maintenance is planned for now.
 				section
 					h2
 						i.fa.fa-globe

@@ -4,6 +4,25 @@ var bcrypt = require('bcryptjs-then');
 var Promise = require('bluebird');
 var _ = require('lodash');
 
+const rightsSchema = new Mongoose.Schema({
+  role: {
+    type: String,
+    default: 'guest'
+  },
+  path: {
+    type: String,
+    default: '/'
+  },
+  exact: {
+    type: Boolean,
+    default: false
+  },
+  deny: {
+    type: Boolean,
+    default: false
+  }
+});
+
 /**
  * User Schema
  *
@@ -25,15 +44,9 @@ var userSchema = Mongoose.Schema({
 		type: String
 	},
   password: {
-    type: String,
-    required: true
+    type: String
   },
-  firstName: {
-    type: String,
-    required: true,
-    minlength: 1
-  },
-  lastName: {
+  name: {
     type: String,
     required: true,
     minlength: 1
@@ -48,12 +61,10 @@ var userSchema = Mongoose.Schema({
     required: true,
     default: 'en'
   },
-  rights: [{
-		role: String,
-		path: String,
-		exact: Boolean,
-		deny: Boolean
-	}]
+  rights: {
+    type: [rightsSchema],
+    required: true
+  }
 
 },
 {
@@ -79,19 +90,24 @@ userSchema.statics.processProfile = (profile) => {
 		return Promise.reject(new Error('Invalid User Email'));
 	}
 
-	return db.User.findOneAndUpdate({
+	return db.User.findOne({
 		email: primaryEmail,
 		provider: profile.provider
-	}, {
-		email: primaryEmail,
-		provider: profile.provider,
-		providerId: profile.id,
-		firstName: profile.displayName
-	}, {
-		new: true,
-		upsert: true
 	}).then((user) => {
-	  return (user) ? user : Promise.reject(new Error('User Upsert failed.'));
+    return (user) ? user : db.User.create({
+      email: primaryEmail,
+      provider: profile.provider,
+      providerId: profile.id,
+      name: profile.displayName,
+      rights: [{
+        role: 'guest',
+        path: '/',
+        exact: false,
+        deny: false
+      }]
+    });
+  }).then((user) => {
+	  return (user) ? user : Promise.reject(new Error('User Automated Creation failed.'));
 	});
 
 };
@@ -132,11 +148,10 @@ userSchema.statics.new = function(nUserData) {
       _id: db.ObjectId(),
       email: nUserData.email,
       provider: 'local',
-      firstName: nUserData.firstName,
-      lastName: nUserData.lastName,
+      name: nUserData.name,
       password: passhash,
       rights: [{
-      	role: 'admin',
+      	role: 'user',
 				path: '/',
 				exact: false,
 				deny: false
@@ -161,8 +176,7 @@ userSchema.statics.edit = function(userId, data) {
 
   let fdata = {
     email: data.email,
-    firstName: data.firstName,
-    lastName: data.lastName,
+    name: data.name,
     timezone: data.timezone,
     lang: data.lang,
     rights: data.rights

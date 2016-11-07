@@ -16,9 +16,14 @@ block admin-content
 			each usr in users
 				li(data-id=usr.id, data-email=usr.email, data-firstname=usr.firstName, data-lastname=usr.lastName)
 					span
-						i.fa.fa-user
+						case usr.provider
+								when 'local': i.fa.fa-database
+								when 'windowslive': i.fa.fa-windows.is-blue
+								when 'google': i.fa.fa-google.is-blue
+								when 'facebook': i.fa.fa-facebook.is-purple
+								default: i.fa.fa-question-circle
 						p
-							strong= usr.fullName
+							strong= usr.name
 							span= usr.email
 					span
 						span.btn-group
