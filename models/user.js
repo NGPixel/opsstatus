@@ -1,6 +1,5 @@
 "use strict";
 
-var modb = require('mongoose');
 var bcrypt = require('bcryptjs-then');
 var Promise = require('bluebird');
 var _ = require('lodash');
@@ -10,7 +9,7 @@ var _ = require('lodash');
  *
  * @type       {Object}
  */
-var userSchema = modb.Schema({
+var userSchema = Mongoose.Schema({
 
   email: {
     type: String,
@@ -18,6 +17,13 @@ var userSchema = modb.Schema({
     index: true,
     minlength: 6
   },
+  provider: {
+		type: String,
+		required: true
+	},
+	providerId: {
+		type: String
+	},
   password: {
     type: String,
     required: true
@@ -43,9 +49,11 @@ var userSchema = modb.Schema({
     default: 'en'
   },
   rights: [{
-    type: String,
-    required: true
-  }]
+		role: String,
+		path: String,
+		exact: Boolean,
+		deny: Boolean
+	}]
 
 },
 {
@@ -59,6 +67,45 @@ userSchema.virtual('fullName').get(function() {
   return this.firstName + ' ' + this.lastName;
 });
 
+userSchema.statics.processProfile = (profile) => {
+
+	let primaryEmail = '';
+	if(_.isArray(profile.emails)) {
+		let e = _.find(profile.emails, ['primary', true]);
+		primaryEmail = (e) ? e.value : _.first(profile.emails).value;
+	} else if(_.isString(profile.email) && profile.email.length > 5) {
+		primaryEmail = profile.email;
+	} else {
+		return Promise.reject(new Error('Invalid User Email'));
+	}
+
+	return db.User.findOneAndUpdate({
+		email: primaryEmail,
+		provider: profile.provider
+	}, {
+		email: primaryEmail,
+		provider: profile.provider,
+		providerId: profile.id,
+		firstName: profile.displayName
+	}, {
+		new: true,
+		upsert: true
+	}).then((user) => {
+	  return (user) ? user : Promise.reject(new Error('User Upsert failed.'));
+	});
+
+};
+
+/**
+ * MODEL - Generate hash from password
+ *
+ * @param      {string}   uPassword  The user password
+ * @return     {Promise<String>}  Promise with generated hash
+ */
+userSchema.statics.hashPassword = function(uPassword) {
+    return bcrypt.hash(uPassword, 10);
+};
+
 /**
  * INSTANCE - Validate password against hash
  *
@@ -71,16 +118,6 @@ userSchema.methods.validatePassword = function(uPassword) {
 };
 
 /**
- * MODEL - Generate hash from password
- *
- * @param      {string}   uPassword  The user password
- * @return     {Promise<String>}  Promise with generated hash
- */
-userSchema.statics.generateHash = function(uPassword) {
-    return bcrypt.hash(uPassword, 10);
-};
-
-/**
  * MODEL - Create a new user
  *
  * @param      {Object}   nUserData  User data
@@ -90,17 +127,23 @@ userSchema.statics.new = function(nUserData) {
 
   let self = this;
 
-  return self.generateHash(nUserData.password).then((passhash) => {
+  return self.hashPassword(nUserData.password).then((passhash) => {
     return this.create({
       _id: db.ObjectId(),
       email: nUserData.email,
+      provider: 'local',
       firstName: nUserData.firstName,
       lastName: nUserData.lastName,
       password: passhash,
-      rights: ['admin']
+      rights: [{
+      	role: 'admin',
+				path: '/',
+				exact: false,
+				deny: false
+      }]
     });
   });
-  
+
 };
 
 /**
@@ -129,7 +172,7 @@ userSchema.statics.edit = function(userId, data) {
   // Change password?
 
   if(!_.isEmpty(data.password) && _.trim(data.password) !== '********') {
-    waitTask = self.generateHash(data.password).then((passhash) => {
+    waitTask = self.hashPassword(data.password).then((passhash) => {
       fdata.password = passhash;
       return fdata;
     });
@@ -155,4 +198,4 @@ userSchema.statics.erase = function(userId) {
   return this.findByIdAndRemove(userId);
 };
 
-module.exports = modb.model('User', userSchema);
+module.exports = Mongoose.model('User', userSchema);

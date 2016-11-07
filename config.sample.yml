@@ -1,61 +1,82 @@
-##########################################
-# OPS STATUS - CONFIGURATION
-##########################################
+###########################################################
+# OPS STATUS - CONFIGURATION                              #
+###########################################################
+# Full explanation + examples in the documentation
+# https://opsstatus.readme.io/
 
-# ------------------
-# Title of this site
-# ------------------
+# ---------------------------------------------------------
+# Site Title
+# ---------------------------------------------------------
 
 title: Ops Status
 
-# -------------------------------------------------
-# Full path to the site, without the trailing slash
-# -------------------------------------------------
+# ---------------------------------------------------------
+# Full path to the site, WITHOUT the trailing slash
+# ---------------------------------------------------------
 
 host: http://localhost
 
-# ------------------------------------------------
+# ---------------------------------------------------------
 # Port the server should listen to (80 by default)
-# ------------------------------------------------
+# ---------------------------------------------------------
 # To use process.env.PORT, comment the line below:
 
 port: 80
 
-# -------------------------
+# ---------------------------------------------------------
+# Site Authentication
+# ---------------------------------------------------------
+
+auth:
+  local:
+    enabled: true
+  google:
+    enabled: true
+    clientId: GOOGLE_CLIENT_ID
+    clientSecret: GOOGLE_CLIENT_SECRET
+  microsoft:
+    enabled: true
+    clientId: MS_APP_ID
+    clientSecret: MS_APP_SECRET
+  facebook:
+    enabled: false
+    clientId: FACEBOOK_APP_ID
+    clientSecret: FACEBOOK_APP_SECRET
+
+# ---------------------------------------------------------
 # MongoDB Connection String
-# -------------------------
-# Full explanation + examples in the documentation (https://opsstatus.readme.io/)
+# ---------------------------------------------------------
 
 db: mongodb://localhost/opsstatus
 
-# ---------------------
+# ---------------------------------------------------------
 # Redis Connection Info
-# ---------------------
-# Full explanation + examples in the documentation (https://opsstatus.readme.io/)
-
+# ---------------------------------------------------------
 redis:
   host: localhost
   port: 6379
   db: 0
 
-# ------------------------------------------
+# ---------------------------------------------------------
 # Secret key to use when encrypting sessions
-# ------------------------------------------
-# Use a long and unique random string (256-bit keys are perfect!)
+# ---------------------------------------------------------
+# Use a long and unique random string
+# 256-bit keys are perfect!
 
 sessionSecret: 1234567890abcdefghijklmnopqrstuvxyz
 
-# -------------------
+# ---------------------------------------------------------
 # Administrator email
-# -------------------
+# ---------------------------------------------------------
 # An account will be created using the email specified here.
-# The password is set to "admin123" by default. Change it immediately upon login!!!
+# The password is set to "admin123" by default.
+# Change it immediately upon login!
 
 admin: admin@company.com
 
-# ------------------------------------------
+# ---------------------------------------------------------
 # Whether the server is the master or a slave
-# ------------------------------------------
+# ---------------------------------------------------------
 # Unless you have multiple instances of Ops Status running on multiple servers, this should always be set to 'master'.
 # Only a single server can be set as 'master'. Other instances should be set as 'slave'.
 # All instances MUST point to the same database and the same redis collections.

@@ -1,6 +1,5 @@
 "use strict";
 
-var modb = require('mongoose');
 var _ = require('lodash');
 var modb_delete = require('mongoose-delete');
 var Promise = require('bluebird');
@@ -10,7 +9,7 @@ var Promise = require('bluebird');
  *
  * @type       {Object}
  */
-var componentSchema = modb.Schema({
+var componentSchema = Mongoose.Schema({
 
   name: {
     type: String,
@@ -29,7 +28,7 @@ var componentSchema = modb.Schema({
     required: true
   },
   group: {
-    type: modb.Schema.Types.ObjectId,
+    type: Mongoose.Schema.Types.ObjectId,
     ref: 'ComponentGroup'
   }
 
@@ -57,7 +56,7 @@ componentSchema.statics.new = function(compName, compDescription) {
     state: 'ok',
     group: null
   });
-  
+
 };
 
 /**
@@ -128,7 +127,7 @@ componentSchema.statics.reorder = function(newOrder) {
         }
 
         // Save modifications
-        
+
         if(isModified) {
           queries.push(comp.save());
         }
@@ -169,4 +168,4 @@ componentSchema.statics.erase = function(compId) {
   });
 };
 
-module.exports = modb.model('Component', componentSchema);
+module.exports = Mongoose.model('Component', componentSchema);

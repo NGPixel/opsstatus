@@ -1,18 +1,17 @@
 "use strict";
 
 var _ = require('lodash');
-var modb = require('mongoose');
 var moment = require('moment');
 var Promise = require('bluebird');
 var V = require('validator-as-promised');
-var Vc = require('../modules/validators');
+var Vc = require('../libs/validators');
 
 /**
  * Incident Schema
  *
  * @type       {Object}
  */
-var incidentSchema = modb.Schema({
+var incidentSchema = Mongoose.Schema({
 
   summary: {
     type: String,
@@ -43,12 +42,12 @@ var incidentSchema = modb.Schema({
     ref: 'Region'
   }],
   component: {
-    type: modb.Schema.Types.ObjectId,
+    type: Mongoose.Schema.Types.ObjectId,
     ref: 'Component',
     required: true
   },
   author: {
-    type: modb.Schema.Types.ObjectId,
+    type: Mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: true
   },
@@ -76,7 +75,7 @@ var incidentSchema = modb.Schema({
       required: true
     },
     author: {
-      type: modb.Schema.Types.ObjectId,
+      type: Mongoose.Schema.Types.ObjectId,
       ref: 'User',
       required: true
     },
@@ -132,7 +131,7 @@ incidentSchema.statics.new = function(data) {
       if(isScheduled) {
         nSchedule.plannedStartDate = moment.tz(data.schedule_planned_start + ' ' + data.schedule_planned_start_time, 'YYYY/MM/DD HH:mm', nTimezone).utc().toDate();
         nSchedule.plannedEndDate = moment.tz(data.schedule_planned_end + ' ' + data.schedule_planned_end_time, 'YYYY/MM/DD HH:mm', nTimezone).utc().toDate();
-        
+
         if(!moment(nSchedule.plannedStartDate).isBefore(nSchedule.plannedEndDate)) {
           throw new Error('End date cannot be before Start date.');
         }
@@ -176,7 +175,7 @@ incidentSchema.statics.new = function(data) {
     });
 
   });
-  
+
 };
 
 /**
@@ -220,4 +219,4 @@ incidentSchema.statics.erase = function(incidentId) {
   return this.findByIdAndRemove(incidentId);
 };
 
-module.exports = modb.model('Incident', incidentSchema);
+module.exports = Mongoose.model('Incident', incidentSchema);

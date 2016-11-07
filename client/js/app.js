@@ -2,6 +2,8 @@
 
 var alerts;
 
+//=include components/*.js
+
 jQuery( document ).ready(function( $ ) {
 
 	vex.defaultOptions.className = 'vex-theme-os';
@@ -29,7 +31,7 @@ jQuery( document ).ready(function( $ ) {
 	// ====================================
 	// Expand Updates List
 	// ====================================
-	
+
 	if($('.dashboard').length) {
 
 		$('.updates-list-morebtn').on('click', (ev) => {

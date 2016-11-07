@@ -1,6 +1,5 @@
 "use strict";
 
-var modb = require('mongoose');
 var _ = require('lodash');
 var slug = require('slug');
 var Promise = require('bluebird');
@@ -11,7 +10,7 @@ var modb_delete = require('mongoose-delete');
  *
  * @type       {<Mongoose.Schema>}
  */
-var regionSchema = modb.Schema({
+var regionSchema = Mongoose.Schema({
 
   _id: String,
 
@@ -105,4 +104,4 @@ regionSchema.statics.erase = function(regionId) {
   });
 };
 
-module.exports = modb.model('Region', regionSchema);
+module.exports = Mongoose.model('Region', regionSchema);

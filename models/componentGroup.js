@@ -1,6 +1,5 @@
 "use strict";
 
-var modb = require('mongoose');
 var _ = require('lodash');
 var Promise = require('bluebird');
 
@@ -9,7 +8,7 @@ var Promise = require('bluebird');
  *
  * @type       {Object}
  */
-var componentGroupSchema = modb.Schema({
+var componentGroupSchema = Mongoose.Schema({
 
   name: {
     type: String,
@@ -29,7 +28,7 @@ var componentGroupSchema = modb.Schema({
     required: true
   },
   components: [{
-    type: modb.Schema.Types.ObjectId,
+    type: Mongoose.Schema.Types.ObjectId,
     ref: 'Component'
   }]
 
@@ -53,7 +52,7 @@ componentGroupSchema.statics.new = function(compgrpName, compgrpShortName) {
     shortName: _.trim(compgrpShortName),
     sortIndex: 0
   });
-  
+
 };
 
 /**
@@ -108,4 +107,4 @@ componentGroupSchema.statics.erase = function(groupId) {
   });
 };
 
-module.exports = modb.model('ComponentGroup', componentGroupSchema);
+module.exports = Mongoose.model('ComponentGroup', componentGroupSchema);

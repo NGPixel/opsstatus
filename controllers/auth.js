@@ -40,9 +40,7 @@ router.get('/login', function(req, res, next) {
 router.post('/login', bruteforce.prevent, function(req, res, next) {
 		passport.authenticate('local', function(err, user, info) {
 
-			if (err) { return next(err); }
-
-			if (!user) {
+			if (err || !user) {
 				req.flash('alert', {
           class: 'error',
           title: 'Invalid login',
@@ -61,6 +59,19 @@ router.post('/login', bruteforce.prevent, function(req, res, next) {
 
 		})(req, res, next);
 });
+
+/**
+ * Social Login
+ */
+
+router.get('/login/ms', passport.authenticate('windowslive', { scope: ['wl.signin', 'wl.basic', 'wl.emails'] }));
+router.get('/login/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
+router.get('/login/facebook', passport.authenticate('facebook', { scope: ['public_profile', 'email'] }));
+
+router.get('/login/ms/callback', passport.authenticate('windowslive', { failureRedirect: '/login', successRedirect: '/admin' }));
+router.get('/login/google/callback', passport.authenticate('google', { failureRedirect: '/login', successRedirect: '/admin' }));
+router.get('/login/facebook/callback', passport.authenticate('facebook', { failureRedirect: '/login', successRedirect: '/admin' }));
+
 
 /**
  * Logout

@@ -18,60 +18,64 @@ var include = require("gulp-include");
  * @type       {Object}
  */
 var paths = {
-	scriptlibs: {
-		admin: [
-      './node_modules/lodash/lodash.min.js',
-      './node_modules/jquery/dist/jquery.min.js',
-      './node_modules/bluebird/js/browser/bluebird.min.js',
-      './node_modules/moment/min/moment-with-locales.min.js',
-      './node_modules/moment-timezone/builds/moment-timezone-with-data.min.js',
-      './node_modules/chart.js/dist/Chart.min.js',
-      './node_modules/vue/dist/vue.min.js',
-      './node_modules/pikaday/pikaday.js',
-      './node_modules/pikaday/plugins/pikaday.jquery.js',
-      './node_modules/sortablejs/Sortable.min.js',
-      './node_modules/vex-js/js/vex.combined.min.js',
-      './node_modules/simplemde/dist/simplemde.min.js',
-      './node_modules/timepicker/jquery.timepicker.min.js',
+	scripts: {
+		combine: {
+			admin: [
+				'./node_modules/lodash/lodash.min.js',
+				'./node_modules/jquery/dist/jquery.min.js',
+				'./node_modules/bluebird/js/browser/bluebird.min.js',
+				'./node_modules/moment/min/moment-with-locales.min.js',
+				'./node_modules/moment-timezone/builds/moment-timezone-with-data.min.js',
+				'./node_modules/chart.js/dist/Chart.min.js',
+				'./node_modules/vue/dist/vue.min.js',
+				'./node_modules/pikaday/pikaday.js',
+				'./node_modules/pikaday/plugins/pikaday.jquery.js',
+				'./node_modules/sortablejs/Sortable.min.js',
+				'./node_modules/vex-js/dist/js/vex.combined.min.js',
+				'./node_modules/simplemde/dist/simplemde.min.js',
+				'./node_modules/timepicker/jquery.timepicker.min.js',
+			],
+			client: [
+				'./node_modules/lodash/lodash.min.js',
+				'./node_modules/jquery/dist/jquery.min.js',
+				'./node_modules/vue/dist/vue.min.js',
+				'./node_modules/vex-js/js/vex.combined.min.js',
+				'./node_modules/chart.js/dist/Chart.bundle.min.js'
+			]
+		},
+		compile: [
+			'./client/js/*.js',
 		],
-		client: [
-			'./node_modules/lodash/lodash.min.js',
-      './node_modules/jquery/dist/jquery.min.js',
-      './node_modules/vue/dist/vue.min.js',
-      './node_modules/vex-js/js/vex.combined.min.js',
-      './node_modules/chart.js/dist/Chart.bundle.min.js'
+		watch: [
+			'./client/js/**/*.js'
 		]
 	},
-	scriptapps: [
-		'./client/js/components/*.js',
-		'./client/js/app.js'
-	],
-	scriptadmin: [
-		'./client/js/admin.js'
-	],
-	scriptappswatch: [
-		'./client/js/**/*.js'
-	],
-	csslibs: [
-		'./node_modules/font-awesome/css/font-awesome.min.css',
-		'./node_modules/gridlex/dist/gridlex.min.css',
-		'./node_modules/vex-js/css/vex.css',
-		'./node_modules/vex-js/css/vex-theme-os.css',
-		'./node_modules/simplemde/dist/simplemde.min.css',
-		'./node_modules/pikaday/css/pikaday.css',
-		'./node_modules/timepicker/jquery.timepicker.min.css'
-	],
-	cssapps: [
-		'./client/css/app.scss'
-	],
-	cssappswatch: [
-		'./client/css/**/*.scss'
-	],
+	css: {
+		combine: [
+			'./node_modules/font-awesome/css/font-awesome.min.css',
+			'./node_modules/gridlex/docs/gridlex.min.css',
+			'./node_modules/vex-js/dist/css/vex.css',
+			'./node_modules/vex-js/dist/css/vex-theme-os.css',
+			'./node_modules/simplemde/dist/simplemde.min.css',
+			'./node_modules/pikaday/css/pikaday.css',
+			'./node_modules/timepicker/jquery.timepicker.min.css'
+		],
+		compile: [
+			'./client/css/*.scss'
+		],
+		includes: [
+			'../core',
+			//'./node_modules/requarks-core'
+		],
+		watch: [
+			'./client/css/**/*.scss'
+		]
+	},
 	fonts: [
 		'./node_modules/font-awesome/fonts/*-webfont.*',
 		'!./node_modules/font-awesome/fonts/*-webfont.svg'
 	],
-	deploypackage: [
+	deploy: [
 		'./**/*',
 		'!node_modules', '!node_modules/**',
 		'!coverage', '!coverage/**',
@@ -88,7 +92,7 @@ var paths = {
 gulp.task('server', ['scripts', 'css', 'fonts'], function() {
 	nodemon({
 		script: './server',
-		ignore: ['public/', 'client/', 'tests/'],
+		ignore: ['assets/', 'client/', 'tests/'],
 		ext: 'js json',
 		env: { 'NODE_ENV': 'development' }
 	});
@@ -105,19 +109,19 @@ gulp.task("scripts", ['scripts-libs', 'scripts-app']);
 gulp.task("scripts-libs", function () {
 	return merge(
 
-		gulp.src(paths.scriptlibs.admin)
+		gulp.src(paths.scripts.combine.admin)
 		.pipe(plumber())
 		.pipe(concat('libs.admin.js'))
 		.pipe(uglify({ mangle: false }))
 		.pipe(plumber.stop())
-		.pipe(gulp.dest("./public/js")),
+		.pipe(gulp.dest("./assets/js")),
 
-		gulp.src(paths.scriptlibs.client)
+		gulp.src(paths.scripts.combine.client)
 		.pipe(plumber())
 		.pipe(concat('libs.client.js'))
 		.pipe(uglify({ mangle: false }))
 		.pipe(plumber.stop())
-		.pipe(gulp.dest("./public/js"))
+		.pipe(gulp.dest("./assets/js"))
 
 	);
 });
@@ -126,26 +130,13 @@ gulp.task("scripts-libs", function () {
  * TASK - Combine, make compatible and compress js app scripts
  */
 gulp.task("scripts-app", function () {
-	return merge(
-
-		gulp.src(paths.scriptapps)
+	return gulp.src(paths.scripts.compile)
 		.pipe(plumber())
-		.pipe(concat('app.js'))
-		.pipe(babel())
-		.pipe(uglify())
-		.pipe(plumber.stop())
-		.pipe(gulp.dest("./public/js")),
-
-		gulp.src(paths.scriptadmin)
-		.pipe(plumber())
-		.pipe(concat('admin.js'))
 		.pipe(include({ extensions: "js" }))
 		.pipe(babel())
 		.pipe(uglify())
 		.pipe(plumber.stop())
-		.pipe(gulp.dest("./public/js"))
-
-	);
+		.pipe(gulp.dest("./assets/js"));
 });
 
 /**
@@ -157,25 +148,24 @@ gulp.task("css", ['css-libs', 'css-app']);
  * TASK - Combine css libraries
  */
 gulp.task("css-libs", function () {
-	return gulp.src(paths.csslibs)
+	return gulp.src(paths.css.combine)
 	.pipe(plumber())
 	.pipe(concat('libs.css'))
 	.pipe(cleanCSS({ keepSpecialComments: 0 }))
 	.pipe(plumber.stop())
-	.pipe(gulp.dest("./public/css"));
+	.pipe(gulp.dest("./assets/css"));
 });
 
 /**
- * TASK - Combine app css
+ * TASK - Compile app css
  */
 gulp.task("css-app", function () {
-	return gulp.src(paths.cssapps)
+	return gulp.src(paths.css.compile)
 	.pipe(plumber())
-	.pipe(sass())
-	.pipe(concat('app.css'))
+	.pipe(sass({ includePaths: paths.css.includes }))
 	.pipe(cleanCSS({ keepSpecialComments: 0 }))
 	.pipe(plumber.stop())
-	.pipe(gulp.dest("./public/css"));
+	.pipe(gulp.dest("./assets/css"));
 });
 
 /**
@@ -183,15 +173,15 @@ gulp.task("css-app", function () {
  */
 gulp.task("fonts", function () {
 	return gulp.src(paths.fonts)
-	.pipe(gulp.dest("./public/fonts"));
+	.pipe(gulp.dest("./assets/fonts"));
 });
 
 /**
  * TASK - Start dev watchers
  */
 gulp.task('watch', function() {
-	gulp.watch([paths.scriptappswatch], ['scripts-app']);
-	gulp.watch([paths.cssappswatch], ['css-app']);
+	gulp.watch([paths.scripts.watch], ['scripts-app']);
+	gulp.watch([paths.css.watch], ['css-app']);
 });
 
 /**
@@ -203,11 +193,11 @@ gulp.task('default', ['watch', 'server']);
  * TASK - Creates deployment packages
  */
 gulp.task('deploy', ['scripts', 'css', 'fonts'], function() {
-	var zipStream = gulp.src(paths.deploypackage)
+	var zipStream = gulp.src(paths.deploy)
 		.pipe(zip('opsstatus.zip'))
 		.pipe(gulp.dest('dist'));
 
-	var targzStream = gulp.src(paths.deploypackage)
+	var targzStream = gulp.src(paths.deploy)
 		.pipe(tar('opsstatus.tar'))
 		.pipe(gzip())
 		.pipe(gulp.dest('dist'));

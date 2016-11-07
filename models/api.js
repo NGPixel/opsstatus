@@ -1,6 +1,5 @@
 "use strict";
 
-var modb = require('mongoose');
 var bcrypt = require('bcryptjs-then');
 var Promise = require('bluebird');
 
@@ -9,7 +8,7 @@ var Promise = require('bluebird');
  *
  * @type       {Object}
  */
-var apiSchema = modb.Schema({
+var apiSchema = Mongoose.Schema({
 
   key: {
     type: String,
@@ -51,4 +50,4 @@ apiSchema.methods.validateKey = function(uKey) {
   return bcrypt.compare(uKey, self.key);
 };
 
-module.exports = modb.model('Api', apiSchema);
+module.exports = Mongoose.model('Api', apiSchema);

@@ -1,6 +1,5 @@
 "use strict";
 
-var modb = require('mongoose');
 var _ = require('lodash');
 var Promise = require('bluebird');
 
@@ -9,7 +8,7 @@ var Promise = require('bluebird');
  *
  * @type       {<Mongoose.Schema>}
  */
-var templateSchema = modb.Schema({
+var templateSchema = Mongoose.Schema({
 
   name: {
     type: String,
@@ -65,4 +64,4 @@ templateSchema.statics.erase = function(templateId) {
   return this.findByIdAndRemove(templateId);
 };
 
-module.exports = modb.model('Template', templateSchema);
+module.exports = Mongoose.model('Template', templateSchema);

@@ -4,16 +4,21 @@
 // Licensed under GPLv3
 // ===========================================
 
+global.PROCNAME = 'OPSSTATUS';
+global.ROOTPATH = __dirname;
+global.CORE_PATH = ROOTPATH + '/../core/';
+global.IS_DEBUG = process.env.NODE_ENV === 'development';
+
 // ----------------------------------------
 // Load modules
 // ----------------------------------------
 
-global.winston = require('winston');
+global.winston = require(CORE_PATH + 'core-libs/winston')(IS_DEBUG);
 winston.info('Ops Status is initializing...');
 
-var appconfig = require('./modules/config')('./config.yml');
-global.db = require('./modules/db')(appconfig);
-global.red = require('./modules/redis')(appconfig);
+var appconfig = require(CORE_PATH + 'core-libs/config')('./config.yml');
+global.db = require(CORE_PATH + 'core-libs/mongodb').init(appconfig);
+global.red = require(CORE_PATH + 'core-libs/redis')(appconfig);
 
 var _ = require('lodash');
 var express = require('express');
@@ -34,7 +39,7 @@ global.lang = require('i18next');
 var i18next_backend = require('i18next-node-fs-backend');
 var i18next_mw = require('i18next-express-middleware');
 
-var mw = autoload(path.join(__dirname, '/middlewares'));
+var mw = autoload(CORE_PATH + '/core-middlewares');
 var ctrl = autoload(path.join(__dirname, '/controllers'));
 
 // ----------------------------------------
@@ -42,14 +47,12 @@ var ctrl = autoload(path.join(__dirname, '/controllers'));
 // ----------------------------------------
 
 global.app = express();
-global.ROOTPATH = __dirname;
-var _isDebug = (app.get('env') === 'development');
 
 // ----------------------------------------
 // Background Handler
 // ----------------------------------------
 
-var bgHandler = require('./modules/bghandler')(appconfig);
+var bgHandler = require('./libs/bghandler')(appconfig);
 
 // ----------------------------------------
 // Security
@@ -61,7 +64,8 @@ app.use(mw.security);
 // Passport Authentication
 // ----------------------------------------
 
-var strategy = require('./modules/auth')(passport, appconfig);
+var strategy = require(CORE_PATH + 'core-libs/auth')(passport, appconfig);
+global.rights = require(CORE_PATH + 'core-libs/rights');
 
 app.use(cookieParser());
 app.use(session({
@@ -105,7 +109,7 @@ app.use(i18next_mw.handle(lang));
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+app.use(favicon(path.join(__dirname, 'assets', 'favicon.ico')));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(expressValidator());
@@ -114,14 +118,14 @@ app.use(expressValidator());
 // Public Assets
 // ----------------------------------------
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'assets')));
 
 // ----------------------------------------
 // View accessible data
 // ----------------------------------------
 
 app.locals._ = require('lodash');
-app.locals.moment = require('moment');
+app.locals.moment = require('moment-timezone');
 app.locals.appconfig = appconfig;
 app.locals.appdata = require('./data.json');
 app.use(mw.flash);
@@ -153,15 +157,13 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error', {
     message: err.message,
-    error: _isDebug ? err : {}
+    error: IS_DEBUG ? err : {}
   });
 });
 
 // ----------------------------------------
 // Start HTTP server
 // ----------------------------------------
-
-winston.info('Ops Status has initialized successfully.');
 
 winston.info('Starting HTTP server on port ' + appconfig.port + '...');
 
