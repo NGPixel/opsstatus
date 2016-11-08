@@ -11,10 +11,9 @@ if($('#admin-users').length) {
 
 		vex.dialog.open({
 		  message: pgLangData.create_title,
-		  input: '<input name="email" type="text" placeholder="' + pgLangData.email + '" autocomplete="email" pattern="[^@]+@[^@]+" required />' + 
+		  input: '<input name="email" type="text" placeholder="' + pgLangData.email + '" autocomplete="email" pattern="[^@]+@[^@]+" required />' +
 		  			 '<input name="password" type="text" placeholder="' + pgLangData.password + '" autocomplete="off" pattern=".{8,}" required />' +
-		  			 '<input name="firstName" type="text" placeholder="' + pgLangData.firstName + '" autocomplete="given-name" pattern=".+" required />' +
-		  			 '<input name="lastName" type="text" placeholder="' + pgLangData.lastName + '" autocomplete="family-name" pattern=".+" required />',
+		  			 '<input name="name" type="text" placeholder="' + pgLangData.name + '" autocomplete="given-name" pattern=".+" required />',
 		  callback(data) {
 
 		  	if(_.isPlainObject(data)) {
@@ -45,7 +44,7 @@ if($('#admin-users').length) {
 		let parentElm = $(ev.currentTarget).closest('li').get(0);
 
 		vex.dialog.confirm({
-		  message: pgLangData.delete_title({ email: parentElm.dataset.email }),
+		  message: pgLangData.delete_title({ email: parentElm.dataset.email, provider: parentElm.dataset.provider }),
 		  callback(value) {
 
 		  	if(value) {

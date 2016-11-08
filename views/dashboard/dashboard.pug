@@ -12,25 +12,25 @@ block navright
 				= t('actions.subscribe')
 
 block header
-	if pdata.componentGroups
+	if pdata.regions
 		nav
 			ul
-				each compgroup in pdata.componentGroups
-					li
-						span= compgroup.shortName
-						+stateicon(compgroup.state)
+				each region in pdata.regions
+					- var isRegionActive = (region.name === 'Canada');
+					li(class={active: isRegionActive})
+						span= region.name
 	else
 		nav
 			ul
-				li No components have been setup yet.
+				li No regions have been setup yet.
 
 block content
 	.dashboard
-		.grid-3_lg-2_sm-1
+		.grid-2_lg-2_sm-1
 			.col
 				section
 					h2
-						i.fa.fa-check-circle 
+						i.fa.fa-check-circle
 						= t('headers.overview')
 					if pdata.componentGroups
 						.box
@@ -51,7 +51,12 @@ block content
 														+stateicon(comp.state)
 					else
 						.box.no-content No components have been setup yet.
-			.col.mid
+				section
+					h2
+						i.fa.fa-line-chart
+						= t('headers.uptime')
+					.box.no-content No metrics have been setup yet.
+			.col.alt
 				section
 					h2
 						i.fa.fa-bullhorn
@@ -60,16 +65,6 @@ block content
 						+incidentItem(pdata.incidents.active)
 					else
 						.box.no-content No active incidents.
-				section
-					h2
-						i.fa.fa-history
-						= t('headers.pastincidents')
-					if pdata.incidents && pdata.incidents.recent.length > 0
-						+incidentItem(pdata.incidents.recent)
-					else
-						.box.no-content
-							| No recent past incidents.
-			.col
 				section
 					h2
 						i.fa.fa-clock-o
@@ -81,21 +76,10 @@ block content
 							| No maintenance is planned for now.
 				section
 					h2
-						i.fa.fa-globe
-						= t('headers.regions')
-					if pdata.regions
-						.box
-							ul.regions-list
-								each region in pdata.regions
-									li
-										span
-											i.fa.fa-globe
-											a(href='/region/' + region._id)= region.name
-										span= t('dashboard.incidentCount', { count: region.incidents })
+						i.fa.fa-history
+						= t('headers.pastincidents')
+					if pdata.incidents && pdata.incidents.recent.length > 0
+						+incidentItem(pdata.incidents.recent)
 					else
-						.box.no-content No regions have been setup yet.
-				section
-					h2
-						i.fa.fa-line-chart
-						= t('headers.uptime')
-					.box.no-content No metrics have been setup yet.
+						.box.no-content
+							| No recent past incidents.

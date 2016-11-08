@@ -53,7 +53,7 @@ var paths = {
 	css: {
 		combine: [
 			'./node_modules/font-awesome/css/font-awesome.min.css',
-			'./node_modules/gridlex/dist/gridlex.min.css',
+			'./node_modules/gridlex/docs/gridlex.min.css',
 			'./node_modules/vex-js/dist/css/vex.css',
 			'./node_modules/vex-js/dist/css/vex-theme-os.css',
 			'./node_modules/simplemde/dist/simplemde.min.css',

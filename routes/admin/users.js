@@ -38,7 +38,7 @@ module.exports = {
 	displayEdit(req, res, next) {
 			db.User
 			.findById(req.params.id)
-			.select('firstName lastName email timezone lang rights')
+			.select('name email timezone lang rights')
 			.exec()
 			.then((usr) => {
 
@@ -121,7 +121,7 @@ module.exports = {
 
 	/**
 	 * Delete a user
-	 * 
+	 *
 	 * @param      {Request}   req     The request
 	 * @param      {Response}  res     The Response
 	 * @param      {Function}  next    The next callback

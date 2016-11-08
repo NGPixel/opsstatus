@@ -14,7 +14,7 @@ block admin-content
 	#admin-users
 		ul.admin-list
 			each usr in users
-				li(data-id=usr.id, data-email=usr.email, data-firstname=usr.firstName, data-lastname=usr.lastName)
+				li(data-id=usr._id, data-email=usr.email, data-name=usr.name, data-provider=usr.provider)
 					span
 						case usr.provider
 								when 'local': i.fa.fa-database
@@ -27,7 +27,7 @@ block admin-content
 							span= usr.email
 					span
 						span.btn-group
-							a.btn.btn-blue(href='/admin/users/' + usr.id, title=t('actions.edit')).edit-action
+							a.btn.btn-blue(href='/admin/users/' + usr._id, title=t('actions.edit')).edit-action
 								span
 									i.fa.fa-edit
 									= t('actions.edit')
@@ -44,6 +44,5 @@ block admin-content
 			delete_title: _.template("!{t('admin.users.delete_title')}"),
 			email: "#{t('admin.users.email')}",
 			password: "#{t('admin.users.password_placeholder')}",
-			firstName: "#{t('admin.users.firstName')}",
-			lastName: "#{t('admin.users.lastName')}"
+			name: "#{t('admin.users.name')}",
 		};

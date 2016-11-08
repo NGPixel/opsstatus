@@ -4,6 +4,11 @@ var bcrypt = require('bcryptjs-then');
 var Promise = require('bluebird');
 var _ = require('lodash');
 
+/**
+ * User Rights Schema
+ *
+ * @type       {Mongoose}
+ */
 const rightsSchema = new Mongoose.Schema({
   role: {
     type: String,
@@ -26,9 +31,9 @@ const rightsSchema = new Mongoose.Schema({
 /**
  * User Schema
  *
- * @type       {Object}
+ * @type       {Mongoose}
  */
-var userSchema = Mongoose.Schema({
+var userSchema = new Mongoose.Schema({
 
   email: {
     type: String,
@@ -72,12 +77,11 @@ var userSchema = Mongoose.Schema({
 });
 
 /**
- * VIRTUAL - Full Name
+ * MODEL - Process Social Authentication User Profile
+ *
+ * @param      {Object}   profile  The profile
+ * @return     {Promise}  Promise returning the user object
  */
-userSchema.virtual('fullName').get(function() {
-  return this.firstName + ' ' + this.lastName;
-});
-
 userSchema.statics.processProfile = (profile) => {
 
 	let primaryEmail = '';
@@ -94,20 +98,15 @@ userSchema.statics.processProfile = (profile) => {
 		email: primaryEmail,
 		provider: profile.provider
 	}).then((user) => {
-    return (user) ? user : db.User.create({
-      email: primaryEmail,
-      provider: profile.provider,
-      providerId: profile.id,
-      name: profile.displayName,
-      rights: [{
-        role: 'guest',
-        path: '/',
-        exact: false,
-        deny: false
-      }]
-    });
+    return (user) ? user : Promise.reject(new Error('Unauthorized Access.'));
   }).then((user) => {
-	  return (user) ? user : Promise.reject(new Error('User Automated Creation failed.'));
+  	user.providerId = profile.id
+  	if(_.isEmpty(user.name)) {
+  		user.name = profile.displayName;
+  	}
+  	return user.save();
+  }).then((user) => {
+	  return (user) ? user : Promise.reject(new Error('User Social Authentication failed.'));
 	});
 
 };

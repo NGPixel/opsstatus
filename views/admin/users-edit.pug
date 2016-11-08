@@ -2,7 +2,7 @@ extends ./layout
 
 block admin-header
 	i.fa.fa-users
-	| #{t('admin.sections.users')} - #{usr.fullName}
+	| #{t('admin.sections.users')} - #{usr.name}
 
 block admin-actions
 	a.btn.btn-indigo(href='/admin/users')
@@ -13,19 +13,16 @@ block admin-actions
 block admin-content
 	#admin-users-edit
 		.admin-form
-				section.grid
-					.col
-						label= t('admin.users.firstName')
-						input#user-firstName(type='text', placeholder=t('admin.users.firstName_placeholder'), v-model='firstName')
-					.col
-						label= t('admin.users.lastName')
-						input(type='text', placeholder=t('admin.users.lastName_placeholder'), v-model='lastName')
+				section
+					label= t('admin.users.name')
+					input#user-name(type='text', placeholder=t('admin.users.name_placeholder'), v-model='name')
 				section
 					label= t('admin.users.email')
-					input(type='text', placeholder=t('admin.users.email_placeholder'), v-model='email')
-				section
-					label= t('admin.users.password')
-					input(type='text', v-model='password', value='********')
+					input(type='text', placeholder=t('admin.users.email_placeholder'), v-model='email', disabled=(usr.provider !== 'local'))
+				if usr.provider === 'local'
+					section
+						label= t('admin.users.password')
+						input(type='text', v-model='password', value='********')
 				section
 					.grid
 						.col

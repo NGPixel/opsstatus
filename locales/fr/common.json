@@ -104,9 +104,9 @@
 			"noRegionsCreatedYet": "Aucune région n'a été créé."
 		},
 		"users": {
-			"create": "Créer un usager",
+			"create": "Créer un usager local",
 			"create_title": "Entrer les données utilisateur:",
-			"delete_title": "Êtes-vous certain de vouloir supprimer <%= email %>?",
+			"delete_title": "Êtes-vous certain de vouloir supprimer <%= email %> [<%= provider %>]?",
 			"displayLanguage": "Langue d'affichage",
 			"email": "Courriel",
 			"email_placeholder": "ex.: jean@compagnie.com",

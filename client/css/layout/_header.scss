@@ -22,6 +22,12 @@ header {
 		> a {
 			display: inline-block;
 			height: 30px;
+			transition: opacity 0.5s ease;
+
+			&:hover {
+				opacity: 0.8;
+			}
+
 		}
 
 		> div {
@@ -71,7 +77,7 @@ header {
 
 	}
 
-	nav {
+	> nav {
 		background-color: #FFF;
 
 		ul {
@@ -92,20 +98,25 @@ header {
 				color: material-color('grey', '600');
 				cursor: default;
 				transition: all 0.5s ease;
+				cursor: pointer;
 
 				&:hover {
-					background-color: material-color('grey', '50');
+					background-color: material-color('grey', '100');
 				}
 
 				&:first-child {
 					border-left: 1px solid material-color('grey', '100');
 				}
 
+				&.active {
+					background-color: material-color('light-blue', '700');
+					color: #FFF;
+					box-shadow: 0px 5px 10px 0px transparentize(material-color('light-blue', '700'), 0.5);
+					border: none;
+				}
+
 				.fa {
-					margin-left: 10px;
-
-					@include status-colors('color');
-
+					margin-right: 10px;
 				}
 
 			}
