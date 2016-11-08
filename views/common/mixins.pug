@@ -56,7 +56,14 @@ mixin incidentItem(incs)
 									else if idx > 0 && idx >= inc.regions.length - 1
 										= ' ' + t('dashboard.affectedRegionsAnd') + ' '
 									a(href='/region/' + reg._id)= reg.name
-
+					if inc.kind === 'scheduled'
+						ul.incident-schedule
+							li
+								span Starts:
+								= moment.tz(inc.schedule.plannedStartDate, 'UTC').format('lll')
+							li
+								span Ends:
+								= moment.tz(inc.schedule.plannedEndDate, 'UTC').format('lll')
 					if inc.updates.length > 1
 						ul.updates-list
 							each upd in _.initial(inc.updates)

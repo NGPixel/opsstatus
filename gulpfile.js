@@ -162,7 +162,7 @@ gulp.task("css-libs", function () {
 gulp.task("css-app", function () {
 	return gulp.src(paths.css.compile)
 	.pipe(plumber())
-	.pipe(sass({ includePaths: paths.css.includes }))
+	.pipe(sass.sync({ includePaths: paths.css.includes }))
 	.pipe(cleanCSS({ keepSpecialComments: 0 }))
 	.pipe(plumber.stop())
 	.pipe(gulp.dest("./assets/css"));
