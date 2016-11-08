@@ -6,12 +6,12 @@ chai.use(chaiAsPromised);
 
 describe('mongodb', function () {
 
-	global.db = require('../modules/db')(appconfig);
+	global.db = require('requarks-core/core-libs/mongodb').init(appconfig);
 
 	it('must connect', function() {
 
-		return expect(db.connectPromise).to.be.fulfilled;
+		return expect(db.onReady).to.be.fulfilled;
 
 	});
-	
+
 });

@@ -3,6 +3,8 @@
 let path = require('path'),
 	 fs = require('fs');
 
+global.ROOTPATH = path.join(__dirname, '..');
+
 // ========================================
 // Load global modules
 // ========================================
@@ -21,14 +23,14 @@ try {
 	let configPath = path.join(__dirname, '../config.yml');
 
 	fs.accessSync(configPath, fs.R_OK);
-	global.appconfig = require('../modules/config')(configPath);
+	global.appconfig = require('requarks-core/core-libs/config')(configPath);
 
 } catch(err) {
 
 	// Use default test values
 
 	let configPath = path.join(__dirname, '../config.sample.yml');
-	global.appconfig = require('../modules/config')(configPath);
+	global.appconfig = require('requarks-core/core-libs/config')(configPath);
 
 }
 
