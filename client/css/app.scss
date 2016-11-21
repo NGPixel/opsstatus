@@ -1,15 +1,22 @@
-@import './layout/_mixins';
-@import './material/_sass-material-colors';
-@import './material/_sass-material-colors-classes';
+@import 'core-client/scss/core';
+@import 'core-client/scss/components/alert';
+@import 'core-client/scss/components/button';
+@import 'core-client/scss/components/footer';
+@import 'core-client/scss/components/form';
+@import 'core-client/scss/components/grid';
+@import 'core-client/scss/components/hero';
+@import 'core-client/scss/components/markdown-content';
+@import 'core-client/scss/components/modal';
+@import 'core-client/scss/components/nav';
+@import 'core-client/scss/components/sidebar';
+@import 'core-client/scss/components/typography';
 
-@import './layout/_fonts';
+@import './layout/_mixins';
 @import './layout/_common';
 @import './layout/_header';
-@import './layout/_footer';
 
 @import './components/_alerts';
 @import './components/_button';
-@import './components/_checkbox';
 @import './components/_dropdown';
 @import './components/_incidents-list';
 @import './components/_regions-list';

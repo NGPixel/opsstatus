@@ -1,37 +1,39 @@
 extends ./layout
 
-block admin-header
-	i.fa.fa-bullhorn
-	= t('admin.incidents.create')
-
-block admin-actions
-	a.btn.btn-indigo(href='/admin/incidents')
-		span
-			i.fa.fa-arrow-left
-			= t('actions.backToList')
-	button.btn.btn-indigo#btn-load-from-template
-		span
-			i.fa.fa-file-o
-			= t('admin.incidents.loadTemplate')
-			
 block admin-content
+	.hero
+		h1.title= t('admin.incidents.create')
+		h2.subtitle Incidents
+		ul.hero-menu
+			li
+				a.is-blue-grey.is-outlined(href='/admin/incidents')
+					i.icon-reply
+					span= t('actions.backToList')
+			li
+				button.is-indigo#btn-load-from-template
+					i.icon-marquee-plus
+					span= t('admin.incidents.loadTemplate')
+
+	//.content
 	if comps.length > 0 && regions.length > 0
 		#admin-incidents-create
-			.admin-form
-				section.hidden#sct-load-from-template
+			.form-sections
+				section.is-hidden#sct-load-from-template
 					label= t('admin.incidents.loadTemplate') + '...'
 					+dropdown('incident-template', 'template', '')(placeholder=t('actions.choose'))
 						each tmpl in templates
 							+dropdownitem(tmpl.name, tmpl.id, 'file-o', 'grey')
 				section
-					label= t('admin.incidents.summary')
-					input#incident-summary(type='text', placeholder=t('admin.incidents.summary_placeholder'), v-model='summary')
+					label.label= t('admin.incidents.summary')
+					p.control.is-fullwidth
+						input#incident-summary(type='text', placeholder=t('admin.incidents.summary_placeholder'), v-model='summary')
 				section
-					label= t('admin.incidents.type')
-					input#schedule_unplanned(name='schedule', type='radio', v-model='type', value='unplanned', checked)
-					label(for='schedule_unplanned')= t('admin.incidents.typeUnplanned')
-					input#schedule_planned(name='schedule', type='radio', v-model='type', value='scheduled')
-					label(for='schedule_planned')= t('admin.incidents.typeScheduled')
+					label.label= t('admin.incidents.type')
+					p.control
+						input#schedule_unplanned(name='schedule', type='radio', v-model='type', value='unplanned', checked)
+						label(for='schedule_unplanned')= t('admin.incidents.typeUnplanned')
+						input#schedule_planned(name='schedule', type='radio', v-model='type', value='scheduled')
+						label(for='schedule_planned')= t('admin.incidents.typeScheduled')
 				section
 					.grid
 						.col-8_md-12(v-show='type=="unplanned"')
@@ -50,28 +52,29 @@ block admin-content
 							= ' ' + t('admin.incidents.datetimeSeparator') + ' '
 							input.timepicker#schedule_planned_end_time(type='text', placeholder= t('admin.incidents.time_placeholder'), v-model='schedule_planned_end_time')
 						.col-4_md-12
-							label= t('admin.incidents.timezone')
+							label.label= t('admin.incidents.timezone')
 							+dropdown('incident-timezone', 'timezone', user.timezone)(placeholder=user.timezone)
 								each tz in moment.tz.names()
 									+dropdownitem(tz, tz, 'clock-o', 'blue-grey', moment().tz(tz).format('Z z'))
 				section
-					label= t('admin.incidents.component')
+					label.label= t('admin.incidents.component')
 					+dropdown('incident-component', 'component', '')(placeholder= t('actions.choose'))
 						each comp in comps
 							+dropdownitem(comp.name, comp.id, 'tasks', 'grey', comp.group.name)
 				section(v-show='type!="scheduled"')
-					label= t('admin.incidents.componentState')
+					label.label= t('admin.incidents.componentState')
 					+dropdown('incident-component', 'componentState', 'partialdown')(placeholder=t('states.partialdown'))
 						each stVal, stKey in appdata.states
 							if stKey !== 'scheduled'
 								+dropdownitem(t('states.' + stKey), stKey, 'circle', 'none status-' + stKey)
 				section
-					label= t('admin.incidents.regions')
-					each region in regions
-						input(id='region-' + region.id, type='checkbox', v-model='regions', value=region.id)
-						label(for='region-' + region.id)= region.name
+					label.label= t('admin.incidents.regions')
+					p.control
+						each region in regions
+							input(id='region-' + region.id, type='checkbox', v-model='regions', value=region.id)
+							label(for='region-' + region.id)= region.name
 				section
-					label= t('admin.incidents.content')
+					label.label= t('admin.incidents.content')
 					textarea#incident-editor
 				section.form-footer
 					button.btn.btn-green#admin-incidents-save

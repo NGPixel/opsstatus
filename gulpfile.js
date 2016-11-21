@@ -68,12 +68,15 @@ var paths = {
 			//'./node_modules/requarks-core'
 		],
 		watch: [
-			'./client/css/**/*.scss'
+			'./client/css/**/*.scss',
+			'../core/core-client/scss/**/*.scss'
 		]
 	},
 	fonts: [
 		'./node_modules/font-awesome/fonts/*-webfont.*',
-		'!./node_modules/font-awesome/fonts/*-webfont.svg'
+		'!./node_modules/font-awesome/fonts/*-webfont.svg',
+		//'../node_modules/requarks-core/core-client/fonts/**/*'
+		'../core/core-client/fonts/**/*'
 	],
 	deploy: [
 		'./**/*',
@@ -162,6 +165,7 @@ gulp.task("css-libs", function () {
 gulp.task("css-app", function () {
 	return gulp.src(paths.css.compile)
 	.pipe(plumber())
+	.pipe(include({ extensions: "css", includePaths: paths.css.includes }))
 	.pipe(sass.sync({ includePaths: paths.css.includes }))
 	.pipe(cleanCSS({ keepSpecialComments: 0 }))
 	.pipe(plumber.stop())

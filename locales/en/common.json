@@ -60,7 +60,7 @@
 		},
 		"dashboard": {
 			"welcome": "Welcome {{name}}",
-			"viewPublicDashboard": "View Publish Dashboard"
+			"viewPublicDashboard": "Publish Dashboard"
 		},
 		"incidents": {
 			"active": "Active Incidents",

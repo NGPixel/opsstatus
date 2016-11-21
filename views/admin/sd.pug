@@ -1,44 +1,80 @@
-a.btn.btn-teal.btn-block(href='/admin/incidents/create')
-	span
-		i.fa.fa-plus
-		= t('admin.incidents.create')
 
-ul.admin-sd
-	li(data-link='/admin')
-		i.fa.fa-th-large
-		= t('admin.sections.dashboard')
-	li(data-link='/admin/incidents')
-		i.fa.fa-bullhorn
-		= t('admin.sections.incidents')
-	li(data-link='/admin/templates')
-		i.fa.fa-copy
-		= t('admin.sections.templates')
-	li(data-link='/admin/components')
-		i.fa.fa-tasks
-		= t('admin.sections.components')
-	li(data-link='/admin/regions')
-		i.fa.fa-globe
-		= t('admin.sections.regions')
-	li(data-link='/admin/metrics')
-		i.fa.fa-bar-chart
-		= t('admin.sections.metrics')
-	li(data-link='/admin/monitors')
-		i.fa.fa-heartbeat
-		= t('admin.sections.monitors')
-	li(data-link='/admin/users')
-		i.fa.fa-users
-		= t('admin.sections.users')
-	li(data-link='/admin/subscribers')
-		i.fa.fa-bell
-		= t('admin.sections.subscribers')
-	li(data-link='/admin/api')
-		i.fa.fa-sitemap
-		= t('admin.sections.api')
-	li(data-link='/admin/settings')
-		i.fa.fa-gear
-		= t('admin.sections.siteSettings')
-
-a.btn.btn-light-blue.btn-block(href='/')
-	span
-		i.fa.fa-home
-		= t('admin.dashboard.viewPublicDashboard')
+aside
+	.sidebar-label
+		i.icon-th-small
+		span Navigation
+	ul.sidebar-menu
+		li
+			a(href='/')
+				i.icon-home
+				span= t('admin.dashboard.viewPublicDashboard')
+		li
+			a(href='/admin/users/' + user.id)
+				i.icon-head
+				span= t('admin.users.myAccount')
+		li
+			a(href='/logout')
+				i.fa.fa-sign-out
+				span= t('actions.logout')
+aside
+	.sidebar-label
+		i.icon-th-small
+		span Administration
+	ul.sidebar-menu
+		li
+			a(href='/admin')
+				i.fa.fa-th-large
+				span= t('admin.sections.dashboard')
+		li
+			a(href='/admin/incidents')
+				i.fa.fa-bullhorn
+				span= t('admin.sections.incidents')
+			ul
+				li
+					a(href='/admin/incidents/create')
+						i.fa.fa-plus
+						span= t('admin.incidents.create')
+				li
+					a(href='/admin/incidents/create')
+						i.icon-sun
+						span Active Incidents
+				li
+					a(href='/admin/incidents/create')
+						i.icon-loader
+						span Archived Incidents
+		li
+			a(href='/admin/templates')
+				i.fa.fa-copy
+				span= t('admin.sections.templates')
+		li
+			a(href='/admin/components')
+				i.fa.fa-tasks
+				span= t('admin.sections.components')
+		li
+			a(href='/admin/regions')
+				i.fa.fa-globe
+				span= t('admin.sections.regions')
+		li
+			a(href='/admin/metrics')
+				i.fa.fa-bar-chart
+				span= t('admin.sections.metrics')
+		li
+			a(href='/admin/monitors')
+				i.fa.fa-heartbeat
+				span= t('admin.sections.monitors')
+		li
+			a(href='/admin/users')
+				i.fa.fa-users
+				span= t('admin.sections.users')
+		li
+			a(href='/admin/subscribers')
+				i.fa.fa-bell
+				span= t('admin.sections.subscribers')
+		li
+			a(href='/admin/api')
+				i.fa.fa-sitemap
+				span= t('admin.sections.api')
+		li
+			a(href='/admin/settings')
+				i.fa.fa-gear
+				span= t('admin.sections.siteSettings')

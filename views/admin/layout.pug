@@ -9,22 +9,15 @@ block navright
 	span Administration
 
 block content
-	.admin
-		.grid
-			.col-3_sm-12
-				include ./sd
-			.col-9_sm-12
-				.admin-header
-					h1
-						block admin-header
-					div
-						block admin-actions
-						a.btn.btn-deep-orange(href='/logout')
-							span
-								i.fa.fa-sign-out
-								= t('actions.logout')
-				.admin-content
-					block admin-content
+	#root
+		.container.is-fluid
+			.columns.is-gapless
+
+				.column.is-narrow.sidebar
+					include ./sd
+
+				.column.is-white
+					block admin-content						
 
 	script(type='text/javascript').
 		var langData = {

@@ -1,18 +1,21 @@
 extends ./layout
 
-block admin-header
-	i.fa.fa-th-large
-	| #{t('admin.sections.dashboard')}
-
-block admin-actions
-	a.btn.btn-indigo(href='/admin/users/' + user.id)
-		span
-			i.fa.fa-user
-			= t('admin.users.myAccount')
-
 block admin-content
 	#admin-dashboard
-		.admin-box
-			= t('admin.dashboard.welcome', { name: user.firstName })
-			.chartContainer
-				canvas#chartIncidents(height="200")
+		.hero
+			h1.title= t('admin.sections.dashboard')
+			h2.subtitle Welcome
+			ul.hero-menu
+				li
+					a.is-blue(href='/admin/users/' + user.id)
+						i.icon-head
+						span= t('admin.users.myAccount')
+				li
+					a.is-orange(href='/logout')
+						i.fa.fa-sign-out
+						span= t('actions.logout')
+		.content
+			.admin-box
+				= t('admin.dashboard.welcome', { name: user.firstName })
+				.chartContainer
+					canvas#chartIncidents(height="200")
