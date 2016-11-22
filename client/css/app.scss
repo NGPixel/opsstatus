@@ -1,3 +1,6 @@
+
+$primary: 'teal';
+
 @import 'core-client/scss/core';
 @import 'core-client/scss/components/alert';
 @import 'core-client/scss/components/button';
@@ -5,6 +8,7 @@
 @import 'core-client/scss/components/form';
 @import 'core-client/scss/components/grid';
 @import 'core-client/scss/components/hero';
+@import 'core-client/scss/components/list';
 @import 'core-client/scss/components/markdown-content';
 @import 'core-client/scss/components/modal';
 @import 'core-client/scss/components/nav';
@@ -15,9 +19,6 @@
 @import './layout/_common';
 @import './layout/_header';
 
-@import './components/_alerts';
-@import './components/_button';
-@import './components/_dropdown';
 @import './components/_incidents-list';
 @import './components/_regions-list';
 @import './components/_status-list';

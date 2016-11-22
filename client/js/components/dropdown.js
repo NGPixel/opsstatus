@@ -19,7 +19,7 @@ class Dropdown {
 		self.obj = $(dObj);
 		self.state = false;
 
-		self.obj.children('div').on('click', (e) => { self.toggle(e); });
+		self.obj.children('div').on('click', (e) => { console.log('HENR2I'); /*self.toggle(e);*/ });
 		$('ul > li', self.obj).on('click', (e) => { self.pick(e); });
 
 	}
@@ -46,7 +46,7 @@ class Dropdown {
 
 		let self = this;
 
-		this.obj.addClass('shown');
+		this.obj.addClass('is-shown');
 		this.obj.children('ul').finish().slideDown(200);
 		this.state = true;
 
@@ -61,7 +61,7 @@ class Dropdown {
 	 */
 	close() {
 
-		this.obj.removeClass('shown');
+		this.obj.removeClass('is-shown');
 		this.obj.children('ul').finish().slideUp(200);
 		this.state = false;
 

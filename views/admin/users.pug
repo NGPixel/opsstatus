@@ -1,42 +1,39 @@
 extends ./layout
 
-block admin-header
-	i.fa.fa-users
-	= t('admin.sections.users')
-
-block admin-actions
-	button.btn.btn-teal#admin-users-new
-		span
-			i.fa.fa-plus
-			= t('admin.users.create')
-
 block admin-content
 	#admin-users
-		ul.admin-list
+		.hero
+			h1.title= t('admin.sections.users')
+			ul.hero-menu
+				li
+					button.is-teal#admin-users-new
+						i.icon-plus
+						span= t('admin.users.create')
+		ul.list
 			each usr in users
-				li(data-id=usr._id, data-email=usr.email, data-name=usr.name, data-provider=usr.provider)
-					span
-						case usr.provider
-								when 'local': i.fa.fa-database
-								when 'windowslive': i.fa.fa-windows.is-blue
-								when 'google': i.fa.fa-google.is-blue
-								when 'facebook': i.fa.fa-facebook.is-purple
-								default: i.fa.fa-question-circle
-						p
+				li.list-row(data-id=usr._id, data-email=usr.email, data-name=usr.name, data-provider=usr.provider)
+					p.list-item
+						span.list-icon
+							case usr.provider
+									when 'local': i.fa.fa-database
+									when 'windowslive': i.fa.fa-windows.is-blue
+									when 'google': i.fa.fa-google.is-blue
+									when 'facebook': i.fa.fa-facebook.is-purple
+									default: i.fa.fa-question-circle
+						span.list-content
 							strong= usr.name
 							span= usr.email
-					span
-						span.btn-group
-							a.btn.btn-blue(href='/admin/users/' + usr._id, title=t('actions.edit')).edit-action
-								span
-									i.fa.fa-edit
-									= t('actions.edit')
+					p.list-item
+						span.button-group
+							a.button.is-orange(href='/admin/users/' + usr._id, title=t('actions.edit')).edit-action
+								i.fa.fa-edit
+								span= t('actions.edit')
 							if !_.eq(usr.id, user.id)
-								a.btn.btn-solo.btn-red(title=t('actions.delete')).delete-action
-									span: i.fa.fa-trash-o
+								button.button.is-red.is-icon-only(title=t('actions.delete')).delete-action
+									i.fa.fa-trash-o
 							else
-								a.btn.btn-solo.btn-grey
-									span: i.fa.fa-trash-o
+								button.button.is-disabled.is-icon-only
+									i.fa.fa-trash-o
 
 	script(type='text/javascript').
 		var pgLangData = {

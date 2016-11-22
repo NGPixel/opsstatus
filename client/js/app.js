@@ -2,11 +2,9 @@
 
 var alerts;
 
-//=include components/*.js
-
 jQuery( document ).ready(function( $ ) {
 
-	vex.defaultOptions.className = 'vex-theme-os';
+	//=require core-client/js/core.js
 
 	// ====================================
 	// Notifications
@@ -21,12 +19,12 @@ jQuery( document ).ready(function( $ ) {
 		$('#notifload').removeClass('active');
 	});
 
-	alerts = new Alerts();
+	/*alerts = new Alerts();
 	if(alertsData) {
 		_.forEach(alertsData, (alertRow) => {
 			alerts.push(alertRow);
 		});
-	}
+	}*/
 
 	// ====================================
 	// Expand Updates List

@@ -1,20 +1,9 @@
 extends ./layout
 
-block admin-header
-	i.fa.fa-bullhorn
-	= t('admin.sections.incidents')
-
-block admin-actions
-	a.btn.btn-solo.btn-teal(href='/admin/incidents/create', title=t('admin.incidents.create'))
-		span
-			i.fa.fa-plus
-	a.btn.btn-indigo(href='/admin/incidents/archive', title=t('admin.incidents.archived'))
-		span
-			i.fa.fa-archive
-			span= t('admin.incidents.archived')
-
 block admin-content
 	#admin-incidents
+		.hero
+			h1.title= t('admin.sections.incidents')
 		if incidents.active.length > 0
 			h3.first
 				i.fa.fa-circle-o
@@ -38,15 +27,14 @@ block admin-content
 											!= t('admin.incidents.scheduledInfo', { startdate: userMoment(incident.schedule.plannedStartDate).calendar(), duration: userMoment.duration(moment(incident.schedule.plannedStartDate).diff(incident.schedule.plannedEndDate)).humanize() })
 							
 						span
-							span.btn-group
-								a.btn.btn-teal(href='/admin/incidents/update/' + incident.id, title=t('admin.incidents.postUpdate'))
-									span
-										i.fa.fa-rocket
-										= t('admin.incidents.postUpdate')
-								a.btn.btn-solo.btn-blue(href='/admin/incidents/edit/' + incident.id, title=t('actions.edit')).edit-action
-									span: i.fa.fa-edit
-								a.btn.btn-solo.btn-red(title=t('actions.delete')).delete-action
-									span: i.fa.fa-trash-o
+							span.button-group
+								a.button.is-teal(href='/admin/incidents/update/' + incident.id, title=t('admin.incidents.postUpdate'))
+									i.icon-speech-bubble
+									span= t('admin.incidents.postUpdate')
+								a.button.is-orange.is-icon-only(href='/admin/incidents/edit/' + incident.id, title=t('actions.edit')).edit-action
+									span: i.icon-edit
+								a.button.is-red.is-icon-only(title=t('actions.delete')).delete-action
+									span: i.icon-trash2
 		else
 			.admin-box
 				| No active incident at the moment.
@@ -68,7 +56,7 @@ block admin-content
 							span.btn-group
 								a.btn.btn-teal(href='/admin/incidents/update/' + incident.id, title=t('admin.incidents.postUpdate'))
 									span
-										i.fa.fa-rocket
+										i.icon-file-add
 										= t('admin.incidents.postUpdate')
 								a.btn.btn-solo.btn-blue(href='/admin/incidents/edit/' + incident.id, title=t('actions.edit')).edit-action
 									span: i.fa.fa-edit

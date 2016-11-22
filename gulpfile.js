@@ -28,6 +28,7 @@ var paths = {
 				'./node_modules/moment-timezone/builds/moment-timezone-with-data.min.js',
 				'./node_modules/chart.js/dist/Chart.min.js',
 				'./node_modules/vue/dist/vue.min.js',
+				'../core/core-client/js/libs/*.js',
 				'./node_modules/pikaday/pikaday.js',
 				'./node_modules/pikaday/plugins/pikaday.jquery.js',
 				'./node_modules/sortablejs/Sortable.min.js',
@@ -46,8 +47,14 @@ var paths = {
 		compile: [
 			'./client/js/*.js',
 		],
+		includes: [
+			'./client/js',
+			'../core',
+			//'./node_modules/requarks-core'
+		],
 		watch: [
-			'./client/js/**/*.js'
+			'./client/js/**/*.js',
+			'../core/core-client/js/**/*.js'
 		]
 	},
 	css: {
@@ -135,7 +142,7 @@ gulp.task("scripts-libs", function () {
 gulp.task("scripts-app", function () {
 	return gulp.src(paths.scripts.compile)
 		.pipe(plumber())
-		.pipe(include({ extensions: "js" }))
+		.pipe(include({ extensions: "js", includePaths: paths.scripts.includes }))
 		.pipe(babel())
 		.pipe(uglify())
 		.pipe(plumber.stop())

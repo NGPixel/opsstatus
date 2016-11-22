@@ -14,28 +14,30 @@ block admin-content
 				section
 					label.label= t('admin.users.name')
 					p.control.is-fullwidth
-						input#user-name(type='text', placeholder=t('admin.users.name_placeholder'), v-model='name')
+						input#user-name(type='text', placeholder=t('admin.users.name_placeholder'), v-model='user.name')
 				section
 					label.label= t('admin.users.email')
 					p.control.is-fullwidth
-						input(type='text', placeholder=t('admin.users.email_placeholder'), v-model='email', disabled=(usr.provider !== 'local'))
+						input(type='text', placeholder=t('admin.users.email_placeholder'), v-model='user.email', disabled=(usr.provider !== 'local'))
 				if usr.provider === 'local'
 					section
 						label.label= t('admin.users.password')
 						p.control
-							input(type='text', v-model='password', value='********')
+							input(type='text', v-model='user.password', value='********')
 				section
 					.columns
 						.column
 							label.label= t('admin.users.timezone')
-							+dropdown('timezone', 'timezone', usr.timezone)(placeholder=usr.timezone)
-								each tz in moment.tz.names()
-									+dropdownitem(tz, tz, 'clock-o', 'blue-grey', moment().tz(tz).format('Z z'))
+							.control.is-fullwidth
+								select(v-model='user.timezone')
+									each tz in moment.tz.names()
+										option(value=tz) #{tz} (#{moment().tz(tz).format('Z z')})
 						.column
 							label.label= t('admin.users.displayLanguage')
-							+dropdown('language', 'lang', usr.lang)(placeholder=appdata.lang[usr.lang])
-								each langName, langKey in appdata.lang
-									+dropdownitem(langName, langKey, 'language', 'blue-grey')
+							.control.is-fullwidth
+								select(v-model='user.lang')
+									each langName, langKey in appdata.lang
+										option(value=langKey)= langName
 				if user.id !== usr.id
 					section
 						label.label= t('admin.users.rights')
@@ -49,4 +51,4 @@ block admin-content
 						span= t('actions.saveChanges')
 
 	script(type='text/javascript').
-		var usrData = !{JSON.stringify(usr)};
+		var usrData = !{JSON.stringify({ user: usr, timezones: moment.tz.names() })};

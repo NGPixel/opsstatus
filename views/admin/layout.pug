@@ -6,7 +6,12 @@ block head
 	script(type='text/javascript', src='/js/admin.js')
 
 block navright
-	span Administration
+	.nav-item
+		a.button.is-outlined(href='/admin/incidents/create')
+			i.icon-search
+		a.button(href='/admin/incidents/create')
+			i.icon-plus
+			span= t('admin.incidents.create')
 
 block content
 	#root

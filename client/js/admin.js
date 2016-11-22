@@ -6,40 +6,17 @@ jQuery( document ).ready(function( $ ) {
 	// Localization
 	// ====================================
 
-	vex.dialog.buttons.YES.text = langData.ok;
-	vex.dialog.buttons.NO.text = langData.cancel;
-
 	moment.locale(userData.locale);
-
-	// ====================================
-	// Sidebar
-	// ====================================
-
-	$('.admin-sd > li').on('click', (ev) => {
-		window.location.assign(ev.currentTarget.dataset.link);
-	});
-
-	let curPath = window.location.pathname;
-
-	$('.admin-sd > li').filter((sdIdx, sdElm) => {
-		let sdPath = $(sdElm).data('link');
-		return _.startsWith(curPath, sdPath) &&
-			(
-				(sdPath === '/admin' && curPath === sdPath)
-				||
-				$(sdElm).data('link') !== '/admin'
-			);
-	}).addClass('active');
 
 	// ====================================
 	// Dropdown
 	// ====================================
 
-	var dropdowns = [];
+	/*var dropdowns = [];
 
 	$('.dropdown').each((idx, elm) => {
 		dropdowns.push(new Dropdown(elm));
-	});
+	});*/
 
 	// ====================================
 	// Sections
