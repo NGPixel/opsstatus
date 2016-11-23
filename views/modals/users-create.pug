@@ -1,0 +1,44 @@
+.modal(v-bind:class="{'is-active': newuserShown}")
+	.modal-background
+	.modal-container
+		.modal-content
+				header.is-light-blue Create Local User
+				section
+					label.label Email Address:
+					p.control.is-fullwidth
+						input.input(type='text', placeholder='user@domain.com', v-model='newuser.email')
+						span.help.is-danger.is-hidden This document path is invalid!
+				section
+					label.label Password
+					p.control.is-fullwidth
+						input.input(type='text', placeholder='', v-model='newuser.password')
+						span.help.is-danger.is-hidden This document path is invalid!
+				section
+					label.label Display Name
+					p.control.is-fullwidth
+						input.input(type='text', placeholder='e.g. John Smith', v-model='newuser.password')
+						span.help.is-danger.is-hidden This document path is invalid!
+				footer
+					a.button.is-grey.is-outlined(v-on:click='newuserCancel') Discard
+					a.button.is-light-blue(v-on:click='newuserCreate') Create
+
+.modal(v-bind:class="{'is-active': newsocialuserShown}")
+	.modal-background
+	.modal-container
+		.modal-content
+				header.is-indigo Authorize Social User
+				section
+					label.label Provider
+					p.control.is-fullwidth
+						select(v-model='newuser.provider')
+							option(value='windowslive') Microsoft Account
+							option(value='google') Google ID
+							option(value='facebook') Facebook
+				section
+					label.label Email Address:
+					p.control.is-fullwidth
+						input.input(type='text', placeholder='user@domain.com', v-model='newuser.email')
+						span.help.is-danger.is-hidden This document path is invalid!
+				footer
+					a.button.is-grey.is-outlined(v-on:click='newsocialuserCancel') Discard
+					a.button.is-indigo(v-on:click='newuserCreate') Authorize

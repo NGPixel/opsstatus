@@ -41,10 +41,10 @@ module.exports = {
 
 		Promise.props({
 
-			comps: db.Component.find()
-				.where('group').ne(null)
-				.populate('group')
-				.exec().then((comps) => { return _.sortBy(comps, ['group.sortIndex', 'sortIndex']);	}),
+			comps: db.ComponentGroup.find()
+				.populate({ path: 'components', options: { sort: 'sortIndex' }})
+				.sort('sortIndex')
+				.exec(),
 
 			regions: db.Region.find()
 				.sort('sortIndex')

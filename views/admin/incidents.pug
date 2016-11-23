@@ -5,28 +5,30 @@ block admin-content
 		.hero
 			h1.title= t('admin.sections.incidents')
 		if incidents.active.length > 0
-			h3.first
-				i.fa.fa-circle-o
-				= t('admin.incidents.active')
-			ul.admin-list.admin-incidents-list
+			ul.list.admin-incidents-list
+				li.list-header
+					i.icon-sun
+					span= t('admin.incidents.active')
 				each incident in incidents.active
-					li(data-id=incident.id, data-name=incident.summary)
-						span
+					li.list-row(data-id=incident.id, data-name=incident.summary)
+						p.list-item
 							case incident.currentState
 								when "open"
-									+stateicon(incident.state)
-									p
+									span.list-icon
+										+stateicon(incident.state)
+									span.list-content
 										strong= incident.summary
 										span
 											!= t('admin.incidents.openInfo', { created: moment(incident.schedule.actualStartDate).calendar(), updated: moment(incident.updatedAt).fromNow() })
 								when "scheduled"
-									i.fa.fa-clock-o.status-scheduled
-									p
+									span.list-icon
+										i.fa.fa-clock-o.status-scheduled
+									span.list-content
 										strong= incident.summary
 										span
 											!= t('admin.incidents.scheduledInfo', { startdate: userMoment(incident.schedule.plannedStartDate).calendar(), duration: userMoment.duration(moment(incident.schedule.plannedStartDate).diff(incident.schedule.plannedEndDate)).humanize() })
 							
-						span
+						p.list-item
 							span.button-group
 								a.button.is-teal(href='/admin/incidents/update/' + incident.id, title=t('admin.incidents.postUpdate'))
 									i.icon-speech-bubble

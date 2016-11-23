@@ -6,9 +6,13 @@ block admin-content
 			h1.title= t('admin.sections.users')
 			ul.hero-menu
 				li
-					button.is-teal#admin-users-new
+					button.is-blue(v-on:click='newuserPrompt')
 						i.icon-plus
 						span= t('admin.users.create')
+				li
+					button.is-indigo(v-on:click='newsocialuserPrompt')
+						i.icon-globe
+						span Authorize Social User
 		ul.list
 			each usr in users
 				li.list-row(data-id=usr._id, data-email=usr.email, data-name=usr.name, data-provider=usr.provider)
@@ -34,6 +38,8 @@ block admin-content
 							else
 								button.button.is-disabled.is-icon-only
 									i.fa.fa-trash-o
+
+		include ../modals/users-create.pug
 
 	script(type='text/javascript').
 		var pgLangData = {

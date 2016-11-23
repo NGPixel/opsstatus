@@ -5,6 +5,39 @@
 
 if($('#admin-users').length) {
 
+	let vueUsers = new Vue({
+		el: '#admin-users',
+		data: {
+			newuserShown: false,
+			newsocialuserShown: false,
+			newuser: {
+				provider: 'local',
+				email: '',
+				password: '',
+				name: ''
+			}
+		},
+		methods: {
+			newuserPrompt: () => {
+				vueUsers.newuser.provider = 'local';
+				vueUsers.newuserShown = true;
+			},
+			newuserCancel: () => {
+				vueUsers.newuserShown = false;
+			},
+			newsocialuserPrompt: () => {
+				vueUsers.newuser.provider = 'windowslive';
+				vueUsers.newsocialuserShown = true;
+			},
+			newsocialuserCancel: () => {
+				vueUsers.newsocialuserShown = false;
+			},
+			newuserCreate: () => {
+
+			}
+		}
+	});
+
 	// Create New User
 
 	$('#admin-users-new').on('click', (ev) => {

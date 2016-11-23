@@ -1,28 +1,30 @@
 extends ./layout
 
 block admin-content
-	.hero
-		h1.title= t('admin.incidents.create')
-		h2.subtitle Incidents
-		ul.hero-menu
-			li
-				a.is-blue-grey.is-outlined(href='/admin/incidents')
-					i.icon-reply
-					span= t('actions.backToList')
-			li
-				button.is-indigo#btn-load-from-template
-					i.icon-marquee-plus
-					span= t('admin.incidents.loadTemplate')
+	#admin-incidents-create
+		.hero
+			h1.title= t('admin.incidents.create')
+			h2.subtitle Incidents
+			ul.hero-menu
+				li
+					a.is-blue-grey.is-outlined(href='/admin/incidents')
+						i.icon-reply
+						span= t('actions.backToList')
+				li
+					button.is-indigo(v-on:click='loadtmplToggle')
+						i.icon-marquee-plus
+						span= t('admin.incidents.loadTemplate')
 
-	//.content
-	if comps.length > 0 && regions.length > 0
-		#admin-incidents-create
+		//.content
+		if comps.length > 0 && regions.length > 0
 			.form-sections
-				section.is-hidden#sct-load-from-template
-					label= t('admin.incidents.loadTemplate') + '...'
-					+dropdown('incident-template', 'template', '')(placeholder=t('actions.choose'))
-						each tmpl in templates
-							+dropdownitem(tmpl.name, tmpl.id, 'file-o', 'grey')
+				transition(name="trans-slide", enter-active-class="fadeIn", leave-active-class="fadeOut")
+					section.animated(v-cloak, v-show='loadtmplShown')
+						label.label= t('admin.incidents.loadTemplate') + '...'
+						p.control
+							select(v-model='template')
+								each tmpl in templates
+									option(value=tmpl.id)= tmpl.name
 				section
 					label.label= t('admin.incidents.summary')
 					p.control.is-fullwidth
@@ -35,38 +37,62 @@ block admin-content
 						input#schedule_planned(name='schedule', type='radio', v-model='type', value='scheduled')
 						label(for='schedule_planned')= t('admin.incidents.typeScheduled')
 				section
-					.grid
-						.col-8_md-12(v-show='type=="unplanned"')
-							label= t('admin.incidents.startedOn')
-							input.datepicker#schedule_actual_start(type='text', placeholder= t('admin.incidents.date_placeholder'), v-model='schedule_actual_start')
-							= ' ' + t('admin.incidents.datetimeSeparator') + ' '
-							input.timepicker#schedule_actual_start_time(type='text', placeholder= t('admin.incidents.time_placeholder'), v-model='schedule_actual_start_time')
-						.col-4_md-12(v-show='type=="scheduled"')
-							label= t('admin.incidents.scheduledStartOn')
-							input.datepicker#schedule_planned_start(type='text', placeholder= t('admin.incidents.date_placeholder'), v-model='schedule_planned_start')
-							= ' ' + t('admin.incidents.datetimeSeparator') + ' '
-							input.timepicker#schedule_planned_start_time(type='text', placeholder= t('admin.incidents.time_placeholder'), v-model='schedule_planned_start_time')
-						.col-4_md-12(v-show='type=="scheduled"')
-							label= t('admin.incidents.scheduledEndOn')
-							input.datepicker#schedule_planned_end(type='text', placeholder= t('admin.incidents.date_placeholder'), v-model='schedule_planned_end')
-							= ' ' + t('admin.incidents.datetimeSeparator') + ' '
-							input.timepicker#schedule_planned_end_time(type='text', placeholder= t('admin.incidents.time_placeholder'), v-model='schedule_planned_end_time')
-						.col-4_md-12
+					.columns
+						.column.is-one-quarter(v-show='type=="unplanned"')
+							label.label= t('admin.incidents.startedOn')
+							p.control
+								input.datepicker#schedule_actual_start(type='text', placeholder= t('admin.incidents.date_placeholder'), v-model='schedule_actual_start')
+							label.label= ' ' + t('admin.incidents.datetimeSeparator') + ' '
+							p.control
+								input.timepicker#schedule_actual_start_time(type='text', placeholder= t('admin.incidents.time_placeholder'), v-model='schedule_actual_start_time')
+						.column(v-cloak, v-show='type=="scheduled"')
+							label.label= t('admin.incidents.scheduledStartOn')
+							p.control
+								input.datepicker#schedule_planned_start(type='text', placeholder= t('admin.incidents.date_placeholder'), v-model='schedule_planned_start')
+							label.label= ' ' + t('admin.incidents.datetimeSeparator') + ' '
+							p.control
+								input.timepicker#schedule_planned_start_time(type='text', placeholder= t('admin.incidents.time_placeholder'), v-model='schedule_planned_start_time')
+						.column(v-cloak, v-show='type=="scheduled"')
+							label.label= t('admin.incidents.scheduledEndOn')
+							p.control
+								input.datepicker#schedule_planned_end(type='text', placeholder= t('admin.incidents.date_placeholder'), v-model='schedule_planned_end')
+							label.label= ' ' + t('admin.incidents.datetimeSeparator') + ' '
+							p.control
+								input.timepicker#schedule_planned_end_time(type='text', placeholder= t('admin.incidents.time_placeholder'), v-model='schedule_planned_end_time')
+						.column
 							label.label= t('admin.incidents.timezone')
-							+dropdown('incident-timezone', 'timezone', user.timezone)(placeholder=user.timezone)
-								each tz in moment.tz.names()
-									+dropdownitem(tz, tz, 'clock-o', 'blue-grey', moment().tz(tz).format('Z z'))
+							p.control
+								select(v-model='timezone')
+									each tz in moment.tz.names()
+										option(value=tz) #{tz} (#{moment().tz(tz).format('Z z')})
 				section
-					label.label= t('admin.incidents.component')
-					+dropdown('incident-component', 'component', '')(placeholder= t('actions.choose'))
-						each comp in comps
-							+dropdownitem(comp.name, comp.id, 'tasks', 'grey', comp.group.name)
+					.columns
+						.column.is-one-quarter
+							label.label Principal Affected Component
+							p.control
+								select(v-model='component')
+									option(value='') Choose...
+									each compGrp in comps
+										optgroup(label=compGrp.name)
+											each comp in compGrp.components
+												option(value=comp.id)= comp.name
+						.column
+							label.label Related Affected Components
+							.columns.is-multiline.is-mobile
+								each compGrp in comps
+									.column.is-one-third
+										strong= compGrp.name
+										each comp in compGrp.components
+											p.control(v-show="'" + comp.id + "' !== component")
+												input(id='aff-comp-' + comp.id, type='checkbox', v-model='regions', value=comp.id)
+												label(for='aff-comp-' + comp.id)= comp.name
 				section(v-show='type!="scheduled"')
-					label.label= t('admin.incidents.componentState')
-					+dropdown('incident-component', 'componentState', 'partialdown')(placeholder=t('states.partialdown'))
+					label.label Incident State
+					p.control
 						each stVal, stKey in appdata.states
 							if stKey !== 'scheduled'
-								+dropdownitem(t('states.' + stKey), stKey, 'circle', 'none status-' + stKey)
+								input(id='state_' + stKey, name='state_' + stKey, type='radio', v-model='componentState', value=stKey)
+								label(for='state_' + stKey)= t('states.' + stKey)
 				section
 					label.label= t('admin.incidents.regions')
 					p.control
@@ -81,6 +107,6 @@ block admin-content
 						span
 							i.icon-check
 							= t('admin.incidents.save')
-	else
-		.admin-box
-			!= t('admin.incidents.missingCompRegion')
+		else
+			.admin-box
+				!= t('admin.incidents.missingCompRegion')

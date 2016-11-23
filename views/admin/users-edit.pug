@@ -42,8 +42,8 @@ block admin-content
 					section
 						label.label= t('admin.users.rights')
 						each rText,rKey in appdata.rights
-							div
-								input(id='right-' + rKey, type='checkbox', v-model='rights', value=rKey)
+							.control
+								input(id='right-' + rKey, type='checkbox', v-model='user.rights', value=rKey)
 								label(for='right-' + rKey)= rText
 				section.form-footer
 					button.button.is-green#admin-users-save

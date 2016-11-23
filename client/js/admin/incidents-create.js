@@ -9,6 +9,7 @@ if($('#admin-incidents-create').length) {
 	let vueIncident = new Vue({
 		el: '#admin-incidents-create',
 		data: {
+			loadtmplShown: false,
 			template: '',
 			summary: '',
 			type: 'unplanned',
@@ -24,8 +25,9 @@ if($('#admin-incidents-create').length) {
 			regions: []
 		},
 		methods: {
-			toggleTemplatePicker: () => {
-				$('#sct-load-from-template').slideToggle().toggleClass('hidden');
+			loadtmplToggle: () => {
+				console.log('DUDE');
+				vueIncident.loadtmplShown = !vueIncident.loadtmplShown;
 			}
 		},
 		watch: {
