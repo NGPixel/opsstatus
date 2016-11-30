@@ -22,9 +22,7 @@ block admin-content
 					section.animated(v-cloak, v-show='loadtmplShown')
 						label.label= t('admin.incidents.loadTemplate') + '...'
 						p.control
-							select(v-model='template')
-								each tmpl in templates
-									option(value=tmpl.id)= tmpl.name
+							
 				section
 					label.label= t('admin.incidents.summary')
 					p.control.is-fullwidth
@@ -36,6 +34,8 @@ block admin-content
 						label(for='schedule_unplanned')= t('admin.incidents.typeUnplanned')
 						input#schedule_planned(name='schedule', type='radio', v-model='type', value='scheduled')
 						label(for='schedule_planned')= t('admin.incidents.typeScheduled')
+				section.info
+					
 				section
 					.columns
 						.column.is-one-quarter(v-show='type=="unplanned"')
@@ -110,3 +110,5 @@ block admin-content
 		else
 			.admin-box
 				!= t('admin.incidents.missingCompRegion')
+
+		include ../modals/incidents-load-tmpl.pug

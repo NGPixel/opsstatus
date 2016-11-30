@@ -1,0 +1,14 @@
+.modal(v-bind:class="{'is-active': loadtmplShown}")
+	.modal-background
+	.modal-container
+		.modal-content
+				header.is-indigo Load Template
+				section
+					label.label Template
+					p.control.is-fullwidth
+						select(v-model='template')
+							each tmpl in templates
+								option(value=tmpl.id)= tmpl.name
+				footer
+					a.button.is-grey.is-outlined(v-on:click='loadtmplToggle') Discard
+					a.button.is-indigo(v-on:click='loadtmplToggle') Load

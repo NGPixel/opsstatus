@@ -26,13 +26,9 @@ if($('#admin-incidents-create').length) {
 		},
 		methods: {
 			loadtmplToggle: () => {
-				console.log('DUDE');
 				vueIncident.loadtmplShown = !vueIncident.loadtmplShown;
 			}
-		},
-		watch: {
-			template: (nVal, oVal) => {
-				
+			loadtmplLoad: () => {
 				$.ajax('/admin/templates/' + nVal, {
 					dataType: 'json',
 					method: 'GET',
@@ -50,7 +46,6 @@ if($('#admin-incidents-create').length) {
 				}, () => {
 					alerts.pushError('Connection error', 'An unexpected error when connecting to the server.');
 				});
-
 			}
 		}
 	});
