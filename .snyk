@@ -1,4 +1,9 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 failThreshold: high
-version: v1.5.2
+version: v1.7.0
 ignore: {}
-patch: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:marked:20170112':
+    - simplemde > marked:
+        patched: '2017-02-10T14:28:10.441Z'
