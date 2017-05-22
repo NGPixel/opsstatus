@@ -1,4 +1,13 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 failThreshold: high
-version: v1.5.2
+version: v1.7.0
 ignore: {}
-patch: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:ms:20170412':
+    - mongoose > ms:
+        patched: '2017-05-22T00:25:11.895Z'
+    - compression > debug > ms:
+        patched: '2017-05-22T00:25:11.895Z'
+    - mongoose > mquery > debug > ms:
+        patched: '2017-05-22T00:25:11.895Z'
