@@ -1,4 +1,9 @@
+# Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
 failThreshold: high
-version: v1.5.2
+version: v1.7.1
 ignore: {}
-patch: {}
+# patches apply the minimum changes required to fix a vulnerability
+patch:
+  'npm:ms:20170412':
+    - compression > debug > ms:
+        patched: '2017-07-10T00:39:03.327Z'
